@@ -1,7 +1,8 @@
 package hu.elte.teamfinder.models;
 
+import java.io.Serializable;
 
-public class Accountmodel{
+public class Accountmodel implements Serializable{
     private final Integer accountId;
     private final String email;
 
