@@ -1,7 +1,8 @@
-package hu.elte.teamfinder.models;
+package hu.elte.teamfinder.controllers;
 
 import java.util.Arrays;
 
+import hu.elte.teamfinder.models.AccountModel;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
