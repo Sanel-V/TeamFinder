@@ -2,11 +2,11 @@ package hu.elte.teamfinder.models;
 
 import java.io.Serializable;
 
-public class Accountmodel implements Serializable{
+public class AccountModel implements Serializable{
     private final Integer accountId;
     private final String email;
 
-    public Accountmodel(Integer accountId, String email){
+    public AccountModel(Integer accountId, String email){
         this.accountId = accountId;
         this.email = email;
     }

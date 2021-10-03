@@ -12,14 +12,14 @@ import java.util.List;
 @RequestMapping("accounts")
 public class AccountController {
     
-    private static final List<Accountmodel> ACCOUNTS = Arrays.asList(
-        new Accountmodel(1, "anna"),
-        new Accountmodel(2, "mark"),
-        new Accountmodel(3, "zoli")
+    private static final List<AccountModel> ACCOUNTS = Arrays.asList(
+        new AccountModel(1, "anna"),
+        new AccountModel(2, "mark"),
+        new AccountModel(3, "zoli")
     ) ;
 
     @GetMapping(path = "{accountId}")
-    public Accountmodel getAccount(@PathVariable("accountId") Integer accountId){
+    public AccountModel getAccount(@PathVariable("accountId") Integer accountId){
         return ACCOUNTS.stream()
                     .filter(account -> accountId.equals(account.getAccountId()))
                     .findFirst()
