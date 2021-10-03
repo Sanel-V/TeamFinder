@@ -14,9 +14,9 @@ import java.util.List;
 public class AccountController {
     
     private static final List<AccountModel> ACCOUNTS = Arrays.asList(
-        new AccountModel(1, "anna"),
-        new AccountModel(2, "mark"),
-        new AccountModel(3, "zoli")
+        new AccountModel(1, "anna", "password"),
+        new AccountModel(2, "mark", "password"),
+        new AccountModel(3, "zoli", "password")
     ) ;
 
     @GetMapping(path = "{accountId}")

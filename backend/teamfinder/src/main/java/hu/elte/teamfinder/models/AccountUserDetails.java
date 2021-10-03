@@ -8,6 +8,7 @@ import java.util.Set;
 
 public class AccountUserDetails implements UserDetails
 {
+    //TODO: have AccountModel member, and return it's values
     private final String email;
     private final String password;
     private final Set<? extends GrantedAuthority> grantedAuthorities;
@@ -16,15 +17,14 @@ public class AccountUserDetails implements UserDetails
     private final boolean isCredentialsNonExpired;
     private final boolean isEnabled;
 
-    public AccountUserDetails(String email,
-                              String password,
+    public AccountUserDetails(AccountModel account,
                               Set<? extends GrantedAuthority> grantedAuthorities,
                               boolean isAccountNonExpired,
                               boolean isAccountNonLocked,
                               boolean isCredentialsNonExpired,
                               boolean isEnabled) {
-        this.email = email;
-        this.password = password;
+        this.email = account.getEmail();
+        this.password = account.getPassword();
         this.grantedAuthorities = grantedAuthorities;
         this.isAccountNonExpired = isAccountNonExpired;
         this.isAccountNonLocked = isAccountNonLocked;
