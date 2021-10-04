@@ -6,5 +6,7 @@ import java.util.Optional;
 
 public interface AccountRepository //TODO: extend JPA repository
 {
-    Optional<AccountModel> selectAccountUserDetailsByEmail(String email);
+    Optional<AccountModel> selectAccountByEmail(String email);
+
+    Optional<AccountModel> getAccountById(Integer accountId);
 }

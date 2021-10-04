@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -30,7 +29,7 @@ public class AccountDetailsService implements UserDetailsService
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException
     {
 
-        Optional<AccountModel> account = accountRepository.selectAccountUserDetailsByEmail(username);
+        Optional<AccountModel> account = accountRepository.selectAccountByEmail(username);
         account.orElseThrow(() -> new UsernameNotFoundException(String.format("User %s not found", username)));
 
         return account.map(acc -> new AccountUserDetails(account.get(), null)).get();

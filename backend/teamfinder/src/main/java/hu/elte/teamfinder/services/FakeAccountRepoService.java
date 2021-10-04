@@ -21,10 +21,17 @@ public class FakeAccountRepoService implements AccountRepository
     }
 
     @Override
-    public Optional<AccountModel> selectAccountUserDetailsByEmail(String email)
+    public Optional<AccountModel> selectAccountByEmail(String email)
     {
         return getAccounts().stream().filter(acc -> email.equals(acc.getEmail())).findFirst();
     }
+
+    @Override
+    public Optional<AccountModel> getAccountById(Integer accountId)
+    {
+        return getAccounts().stream().filter(acc -> accountId.equals(acc.getAccountId())).findFirst();
+    }
+
     private List<AccountModel> getAccounts()
     {
         List<AccountModel> accounts = Arrays.asList
