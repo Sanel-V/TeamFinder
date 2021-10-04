@@ -3,8 +3,11 @@ package hu.elte.teamfinder.controllers;
 import java.util.Arrays;
 
 import hu.elte.teamfinder.models.AccountModel;
+import hu.elte.teamfinder.services.AccountDetailsService;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,9 +22,9 @@ import java.util.List;
 @RequestMapping("accounts")
 public class AccountController {
     //TODO: making instance of Service
-    private final AccountService accountService;
+    private final AccountDetailsService accountService;
 
-    public AccountController(AccountService accountService){
+    public AccountController(AccountDetailsService accountService){
         this.accountService = accountService;
     }
 
@@ -50,25 +53,25 @@ public class AccountController {
 
 
     @GetMapping("/all")
-    public ResponseEntity<List<Accountmodel>> getAllAccounts(){
+    public ResponseEntity<List<AccountDetailsService>> getAllAccounts(){
         //TODO: Implement function
         throw new UnsupportedOperationException();
     }
 
     @GetMapping("/get/{id}")
-    public ResponseEntity<Accountmodel> getAccountById(@PathVariable("id") Integer id){
+    public ResponseEntity<AccountDetailsService> getAccountById(@PathVariable("id") Integer id){
         //TODO: Implement function
         throw new UnsupportedOperationException();
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Accountmodel> addAccount(@RequestBody Accountmodel account){
+    public ResponseEntity<AccountDetailsService> addAccount(@RequestBody AccountDetailsService account){
         //TODO: Implement function
         throw new UnsupportedOperationException();
     }
 
     @PutMapping("/update")
-    public ResponseEntity<Accountmodel> updateAccount(@RequestBody Accountmodel account){
+    public ResponseEntity<AccountDetailsService> updateAccount(@RequestBody AccountDetailsService account){
         //TODO: Implement function
         throw new UnsupportedOperationException();
     }
@@ -77,5 +80,10 @@ public class AccountController {
     public ResponseEntity<?> deleteAccountById(@PathVariable("id") Integer id){
         //TODO: Implement function
         throw new UnsupportedOperationException();
+    }
+
+    @GetMapping("/getUserDetails/{username}")
+    public ResponseEntity<UserDetails>   loadUserByUsername(@PathVariable("username") String username){
+        return new ResponseEntity<>(accountService.loadUserByUsername(username), HttpStatus.OK);
     }
 }
