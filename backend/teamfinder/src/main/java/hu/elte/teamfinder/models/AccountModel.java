@@ -6,15 +6,40 @@ public class AccountModel implements Serializable{
     private final Integer accountId;
     private final String email;
     private final String password;
-    //TODO: Figure out if basically implementing all methods of UserDetails is a good idea
-    //I don't want to hardcode values in AccountUserDetails
-    //That also means saving all of these values in the db (?)
+    //TODO: add Access modifiers field
+    private final boolean isAccountNonExpired;
+    private final boolean isAccountNonLocked;
+    private final boolean isCredentialsNonExpired;
+    private final boolean isEnabled;
 
     //TODO: Write a security config and roles/permissions
-    public AccountModel(Integer accountId, String email, String password){
+    public AccountModel(Integer accountId,
+                        String email,
+                        String password,
+                        boolean isAccountNonExpired,
+                        boolean isAccountNonLocked,
+                        boolean isCredentialsNonExpired,
+                        boolean isEnabled)
+    {
         this.accountId = accountId;
         this.email = email;
         this.password = password;
+        this.isAccountNonExpired = isAccountNonExpired;
+        this.isAccountNonLocked = isAccountNonLocked;
+        this.isCredentialsNonExpired = isCredentialsNonExpired;
+        this.isEnabled = isEnabled;
+    }
+    public AccountModel(Integer accountId,
+                        String email,
+                        String password)
+    {
+        this.accountId = accountId;
+        this.email = email;
+        this.password = password;
+        this.isAccountNonExpired = true;
+        this.isAccountNonLocked = true;
+        this.isCredentialsNonExpired = true;
+        this.isEnabled = true;
     }
 
     public Integer getAccountId(){
@@ -28,5 +53,25 @@ public class AccountModel implements Serializable{
     public String getPassword()
     {
         return password;
+    }
+
+    public boolean isAccountNonExpired()
+    {
+        return isAccountNonExpired;
+    }
+
+    public boolean isAccountNonLocked()
+    {
+        return isAccountNonLocked;
+    }
+
+    public boolean isCredentialsNonExpired()
+    {
+        return isCredentialsNonExpired;
+    }
+
+    public boolean isEnabled()
+    {
+        return isEnabled;
     }
 }

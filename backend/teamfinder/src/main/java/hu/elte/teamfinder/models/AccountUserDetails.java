@@ -4,12 +4,13 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Optional;
 import java.util.Set;
 
 public class AccountUserDetails implements UserDetails
 {
-    //TODO: have AccountModel member, and return it's values
     private final String email;
+    private final Integer accountId;
     private final String password;
     private final Set<? extends GrantedAuthority> grantedAuthorities;
     private final boolean isAccountNonExpired;
@@ -18,18 +19,21 @@ public class AccountUserDetails implements UserDetails
     private final boolean isEnabled;
 
     public AccountUserDetails(AccountModel account,
-                              Set<? extends GrantedAuthority> grantedAuthorities,
-                              boolean isAccountNonExpired,
-                              boolean isAccountNonLocked,
-                              boolean isCredentialsNonExpired,
-                              boolean isEnabled) {
+                              Set<? extends GrantedAuthority> grantedAuthorities)
+    {
         this.email = account.getEmail();
+        this.accountId = account.getAccountId();
         this.password = account.getPassword();
-        this.grantedAuthorities = grantedAuthorities;
-        this.isAccountNonExpired = isAccountNonExpired;
-        this.isAccountNonLocked = isAccountNonLocked;
-        this.isCredentialsNonExpired = isCredentialsNonExpired;
-        this.isEnabled = isEnabled;
+        this.grantedAuthorities = grantedAuthorities;//account.getGrantedAuthorities();
+        this.isAccountNonExpired = account.isAccountNonExpired();
+        this.isAccountNonLocked = account.isAccountNonLocked();
+        this.isCredentialsNonExpired = account.isCredentialsNonExpired();
+        this.isEnabled = account.isEnabled();
+    }
+
+    public Integer getAccountId()
+    {
+        return accountId;
     }
 
     @Override
@@ -66,4 +70,6 @@ public class AccountUserDetails implements UserDetails
     public boolean isEnabled() {
         return isEnabled;
     }
+
+
 }

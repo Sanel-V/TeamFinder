@@ -9,14 +9,13 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.Optional;
 
-public class AccountService implements UserDetailsService
+public class AccountDetailsService implements UserDetailsService
 {
-    //TODO: implement accountRepository
-    //if we save AccountModel instead of AccountUserDetails we keep the accountId (see TO DO's in AccountUserDetails
-    //AccountRepository and this.loadUserByUsername method)
+    //TODO: implement an accountRepository (have an actual instance)
+
     private final AccountRepository accountRepository;
 
-    public AccountService(AccountRepository accountRepository)
+    public AccountDetailsService(AccountRepository accountRepository)
     {
         this.accountRepository = accountRepository;
     }
@@ -25,12 +24,10 @@ public class AccountService implements UserDetailsService
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException
     {
-        //TODO: return AccountUserDetails from AccountModel (maybe?)
-        /*
+
         Optional<AccountModel> account = accountRepository.selectAccountUserDetailsByEmail(email);
         account.orElseThrow(() -> new UsernameNotFoundException(String.format("User %s not found", email)));
-        return account.map(acc -> new AccountUserDetails(account,)).get();
-        */
-        return null;
+
+        return account.map(acc -> new AccountUserDetails(account.get(), null)).get();
     }
 }
