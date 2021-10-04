@@ -3,10 +3,11 @@ package hu.elte.teamfinder.models;
 import java.io.Serializable;
 
 public class AccountModel implements Serializable{
+    //TODO: Make accountId auto-generated
     private final Integer accountId;
     private final String email;
     private final String password;
-    //TODO: add Access modifiers field
+    //TODO: add Access modifiers field and update constructor
     private final boolean isAccountNonExpired;
     private final boolean isAccountNonLocked;
     private final boolean isCredentialsNonExpired;
