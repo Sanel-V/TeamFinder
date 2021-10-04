@@ -1,6 +1,8 @@
-package hu.elte.teamfinder.models;
+package hu.elte.teamfinder.controllers;
 
 import java.util.Arrays;
+
+import hu.elte.teamfinder.models.AccountModel;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -26,10 +28,10 @@ public class AccountController {
     /**
      * Examples for testing accounts
      */
-    private static final List<Accountmodel> ACCOUNTS = Arrays.asList(
-        new Accountmodel(1, "anna"),
-        new Accountmodel(2, "mark"),
-        new Accountmodel(3, "zoli")
+    private static final List<AccountModel> ACCOUNTS = Arrays.asList(
+        new AccountModel(1, "anna", "password"),
+        new AccountModel(2, "mark", "password"),
+        new AccountModel(3, "zoli", "password")
     ) ;
 
     /**
@@ -39,7 +41,7 @@ public class AccountController {
      * @return  the account of the given ID, throws Exception if not found
      */
     @GetMapping(path = "{accountId}")
-    public Accountmodel getAccount(@PathVariable("accountId") Integer accountId){
+    public AccountModel getAccount(@PathVariable("accountId") Integer accountId){
         return ACCOUNTS.stream()
                     .filter(account -> accountId.equals(account.getAccountId()))
                     .findFirst()

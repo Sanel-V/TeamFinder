@@ -3,9 +3,9 @@ package hu.elte.teamfinder.models;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Profilemodel implements Serializable{
+public class ProfileModel implements Serializable{
 
-    /**ID of the account from Accountmodel */
+    /**ID of the account from AccountModel */
     private final Integer accountId;
     private String firstName;
     private String lastName;
@@ -18,13 +18,13 @@ public class Profilemodel implements Serializable{
     private ArrayList<String> tags;
     
     /**
-     * The general contructor of the Profilemodel
-     * @param accountId Id of the account form Accountmodel
+     * The general contructor of the ProfileModel
+     * @param accountId Id of the account form AccountModel
      * @param firstname
      * @param lastname
      * @param age
      */
-    public Profilemodel(Integer accountId, String firstname, String lastname, Integer age){
+    public ProfileModel(Integer accountId, String firstname, String lastname, Integer age){
         this.accountId = accountId;
         this.firstName = firstname;
         this.lastName = lastname;
