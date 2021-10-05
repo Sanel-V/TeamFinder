@@ -2,6 +2,7 @@ package hu.elte.teamfinder.services;
 
 import hu.elte.teamfinder.models.AccountModel;
 import hu.elte.teamfinder.repos.AccountRepository;
+import hu.elte.teamfinder.security.AccountRole;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
@@ -36,7 +37,7 @@ public class FakeAccountRepoService implements AccountRepository
     {
         List<AccountModel> accounts = Arrays.asList
                 (
-                        (new AccountModel( 1,"anna", passwordEncoder.encode("password"))),
+                        (new AccountModel( 1,"anna", passwordEncoder.encode("password"), AccountRole.ADMIN, true, true, true, true)),
                         (new AccountModel( 2,"bob", passwordEncoder.encode("password123")))
                 );
 

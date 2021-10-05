@@ -18,13 +18,13 @@ public class AccountUserDetails implements UserDetails
     private final boolean isCredentialsNonExpired;
     private final boolean isEnabled;
 
-    public AccountUserDetails(AccountModel account,
-                              Set<? extends GrantedAuthority> grantedAuthorities)
+    public AccountUserDetails(AccountModel account)
     {
         this.email = account.getEmail();
         this.accountId = account.getAccountId();
         this.password = account.getPassword();
-        this.grantedAuthorities = grantedAuthorities;//account.getGrantedAuthorities();
+        //TODO: When roles are a Set: unify all authority set into one
+        this.grantedAuthorities = account.getRole().getGrantedAuthorities();
         this.isAccountNonExpired = account.isAccountNonExpired();
         this.isAccountNonLocked = account.isAccountNonLocked();
         this.isCredentialsNonExpired = account.isCredentialsNonExpired();

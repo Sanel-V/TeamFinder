@@ -12,7 +12,7 @@ import java.util.List;
 @RestController
 @RequestMapping("accounts")
 public class AccountController {
-    
+    //TODO: add @PreAuthorize for permission based authentication for each Mapping
     private static final List<AccountModel> ACCOUNTS = Arrays.asList(
         new AccountModel(1, "anna", "password"),
         new AccountModel(2, "mark", "password"),

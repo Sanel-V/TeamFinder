@@ -1,5 +1,7 @@
 package hu.elte.teamfinder.models;
 
+import hu.elte.teamfinder.security.AccountRole;
+
 import java.io.Serializable;
 
 public class AccountModel implements Serializable{
@@ -7,16 +9,17 @@ public class AccountModel implements Serializable{
     private final Integer accountId;
     private final String email;
     private final String password;
+    private final AccountRole role; //TODO: make this a Set, Account could have multiple roles
     //TODO: add Access modifiers field and update constructor
     private final boolean isAccountNonExpired;
     private final boolean isAccountNonLocked;
     private final boolean isCredentialsNonExpired;
     private final boolean isEnabled;
 
-    //TODO: Write a security config and roles/permissions
     public AccountModel(Integer accountId,
                         String email,
                         String password,
+                        AccountRole role,
                         boolean isAccountNonExpired,
                         boolean isAccountNonLocked,
                         boolean isCredentialsNonExpired,
@@ -25,6 +28,7 @@ public class AccountModel implements Serializable{
         this.accountId = accountId;
         this.email = email;
         this.password = password;
+        this.role = role;
         this.isAccountNonExpired = isAccountNonExpired;
         this.isAccountNonLocked = isAccountNonLocked;
         this.isCredentialsNonExpired = isCredentialsNonExpired;
@@ -37,6 +41,7 @@ public class AccountModel implements Serializable{
         this.accountId = accountId;
         this.email = email;
         this.password = password;
+        this.role = AccountRole.STANDARD;
         this.isAccountNonExpired = true;
         this.isAccountNonLocked = true;
         this.isCredentialsNonExpired = true;
@@ -55,6 +60,8 @@ public class AccountModel implements Serializable{
     {
         return password;
     }
+
+    public AccountRole getRole() {return role;}
 
     public boolean isAccountNonExpired()
     {
