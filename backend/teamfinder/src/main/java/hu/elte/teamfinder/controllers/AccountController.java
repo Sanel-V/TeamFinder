@@ -71,21 +71,21 @@ public class AccountController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<AccountDetailsService> addAccount(@RequestBody AccountDetailsService account){
-        //TODO: Implement function
-        throw new UnsupportedOperationException();
+    public ResponseEntity<AccountModel> addAccount(@RequestBody AccountModel account){
+        AccountModel createdAccount = accountModelService.addAccount(account);
+        return new ResponseEntity<>(createdAccount, HttpStatus.OK);
     }
 
     @PutMapping("/update")
-    public ResponseEntity<AccountDetailsService> updateAccount(@RequestBody AccountDetailsService account){
+    public ResponseEntity<AccountModel> updateAccount(@RequestBody AccountModel account){
         //TODO: Implement function
         throw new UnsupportedOperationException();
     }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteAccountById(@PathVariable("id") Integer id){
-        //TODO: Implement function
-        throw new UnsupportedOperationException();
+        accountModelService.deleteAccount(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/getUserDetails/{username}")

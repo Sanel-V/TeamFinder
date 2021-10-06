@@ -12,4 +12,8 @@ public interface AccountRepository //TODO: extend JPA repository
     Optional<AccountModel> getAccountById(Integer accountId);
 
     List<AccountModel> getAllAccounts();
+
+    AccountModel addAccount(AccountModel account);
+
+    void deleteAccount();
 }

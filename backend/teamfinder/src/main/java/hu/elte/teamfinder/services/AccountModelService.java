@@ -27,4 +27,12 @@ public class AccountModelService {
     public AccountModel getAccountById(Integer id) {
         return accountRepository.getAccountById(id).orElseThrow();
     }
+
+    public AccountModel addAccount(AccountModel account){
+        return accountRepository.addAccount(account);
+    }
+
+    public void deleteAccount(Integer id) {
+        accountRepository.deleteAccount();
+    }
 }

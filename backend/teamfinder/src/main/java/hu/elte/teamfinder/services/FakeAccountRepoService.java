@@ -38,6 +38,16 @@ public class FakeAccountRepoService implements AccountRepository
         return getAccounts();
     }
 
+    @Override
+    public AccountModel addAccount(AccountModel account) {
+        return account;
+    }
+
+    @Override
+    public void deleteAccount() {
+
+    }
+
     private List<AccountModel> getAccounts()
     {
         List<AccountModel> accounts = Arrays.asList
