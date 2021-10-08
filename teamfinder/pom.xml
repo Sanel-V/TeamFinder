@@ -12,7 +12,7 @@
 	<artifactId>teamfinder</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>teamfinder</name>
-	<description>A app for finding teammembers for schoolprojects.</description>
+	<description>A app for finding team members for school projects.</description>
     <properties>
         <java.version>11</java.version>
         <maven.compiler.source>11</maven.compiler.source>
@@ -47,9 +47,34 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/junit/junit-->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.8.1</version>
+			<!--<scope>backend.test</scope>-->
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-api</artifactId>
+			<version>5.7.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-test</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-test</artifactId>
+		</dependency>
+
+
 	</dependencies>
 
 	<build>
+		<sourceDirectory>src/backend/java</sourceDirectory>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
@@ -64,7 +89,7 @@
 					<nodeVersion>v14.18.0</nodeVersion>
 					<npmVersion>6.14.15</npmVersion>
 					<workingDirectory>src/frontend</workingDirectory>
-					<installDirectory>src/frontend/target</installDirectory>
+					<installDirectory>src/frontend/node-installation</installDirectory>
 				</configuration>
 				<executions>
 					<execution>

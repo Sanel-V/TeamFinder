@@ -1,0 +1,33 @@
+Scope:
+
+Phase 1 (minimum)
+	- Tools for moderation of profiles
+	- Log in
+	- Profile setup
+	(- Tags?)
+	- Ability to set profile to private (not visible)
+	- See a list of people
+	- See other people's profile
+	- Search bar 
+	(- Filter searches by bio or profile tags?)
+	(- Contact middleman ?)
+	 (Instead of everyone seeing a person's e-mail,
+	 you can contact them through our website, 
+	 and our website will send that email to the person, 
+	 without exposing the email addresses of either parties)
+	
+Phase 2 (teams)
+	- See a list of teams
+	- Create and setup teams
+	- Invite people to the team
+	- Request membership to a team (send request to team leader)
+	(- Give leadership to someone else ?)
+	- Remove people from team
+	
+Phase 3 (ideas)
+	- Forum-like section with ability to post comments
+	- Forum moderation tools
+	
+Phase 4
+	(- Tools for adding more classes with seperate sections for each ?)
+	

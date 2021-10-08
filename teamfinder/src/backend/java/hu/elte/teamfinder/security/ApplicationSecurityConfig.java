@@ -36,6 +36,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter
                 .authenticated()
                 .and()
                 .formLogin()
-                    .loginPage("/frontend/");
+                    //.defaultSuccessUrl("/index.html",true)
+                ;
     }
 }
