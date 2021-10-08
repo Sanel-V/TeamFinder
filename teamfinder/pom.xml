@@ -56,14 +56,15 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<version>${project.parent.version}</version>
 			</plugin>
-			 <!-- <plugin>
+			<plugin>
 				<groupId>com.github.eirslett</groupId>
 				<artifactId>frontend-maven-plugin</artifactId>
 				<version>1.9.1</version>
 				<configuration>
 					<nodeVersion>v14.18.0</nodeVersion>
 					<npmVersion>6.14.15</npmVersion>
-					<workingDirectory>src/frontend/teamfinder</workingDirectory>
+					<workingDirectory>src/frontend</workingDirectory>
+					<installDirectory>src/frontend/target</installDirectory>
 				</configuration>
 				<executions>
 					<execution>
@@ -88,7 +89,7 @@
 						</configuration>
 					</execution>
 				</executions>
-			</plugin> -->
+			</plugin>
 
 		</plugins>
 	</build>
