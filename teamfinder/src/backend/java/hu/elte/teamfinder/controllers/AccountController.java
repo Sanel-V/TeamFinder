@@ -65,7 +65,6 @@ public class AccountController {
 
     @GetMapping("/get/{id}")
     public ResponseEntity<AccountModel> getAccountById(@PathVariable("id") Integer id){
-        //TODO: Implement function
         AccountModel account = accountModelService.getAccountById(id);
         return new ResponseEntity<>(account, HttpStatus.OK);
     }

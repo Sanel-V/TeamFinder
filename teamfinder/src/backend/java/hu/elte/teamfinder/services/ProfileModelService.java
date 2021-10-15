@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class ProfileModelService {
@@ -22,7 +23,11 @@ public class ProfileModelService {
         return profileRepository.getAccountById(id).orElseThrow();
     }
 
-    public ArrayList<ProfileModel> getAllProfiles() {
+    public List<ProfileModel> getAllProfiles() {
         return profileRepository.getAllProfiles();
+    }
+
+    public ProfileModel updateProfile(ProfileModel profile) {
+        return profileRepository.updateProfile(profile).orElseThrow();
     }
 }

@@ -4,11 +4,8 @@ import hu.elte.teamfinder.models.ProfileModel;
 import hu.elte.teamfinder.services.ProfileModelService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -20,17 +17,23 @@ public class ProfileController {
         this.profileService = service;
     }
 
-    @GetMapping("/profile/{id}")
+    @GetMapping("{id}")
     public ResponseEntity<ProfileModel> getProfileById(@PathVariable("id") Integer id){
         ProfileModel profile = profileService.getProfileById(id);
-        return new ResponseEntity<ProfileModel>(profile, HttpStatus.OK);
+        return new ResponseEntity<>(profile, HttpStatus.OK);
     }
 
     @GetMapping("/allprofiles")
     public  ResponseEntity<List<ProfileModel>> getAllProfiles(){
-        ArrayList<ProfileModel> profiles = profileService.getAllProfiles();
-        return new ResponseEntity<List<ProfileModel>>(profiles, HttpStatus.OK);
+        List<ProfileModel> profiles = profileService.getAllProfiles();
+        return new ResponseEntity<>(profiles, HttpStatus.OK);
     }
 
+    @PutMapping("/update")
+    public ResponseEntity<ProfileModel> updateProfile(@RequestBody ProfileModel profile){
+        ProfileModel updatedProfile = profileService.updateProfile(profile);
+        return new ResponseEntity<>(updatedProfile, HttpStatus.OK);
+    }
 
+    //Deleting profile is only possible if you delete the account
 }
