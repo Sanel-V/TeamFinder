@@ -1,11 +1,17 @@
 package hu.elte.teamfinder.models;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+@Entity
 public class ProfileModel implements Serializable{
 
     /**ID of the account from AccountModel */
+    @Id
+    @Column(nullable = false, updatable = false)
     private final Integer accountId;
     private String firstName;
     private String lastName;

@@ -2,11 +2,18 @@ package hu.elte.teamfinder.models;
 
 import hu.elte.teamfinder.security.AccountRole;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.io.Serializable;
 
+@Entity
 public class AccountModel implements Serializable{
     //TODO: Make accountId auto-generated
+    @Id
+    @Column(nullable = false, updatable = false)
     private final Integer accountId;
+    @Column(unique = true)
     private final String email;
     private final String password;
     private final AccountRole role; //TODO: make this a Set, Account could have multiple roles
