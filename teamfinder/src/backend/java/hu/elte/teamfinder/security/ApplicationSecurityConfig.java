@@ -28,6 +28,8 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter
     {
 
         http
+                .cors()
+                .and()
                 .csrf().disable()//TODO: consider removing this in live build
                 .authorizeRequests()
                 .antMatchers("/").permitAll()
