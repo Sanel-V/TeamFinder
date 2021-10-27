@@ -9,6 +9,7 @@ class App extends React.Component {
       isLogginActive: true
     };
   }
+  
 
   componentDidMount() {
     //Add .right by default
@@ -32,6 +33,17 @@ class App extends React.Component {
     const { isLogginActive } = this.state;
     const current = isLogginActive ? "Register" : "Login";
     const currentActive = isLogginActive ? "login" : "register";
+    const { createProxyMiddleware } = require('http-proxy-middleware');
+
+    module.exports = function(app) {
+      app.use(
+        '/api',
+        createProxyMiddleware({
+          target: 'http://localhost:5000',
+          changeOrigin: true,
+        })
+      );
+    };
     return (
       <div className="App">
         <div className="login">

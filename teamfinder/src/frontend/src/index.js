@@ -3,9 +3,10 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { Accounts } from './components/accounts/accounts';
 
 ReactDOM.render(
-    <App />,
+    <Accounts />,
   document.getElementById('root')
 );
 
