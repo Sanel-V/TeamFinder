@@ -4,14 +4,19 @@ import hu.elte.teamfinder.security.AccountRole;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.io.Serializable;
 
+import static javax.persistence.GenerationType.AUTO;
+
 @Entity
 public class AccountModel implements Serializable{
+    //TODO: join with ProfileModel
     //TODO: Make accountId auto-generated
     @Id
     @Column(nullable = false, updatable = false)
+    @GeneratedValue(strategy = AUTO)
     private final Integer accountId;
     @Column(unique = true)
     private final String email;
@@ -22,6 +27,19 @@ public class AccountModel implements Serializable{
     private final boolean isAccountNonLocked;
     private final boolean isCredentialsNonExpired;
     private final boolean isEnabled;
+
+    public AccountModel()
+    {
+        this.accountId = -1;
+        this.email = null;
+        this.password = null;
+        this.role = AccountRole.STANDARD;
+        this.isAccountNonExpired = true;
+        this.isAccountNonLocked = true;
+        this.isCredentialsNonExpired = true;
+        this.isEnabled = true;
+    }
+
 
     public AccountModel(Integer accountId,
                         String email,
@@ -54,6 +72,7 @@ public class AccountModel implements Serializable{
         this.isCredentialsNonExpired = true;
         this.isEnabled = true;
     }
+
 
     public Integer getAccountId(){
         return accountId;

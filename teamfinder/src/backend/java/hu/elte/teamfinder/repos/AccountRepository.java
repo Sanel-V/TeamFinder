@@ -10,6 +10,9 @@ import java.util.Optional;
 @Repository
 public interface AccountRepository extends JpaRepository<AccountModel, Integer>
 {
+    //Optional<AccountModel> findAccountModelByEmail(String email);
+    //selectAccountByEmail(String username);
+    /*
     Optional<AccountModel> selectAccountByEmail(String email);
 
     Optional<AccountModel> getAccountById(Integer accountId);
@@ -18,5 +21,5 @@ public interface AccountRepository extends JpaRepository<AccountModel, Integer>
 
     AccountModel addAccount(AccountModel account);
 
-    void deleteAccount(); //Todo: delete profile as well
+    void deleteAccount(); //Todo: delete profile as well*/
 }

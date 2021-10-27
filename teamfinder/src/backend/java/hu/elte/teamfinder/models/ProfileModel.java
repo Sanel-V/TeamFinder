@@ -9,6 +9,7 @@ import static javax.persistence.GenerationType.AUTO;
 @Entity
 public class ProfileModel implements Serializable{
 
+    //TODO: connect Profile to Account
     /**ID of the account from AccountModel */
     @Id
     @Column(nullable = false, updatable = false, unique = true)
