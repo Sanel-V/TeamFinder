@@ -1,11 +1,14 @@
 package hu.elte.teamfinder.repos;
 
 import hu.elte.teamfinder.models.AccountModel;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface AccountRepository //TODO: extend JPA repository
+@Repository
+public interface AccountRepository extends JpaRepository<AccountModel, Integer>
 {
     Optional<AccountModel> selectAccountByEmail(String email);
 

@@ -2,6 +2,7 @@ package hu.elte.teamfinder.controllers;
 
 import hu.elte.teamfinder.models.ProfileModel;
 import hu.elte.teamfinder.services.ProfileModelService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,10 +10,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/profile")
 public class ProfileController {
 
     private final ProfileModelService profileService;
 
+    @Autowired
     public  ProfileController(ProfileModelService service){
         this.profileService = service;
     }
@@ -25,7 +28,7 @@ public class ProfileController {
 
     @GetMapping("/allprofiles")
     public  ResponseEntity<List<ProfileModel>> getAllProfiles(){
-        List<ProfileModel> profiles = profileService.getAllProfiles();
+        List<ProfileModel> profiles = profileService.findAllProfiles();
         return new ResponseEntity<>(profiles, HttpStatus.OK);
     }
 

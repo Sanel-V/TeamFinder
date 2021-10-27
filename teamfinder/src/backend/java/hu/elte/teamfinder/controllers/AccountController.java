@@ -24,11 +24,11 @@ import java.util.List;
 public class AccountController {
     //TODO: making instance of Service
     //TODO: ? probably exchange AccountDetailsService for a different service and AccountDetails for AccountModel
-    private final AccountDetailsService accountService;
+    //private final AccountDetailsService accountService;
     private final AccountModelService accountModelService;
 
-    public AccountController(AccountDetailsService accountService, AccountModelService accountModelService){
-        this.accountService = accountService;
+    public AccountController(AccountModelService accountModelService){
+        //this.accountService = accountService;
         this.accountModelService = accountModelService;
     }
 
@@ -86,9 +86,9 @@ public class AccountController {
         accountModelService.deleteAccount(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
+/*
     @GetMapping("/getUserDetails/{username}")
     public ResponseEntity<UserDetails>   loadUserByUsername(@PathVariable("username") String username){
         return new ResponseEntity<>(accountService.loadUserByUsername(username), HttpStatus.OK);
-    }
+    }*/
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,19 +16,32 @@ public class ProfileModelService {
     private final ProfileRepository profileRepository;
 
     @Autowired
-    public  ProfileModelService(@Qualifier("fakeProfile") ProfileRepository profileRepository){
+    public  ProfileModelService(ProfileRepository profileRepository){
         this.profileRepository = profileRepository;
     }
 
-    public ProfileModel getProfileById(Integer id) {
-        return profileRepository.getAccountById(id).orElseThrow();
+    public ProfileModel createProfile(ProfileModel profile)
+    {
+        return profileRepository.save(profile);
     }
 
-    public List<ProfileModel> getAllProfiles() {
-        return profileRepository.getAllProfiles();
+    public ProfileModel getProfileById(Integer id) {
+        return profileRepository.getById(id);
+        /*
+        return profileRepository.getAccountById(id).orElseThrow();*/
+    }
+
+    public List<ProfileModel> findAllProfiles() {
+        return profileRepository.findAll();
     }
 
     public ProfileModel updateProfile(ProfileModel profile) {
-        return profileRepository.updateProfile(profile).orElseThrow();
+        return profileRepository.save(profile);
+    }
+
+    public Boolean deleteProfile(Integer id)
+    {
+        profileRepository.deleteById(id);
+        return true;
     }
 }
