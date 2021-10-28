@@ -38,7 +38,7 @@ export class Login extends React.Component {
     render() {
         const {email, password} = this.state;
         return <div className="base-container">
-            <div className="header">Login</div>
+            <div className="header">Login to TeamFinder</div>
             <div className="content">
                 <div className="image">
                     <img src={loginImg} />
