@@ -15,5 +15,5 @@ public interface AccountRepository //TODO: extend JPA repository
 
     AccountModel addAccount(AccountModel account);
 
-    void deleteAccount();
+    void deleteAccount(); //Todo: delete profile as well
 }
