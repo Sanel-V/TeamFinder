@@ -1,6 +1,8 @@
 package hu.elte.teamfinder;
 
+import hu.elte.teamfinder.models.AccountModel;
 import hu.elte.teamfinder.models.ProfileModel;
+import hu.elte.teamfinder.repos.AccountRepository;
 import hu.elte.teamfinder.repos.ProfileRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -16,11 +18,12 @@ public class TeamFinderApplication
 	}
 
 	@Bean
-	CommandLineRunner run(ProfileRepository repository)
+	CommandLineRunner run(AccountRepository repository)
 	{
 		return args ->
 		{
-			repository.save(new ProfileModel(1,"Bob","Dylan",25));
+			repository.save(new AccountModel(1,"Bob", "25"));
+
 		};
 	}
 }
