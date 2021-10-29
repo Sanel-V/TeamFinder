@@ -26,6 +26,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+        path: ./teamfinder/src/frontend
     - run: npm ci --prefix ./teamfinder/src/frontend
     - run: npm run build --if-present --prefix ./teamfinder/src/frontend
     - run: npm test --prefix ./teamfinder/src/frontend
