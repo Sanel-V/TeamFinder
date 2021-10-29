@@ -30,12 +30,12 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter
         http
                 .csrf().disable()//TODO: consider removing this in live build
                 .authorizeRequests()
-                .antMatchers("/").permitAll()
-                .antMatchers("/accounts/**").hasAnyRole("ADMIN") //ROLE_ADMIN
+                .antMatchers("/**").permitAll()
+                /*.antMatchers("/accounts/**").hasAnyRole("ADMIN") //ROLE_ADMIN
                 .anyRequest()
                 .authenticated()
                 .and()
-                .formLogin()
+                .formLogin()*/
                     //.defaultSuccessUrl("/index.html",true)
                 ;
     }

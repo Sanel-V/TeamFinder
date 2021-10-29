@@ -1,13 +1,23 @@
 package hu.elte.teamfinder.models;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import static javax.persistence.GenerationType.AUTO;
+
+@Entity
 public class ProfileModel implements Serializable{
 
+    //TODO: connect Profile to Account
     /**ID of the account from AccountModel */
-    private final Integer accountId;
+    @Id
+    @Column(nullable = false, updatable = false, unique = true)
+    @GeneratedValue(strategy = AUTO)
+    private Integer accountId;
+    @Column(nullable = false)
     private String firstName;
+    @Column(nullable = false)
     private String lastName;
     private Integer age;
     /**Shows whether the profile is able to seen by others */
@@ -33,6 +43,8 @@ public class ProfileModel implements Serializable{
         this.summary = "";
         this.tags = new ArrayList<String>(); 
     }
+
+    public ProfileModel(){}
 
     public Integer getAccountId(){
         return this.accountId;

@@ -13,26 +13,31 @@ public class AccountModelService {
 
     private final AccountRepository accountRepository;
 
-    //Switch implementation of repo by switching qualifier value
     @Autowired
-    public AccountModelService(@Qualifier("fake") AccountRepository accountRepository)
+    public AccountModelService(AccountRepository accountRepository)
     {
         this.accountRepository = accountRepository;
     }
 
-    public List<AccountModel> getAllAcounts(){
-        return accountRepository.getAllAccounts();
+    public List<AccountModel> getAllAccounts(){
+        return accountRepository.findAll();
     }
 
     public AccountModel getAccountById(Integer id) {
-        return accountRepository.getAccountById(id).orElseThrow();
+        return accountRepository.getById(id);
     }
 
     public AccountModel addAccount(AccountModel account){
-        return accountRepository.addAccount(account);
+        return accountRepository.save(account);
     }
-
+/*
+    public AccountModel updateAccount(AccountModel account)
+    {
+        //If account already exists, updates
+        return accountRepository.save(account);
+    }
+*/
     public void deleteAccount(Integer id) {
-        accountRepository.deleteAccount();
+        accountRepository.deleteById(id);
     }
 }

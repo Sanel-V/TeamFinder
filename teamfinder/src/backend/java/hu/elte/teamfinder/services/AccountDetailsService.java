@@ -20,9 +20,8 @@ public class AccountDetailsService implements UserDetailsService
 {
     private final AccountRepository accountRepository;
 
-    //Switch implementation of repo by switching qualifier value
     @Autowired
-    public AccountDetailsService(@Qualifier("fake") AccountRepository accountRepository)
+    public AccountDetailsService(AccountRepository accountRepository)
     {
         this.accountRepository = accountRepository;
     }
@@ -32,7 +31,7 @@ public class AccountDetailsService implements UserDetailsService
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException
     {
 
-        Optional<AccountModel> account = accountRepository.selectAccountByEmail(username);
+        Optional<AccountModel> account = null;//accountRepository.findAccountModelByEmail(username);
         account.orElseThrow(() -> new UsernameNotFoundException(String.format("User %s not found", username)));
 
         return new AccountUserDetails(account.get());
@@ -40,7 +39,7 @@ public class AccountDetailsService implements UserDetailsService
 
     public UserDetails loadUserById(Integer accountId) throws UsernameNotFoundException
     {
-        Optional<AccountModel> account = accountRepository.getAccountById(accountId);
+        Optional<AccountModel> account = accountRepository.findById(accountId);
         account.orElseThrow(() -> new UsernameNotFoundException(String.format("User with id: %d not found", accountId)));
 
         return new AccountUserDetails(account.get());
