@@ -14,36 +14,28 @@ export class Accounts extends React.Component {
 
         this.baseUrl = "http://localhost:8080";
 
-        axios.get(`http://localhost:8080/allprofiles`)
+        axios.get(`${this.baseUrl}/accounts/all`)
             .then(response => {
-                this.setState({ profiles: response.data})
+                this.setState({ profiles: response.data })
+                console.log(response);
             })
             .catch(function (error) {
+                // handle error
                 console.log(error);
             })
             .then(function () {
-                
-            })
+                // always executed
+            });
 
-
-
-        /*this.profiles = [{
-            name: 'Abc Abc',
-            bio: 'I hope you enjoy learning React!',
-            image: 'https://placekitten.com/g/301/301'
-        },{
-            name: 'Abc Abc2',
-            bio: 'I hope you enjoy learning React!',
-            image: 'https://placekitten.com/64/64'
-        },{
-            name: 'Abc Abc3',
-            bio: 'I hope you enjoy learning React!',
-            image: 'https://placekitten.com/g/64/64'
-        }];*/
     }
 
     render() {
-        return(<div><h1>All accounts</h1><Profiles profiles={this.state.profiles}/></div>) 
+        return(
+        <div>
+            <h1>All accounts</h1>
+            <Profiles profiles={this.state.profiles}/>
+        </div>
+        ) 
            
     }
 }
@@ -51,17 +43,16 @@ export class Accounts extends React.Component {
 function Profiles(props){
     const input = props.profiles;
     const profiles = input.map((profile) =>
-        {
-            return <div className="card p-4" key={profile.accountId}>{<Profile profile={profile} />}</div>
-        }
+        <div className="card p-4" key={profile.accountId}>{<Profile profile={profile} />}</div>
     );
     return(<div className="container d-flex">{profiles}</div>);
 }
 
 function Profile(props) {
+    console.log({props});
     return (
             
-                <div className=" image d-flex flex-column justify-content-center align-items-center"> <button className="btn btn-secondary"> <img src={props.profile.image} height="100" width="100" /></button> <span className="name mt-3">{props.profile.firstname}</span> <span className="name">{props.profile.lastname}</span> <span className="idd">@instagram</span>
+                <div className=" image d-flex flex-column justify-content-center align-items-center"> <button className="btn btn-secondary"><img alt="" src={props.profile.image} height="100" width="100" /></button> <span className="name mt-3">{props.profile.email}</span> <span className="idd">@instagram</span>
                     <div className="d-flex flex-row justify-content-center align-items-center gap-2"> <span className="idd1">Oxc4c16a645_b21a</span> <span><i className="fa fa-copy"></i></span> </div>
                     <div className="d-flex flex-row justify-content-center align-items-center mt-3"> <span className="number">1069 <span className="follow">Followers</span></span> </div>
                     <div className=" d-flex mt-2"> <button className="btn1 btn-dark">View Profile</button> </div>
