@@ -1,5 +1,6 @@
 import React from "react";
 import "./App.scss";
+import { Accounts } from "./components/accounts/accounts";
 import { Login, Register } from "./components/login/index";
 
 class App extends React.Component {
@@ -9,11 +10,10 @@ class App extends React.Component {
       isLogginActive: true
     };
   }
-  
 
   componentDidMount() {
     //Add .right by default
-    this.rightSide.classList.add("right");
+    // this.rightSide.classList.add("right");
   }
 
   changeState() {
@@ -33,34 +33,24 @@ class App extends React.Component {
     const { isLogginActive } = this.state;
     const current = isLogginActive ? "Register" : "Login";
     const currentActive = isLogginActive ? "login" : "register";
-    const { createProxyMiddleware } = require('http-proxy-middleware');
-
-    module.exports = function(app) {
-      app.use(
-        '/api',
-        createProxyMiddleware({
-          target: 'http://localhost:5000',
-          changeOrigin: true,
-        })
-      );
-    };
     return (
       <div className="App">
         <div className="login">
-          <div className="container" ref={ref => (this.container = ref)}>
-            {isLogginActive && (
+          {/* <div className="container" ref={ref => (this.container = ref)}> */}
+            {/* {isLogginActive && (
               <Login containerRef={ref => (this.current = ref)} />
             )}
             {!isLogginActive && (
               <Register containerRef={ref => (this.current = ref)} />
-            )}
-          </div>
-          <RightSide
+            )} */}
+            <Accounts />
+          {/* </div> */}
+          {/* <RightSide
             current={current}
             currentActive={currentActive}
             containerRef={ref => (this.rightSide = ref)}
             onClick={this.changeState.bind(this)}
-          />
+          /> */}
         </div>
       </div>
     );
