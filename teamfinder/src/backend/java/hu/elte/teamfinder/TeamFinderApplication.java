@@ -22,7 +22,7 @@ public class TeamFinderApplication
 	{
 		return args ->
 		{
-			repository.save(new AccountModel(1,"Bob", "25"));
+			//repository.save(new AccountModel(1,"Bob", "25"));
 
 		};
 	}
