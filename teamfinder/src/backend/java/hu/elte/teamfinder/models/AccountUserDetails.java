@@ -1,11 +1,15 @@
 package hu.elte.teamfinder.models;
 
+import hu.elte.teamfinder.security.AccountRole;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class AccountUserDetails implements UserDetails
 {
@@ -23,8 +27,11 @@ public class AccountUserDetails implements UserDetails
         this.email = account.getEmail();
         this.accountId = account.getAccountId();
         this.password = account.getPassword();
-        //TODO: When roles are a Set: unify all authority set into one
-        this.grantedAuthorities = account.getRole().getGrantedAuthorities();
+        this.grantedAuthorities =
+                account.getRoles().stream()
+                        .map(AccountRole::getGrantedAuthorities)
+                        .flatMap(Collection::stream)
+                        .collect(Collectors.toSet());
         this.isAccountNonExpired = account.isAccountNonExpired();
         this.isAccountNonLocked = account.isAccountNonLocked();
         this.isCredentialsNonExpired = account.isCredentialsNonExpired();

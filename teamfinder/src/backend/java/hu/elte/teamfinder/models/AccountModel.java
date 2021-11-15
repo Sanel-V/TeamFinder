@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 import static javax.persistence.GenerationType.AUTO;
 
@@ -21,7 +23,7 @@ public class AccountModel implements Serializable{
     @Column(unique = true)
     private final String email;
     private final String password;
-    private final AccountRole role; //TODO: make this a Set, Account could have multiple roles
+    private final Set<AccountRole> roles; //TODO: make this a Set, Account could have multiple roles
     //TODO: add Access modifiers field and update constructor
     private final boolean isAccountNonExpired;
     private final boolean isAccountNonLocked;
@@ -33,7 +35,8 @@ public class AccountModel implements Serializable{
         this.accountId = -1;
         this.email = null;
         this.password = null;
-        this.role = AccountRole.STANDARD;
+        this.roles = new HashSet<>();
+        roles.add(AccountRole.STANDARD);
         this.isAccountNonExpired = true;
         this.isAccountNonLocked = true;
         this.isCredentialsNonExpired = true;
@@ -44,7 +47,7 @@ public class AccountModel implements Serializable{
     public AccountModel(Integer accountId,
                         String email,
                         String password,
-                        AccountRole role,
+                        Set<AccountRole> roles,
                         boolean isAccountNonExpired,
                         boolean isAccountNonLocked,
                         boolean isCredentialsNonExpired,
@@ -53,7 +56,7 @@ public class AccountModel implements Serializable{
         this.accountId = accountId;
         this.email = email;
         this.password = password;
-        this.role = role;
+        this.roles = roles;
         this.isAccountNonExpired = isAccountNonExpired;
         this.isAccountNonLocked = isAccountNonLocked;
         this.isCredentialsNonExpired = isCredentialsNonExpired;
@@ -66,7 +69,8 @@ public class AccountModel implements Serializable{
         this.accountId = accountId;
         this.email = email;
         this.password = password;
-        this.role = AccountRole.STANDARD;
+        this.roles = new HashSet<>();
+        roles.add(AccountRole.STANDARD);
         this.isAccountNonExpired = true;
         this.isAccountNonLocked = true;
         this.isCredentialsNonExpired = true;
@@ -87,7 +91,7 @@ public class AccountModel implements Serializable{
         return password;
     }
 
-    public AccountRole getRole() {return role;}
+    public Set<AccountRole> getRoles() {return roles;}
 
     public boolean isAccountNonExpired()
     {
