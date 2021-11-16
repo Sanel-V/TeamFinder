@@ -16,8 +16,11 @@ export class Accounts extends React.Component {
 
         axios.get(`${this.baseUrl}/account/all`)
             .then(response => {
-                this.setState({ profiles: response.data })
-                console.log(response);
+                if (response.data.length === 0)
+                    this.setState({ profiles: [{key: 0, "image":"abc", "email" : "avx", "bio" : "abc"}] })
+                else
+                    this.setState({ profiles: response.data })
+                console.log(this.state.profiles);
             })
             .catch(function (error) {
                 // handle error
@@ -50,6 +53,8 @@ function Profiles(props){
 
 function Profile(props) {
     console.log({props});
+    if (props.profile.image == null)
+        props.profile.image = "/profile_default.png";
     return (
 
                 <div className=" image d-flex flex-column justify-content-center align-items-center"> <button className="btn btn-secondary"><img alt="" src={props.profile.image} height="100" width="100" /></button> <span className="name mt-3">{props.profile.email}</span> <span className="idd">@instagram</span>

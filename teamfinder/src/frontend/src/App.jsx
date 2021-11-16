@@ -36,21 +36,20 @@ class App extends React.Component {
     return (
       <div className="App">
         <div className="login">
-          {/* <div className="container" ref={ref => (this.container = ref)}> */}
-            {/* {isLogginActive && (
+          <div className="container" ref={ref => (this.container = ref)}>
+            {isLogginActive && (
               <Login containerRef={ref => (this.current = ref)} />
             )}
             {!isLogginActive && (
               <Register containerRef={ref => (this.current = ref)} />
-            )} */}
-            <Accounts />
-          {/* </div> */}
-          {/* <RightSide
+            )}
+          </div>
+          <RightSide
             current={current}
             currentActive={currentActive}
             containerRef={ref => (this.rightSide = ref)}
             onClick={this.changeState.bind(this)}
-          /> */}
+          />
         </div>
       </div>
     );
