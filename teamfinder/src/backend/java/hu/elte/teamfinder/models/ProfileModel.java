@@ -25,6 +25,7 @@ public class ProfileModel implements Serializable{
     /**Summary of the profile */
     private String summary;
     /**Shows the skills of the person */
+    @Convert(converter = StringListConverter.class)
     private ArrayList<String> tags;
     
     /**

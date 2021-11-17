@@ -20,6 +20,7 @@ public class AccountModel implements Serializable{
     private final Integer accountId;
     @Column(unique = true)
     private final String email;
+
     private final String password;
     private final AccountRole role; //TODO: make this a Set, Account could have multiple roles
     //TODO: add Access modifiers field and update constructor
