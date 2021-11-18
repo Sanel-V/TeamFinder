@@ -15,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 //@EnableGlobalMethodSecurity(prePostEnabled = true) //TODO: uncomment this when controllers are configured with @PreAuthorize
 public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter
 {
+    /*
     @Autowired
     private final PasswordEncoder passwordEncoder;
 
@@ -22,7 +23,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter
     {
         this.passwordEncoder = passwordEncoder;
     }
-
+*/
     @Override
     protected void configure(HttpSecurity http) throws Exception
     {
