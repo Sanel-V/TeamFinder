@@ -10,7 +10,18 @@ import java.util.StringTokenizer;
 public class StringSetConverter implements AttributeConverter<Set<String>, String>
 {
 
-    public static final String DELIMITER = ";";
+    public final String DELIMITER;
+
+    public StringSetConverter()
+    {
+        this.DELIMITER = ";";
+    }
+
+    public StringSetConverter(String delimiter)
+    {
+        this.DELIMITER = delimiter;
+    }
+
     @Override
     public String convertToDatabaseColumn(Set<String> strings)
     {
