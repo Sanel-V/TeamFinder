@@ -27,6 +27,11 @@ public class AccountModelService {
         return accountRepository.getById(id);
     }
 
+    public AccountModel getAccountByEmail(String email)
+    {
+        return accountRepository.findAccountModelByEmail(email).get();
+    }
+
     public AccountModel addAccount(AccountModel account){
         return accountRepository.save(account);
     }

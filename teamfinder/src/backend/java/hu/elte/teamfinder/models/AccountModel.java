@@ -1,11 +1,9 @@
 package hu.elte.teamfinder.models;
 
 import hu.elte.teamfinder.security.AccountRole;
+import hu.elte.teamfinder.utils.StringSetConverter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -23,7 +21,9 @@ public class AccountModel implements Serializable{
     @Column(unique = true)
     private final String email;
     private final String password;
-    private final Set<AccountRole> roles; //TODO: make this a Set, Account could have multiple roles
+    @Convert(converter = StringSetConverter.class)
+    @Column
+    private final Set<AccountRole> roles;
     //TODO: add Access modifiers field and update constructor
     private final boolean isAccountNonExpired;
     private final boolean isAccountNonLocked;

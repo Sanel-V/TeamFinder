@@ -18,30 +18,38 @@ import java.util.Set;
 @Service
 public class AccountDetailsService implements UserDetailsService
 {
-    private final AccountRepository accountRepository;
+    private final AccountModelService accountModelService;
 
+    @Autowired
+    public AccountDetailsService(AccountModelService accountModelService)
+    {
+        this.accountModelService = accountModelService;
+    }
+
+    //private final AccountRepository accountRepository;
+    /*
     @Autowired
     public AccountDetailsService(AccountRepository accountRepository)
     {
         this.accountRepository = accountRepository;
     }
-
+*/
     //NOTE: We use the email address as the username
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException
     {
 
-        Optional<AccountModel> account = null;//accountRepository.findAccountModelByEmail(username);
+        Optional<AccountModel> account = Optional.ofNullable(accountModelService.getAccountByEmail(username));//accountRepository.findAccountModelByEmail(username);
         account.orElseThrow(() -> new UsernameNotFoundException(String.format("User %s not found", username)));
 
         return new AccountUserDetails(account.get());
     }
-
+/*
     public UserDetails loadUserById(Integer accountId) throws UsernameNotFoundException
     {
         Optional<AccountModel> account = accountRepository.findById(accountId);
         account.orElseThrow(() -> new UsernameNotFoundException(String.format("User with id: %d not found", accountId)));
 
         return new AccountUserDetails(account.get());
-    }
+    }*/
 }
