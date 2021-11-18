@@ -25,4 +25,4 @@ jobs:
     - name: Build with Maven
       run: mvn -B package --file teamfinder/pom.xml
     - name: PMD check
-      run: mvn pmd:check
+      run: mvn pmd:check --file teamfinder/pom.xml
