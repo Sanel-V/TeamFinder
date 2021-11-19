@@ -13,30 +13,30 @@ import java.util.List;
 @RequestMapping("/profile")
 public class ProfileController {
 
-    private final ProfileModelService profileService;
+  private final ProfileModelService profileService;
 
-    @Autowired
-    public  ProfileController(ProfileModelService service){
-        this.profileService = service;
-    }
+  @Autowired
+  public ProfileController(ProfileModelService service) {
+    this.profileService = service;
+  }
 
-    @GetMapping("{id}")
-    public ResponseEntity<ProfileModel> getProfileById(@PathVariable("id") Integer id){
-        ProfileModel profile = profileService.getProfileById(id);
-        return new ResponseEntity<>(profile, HttpStatus.OK);
-    }
+  @GetMapping("{id}")
+  public ResponseEntity<ProfileModel> getProfileById(@PathVariable("id") Integer id) {
+    ProfileModel profile = profileService.getProfileById(id);
+    return new ResponseEntity<>(profile, HttpStatus.OK);
+  }
 
-    @GetMapping("/allprofiles")
-    public  ResponseEntity<List<ProfileModel>> getAllProfiles(){
-        List<ProfileModel> profiles = profileService.findAllProfiles();
-        return new ResponseEntity<>(profiles, HttpStatus.OK);
-    }
+  @GetMapping("/allprofiles")
+  public ResponseEntity<List<ProfileModel>> getAllProfiles() {
+    List<ProfileModel> profiles = profileService.findAllProfiles();
+    return new ResponseEntity<>(profiles, HttpStatus.OK);
+  }
 
-    @PutMapping("/update")
-    public ResponseEntity<ProfileModel> updateProfile(@RequestBody ProfileModel profile){
-        ProfileModel updatedProfile = profileService.updateProfile(profile);
-        return new ResponseEntity<>(updatedProfile, HttpStatus.OK);
-    }
+  @PutMapping("/update")
+  public ResponseEntity<ProfileModel> updateProfile(@RequestBody ProfileModel profile) {
+    ProfileModel updatedProfile = profileService.updateProfile(profile);
+    return new ResponseEntity<>(updatedProfile, HttpStatus.OK);
+  }
 
-    //Deleting profile is only possible if you delete the account
+  // Deleting profile is only possible if you delete the account
 }

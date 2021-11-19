@@ -11,101 +11,95 @@ import java.io.Serializable;
 import static javax.persistence.GenerationType.AUTO;
 
 @Entity
-public class AccountModel implements Serializable{
-    //TODO: join with ProfileModel
-    //TODO: Make accountId auto-generated
-    @Id
-    @Column(nullable = false, updatable = false)
-    @GeneratedValue(strategy = AUTO)
-    private final Integer accountId;
-    @Column(unique = true)
-    private final String email;
-    private final String password;
-    private final AccountRole role; //TODO: make this a Set, Account could have multiple roles
-    //TODO: add Access modifiers field and update constructor
-    private final boolean isAccountNonExpired;
-    private final boolean isAccountNonLocked;
-    private final boolean isCredentialsNonExpired;
-    private final boolean isEnabled;
+public class AccountModel implements Serializable {
+  // TODO: join with ProfileModel
+  // TODO: Make accountId auto-generated
+  @Id
+  @Column(nullable = false, updatable = false)
+  @GeneratedValue(strategy = AUTO)
+  private final Integer accountId;
 
-    public AccountModel()
-    {
-        this.accountId = -1;
-        this.email = null;
-        this.password = null;
-        this.role = AccountRole.STANDARD;
-        this.isAccountNonExpired = true;
-        this.isAccountNonLocked = true;
-        this.isCredentialsNonExpired = true;
-        this.isEnabled = true;
-    }
+  @Column(unique = true)
+  private final String email;
 
+  private final String password;
+  private final AccountRole role; // TODO: make this a Set, Account could have multiple roles
+  // TODO: add Access modifiers field and update constructor
+  private final boolean isAccountNonExpired;
+  private final boolean isAccountNonLocked;
+  private final boolean isCredentialsNonExpired;
+  private final boolean isEnabled;
 
-    public AccountModel(Integer accountId,
-                        String email,
-                        String password,
-                        AccountRole role,
-                        boolean isAccountNonExpired,
-                        boolean isAccountNonLocked,
-                        boolean isCredentialsNonExpired,
-                        boolean isEnabled)
-    {
-        this.accountId = accountId;
-        this.email = email;
-        this.password = password;
-        this.role = role;
-        this.isAccountNonExpired = isAccountNonExpired;
-        this.isAccountNonLocked = isAccountNonLocked;
-        this.isCredentialsNonExpired = isCredentialsNonExpired;
-        this.isEnabled = isEnabled;
-    }
-    public AccountModel(Integer accountId,
-                        String email,
-                        String password)
-    {
-        this.accountId = accountId;
-        this.email = email;
-        this.password = password;
-        this.role = AccountRole.STANDARD;
-        this.isAccountNonExpired = true;
-        this.isAccountNonLocked = true;
-        this.isCredentialsNonExpired = true;
-        this.isEnabled = true;
-    }
+  public AccountModel() {
+    this.accountId = -1;
+    this.email = null;
+    this.password = null;
+    this.role = AccountRole.STANDARD;
+    this.isAccountNonExpired = true;
+    this.isAccountNonLocked = true;
+    this.isCredentialsNonExpired = true;
+    this.isEnabled = true;
+  }
 
+  public AccountModel(
+      Integer accountId,
+      String email,
+      String password,
+      AccountRole role,
+      boolean isAccountNonExpired,
+      boolean isAccountNonLocked,
+      boolean isCredentialsNonExpired,
+      boolean isEnabled) {
+    this.accountId = accountId;
+    this.email = email;
+    this.password = password;
+    this.role = role;
+    this.isAccountNonExpired = isAccountNonExpired;
+    this.isAccountNonLocked = isAccountNonLocked;
+    this.isCredentialsNonExpired = isCredentialsNonExpired;
+    this.isEnabled = isEnabled;
+  }
 
-    public Integer getAccountId(){
-        return accountId;
-    }
+  public AccountModel(Integer accountId, String email, String password) {
+    this.accountId = accountId;
+    this.email = email;
+    this.password = password;
+    this.role = AccountRole.STANDARD;
+    this.isAccountNonExpired = true;
+    this.isAccountNonLocked = true;
+    this.isCredentialsNonExpired = true;
+    this.isEnabled = true;
+  }
 
-    public String getEmail(){
-        return email;
-    }
+  public Integer getAccountId() {
+    return accountId;
+  }
 
-    public String getPassword()
-    {
-        return password;
-    }
+  public String getEmail() {
+    return email;
+  }
 
-    public AccountRole getRole() {return role;}
+  public String getPassword() {
+    return password;
+  }
 
-    public boolean isAccountNonExpired()
-    {
-        return isAccountNonExpired;
-    }
+  public AccountRole getRole() {
+    return role;
+  }
 
-    public boolean isAccountNonLocked()
-    {
-        return isAccountNonLocked;
-    }
+  public boolean isAccountNonExpired() {
+    return isAccountNonExpired;
+  }
 
-    public boolean isCredentialsNonExpired()
-    {
-        return isCredentialsNonExpired;
-    }
+  public boolean isAccountNonLocked() {
+    return isAccountNonLocked;
+  }
 
-    public boolean isEnabled()
-    {
-        return isEnabled;
-    }
+  public boolean isCredentialsNonExpired() {
+    return isCredentialsNonExpired;
+  }
+
+  public boolean isEnabled() {
+    return isEnabled;
+  }
 }
