@@ -26,7 +26,11 @@ public class ProfileModel implements Serializable{
     /**Shows the skills of the person */
     @Convert(converter = StringListConverter.class)
     private ArrayList<String> tags;
-    
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @MapsId
+    private AccountModel account;
+
     /**
      * The general contructor of the ProfileModel
      * @param accountId Id of the account form AccountModel
@@ -44,8 +48,7 @@ public class ProfileModel implements Serializable{
         this.tags = new ArrayList<String>(); 
     }
 
-    public ProfileModel(Long accountId){
-        this.accountId = accountId;
+    public ProfileModel(){
         this.firstName = null;
         this.lastName = null;
         this.age = null;
@@ -53,6 +56,8 @@ public class ProfileModel implements Serializable{
         this.summary = null;
         this.tags = null;
     }
+
+
 
     public Long getAccountId(){
         return this.accountId;
@@ -114,5 +119,9 @@ public class ProfileModel implements Serializable{
         if(!this.tags.remove(tag)){
             throw new IllegalArgumentException("Tag doesn't exist!");
         }
+    }
+
+    public AccountModel getAccount() {
+        return account;
     }
 }

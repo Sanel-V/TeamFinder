@@ -2,10 +2,7 @@ package hu.elte.teamfinder.models;
 
 import hu.elte.teamfinder.security.AccountRole;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 
 import static javax.persistence.GenerationType.AUTO;
@@ -29,6 +26,10 @@ public class AccountModel implements Serializable{
     private final boolean isCredentialsNonExpired;
     private final boolean isEnabled;
 
+    @OneToOne(mappedBy = "account", cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY, optional = false)
+    private ProfileModel profile;
+
     public AccountModel()
     {
         this.email = null;
@@ -38,6 +39,7 @@ public class AccountModel implements Serializable{
         this.isAccountNonLocked = true;
         this.isCredentialsNonExpired = true;
         this.isEnabled = true;
+        this.profile = null;
     }
 
 
@@ -47,7 +49,8 @@ public class AccountModel implements Serializable{
                         boolean isAccountNonExpired,
                         boolean isAccountNonLocked,
                         boolean isCredentialsNonExpired,
-                        boolean isEnabled)
+                        boolean isEnabled,
+                        ProfileModel profile)
     {
         this.email = email;
         this.password = password;
@@ -56,6 +59,7 @@ public class AccountModel implements Serializable{
         this.isAccountNonLocked = isAccountNonLocked;
         this.isCredentialsNonExpired = isCredentialsNonExpired;
         this.isEnabled = isEnabled;
+        this.profile = profile;
     }
     public AccountModel(String email,
                         String password)
@@ -67,6 +71,7 @@ public class AccountModel implements Serializable{
         this.isAccountNonLocked = true;
         this.isCredentialsNonExpired = true;
         this.isEnabled = true;
+        this.profile = new ProfileModel();
     }
 
 
@@ -103,5 +108,9 @@ public class AccountModel implements Serializable{
     public boolean isEnabled()
     {
         return isEnabled;
+    }
+
+    public ProfileModel getProfile() {
+        return profile;
     }
 }
