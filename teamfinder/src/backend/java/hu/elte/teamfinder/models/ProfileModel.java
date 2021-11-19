@@ -13,8 +13,7 @@ public class ProfileModel implements Serializable{
     /**ID of the account from AccountModel */
     @Id
     @Column(nullable = false, updatable = false, unique = true)
-    @GeneratedValue(strategy = AUTO)
-    private Integer accountId;
+    private Long accountId;
     @Column(nullable = false)
     private String firstName;
     @Column(nullable = false)
@@ -35,7 +34,7 @@ public class ProfileModel implements Serializable{
      * @param lastname
      * @param age
      */
-    public ProfileModel(Integer accountId, String firstname, String lastname, Integer age){
+    public ProfileModel(Long accountId, String firstname, String lastname, Integer age){
         this.accountId = accountId;
         this.firstName = firstname;
         this.lastName = lastname;
@@ -45,9 +44,17 @@ public class ProfileModel implements Serializable{
         this.tags = new ArrayList<String>(); 
     }
 
-    public ProfileModel(){}
+    public ProfileModel(Long accountId){
+        this.accountId = accountId;
+        this.firstName = null;
+        this.lastName = null;
+        this.age = null;
+        this.isPublic = null;
+        this.summary = null;
+        this.tags = null;
+    }
 
-    public Integer getAccountId(){
+    public Long getAccountId(){
         return this.accountId;
     }
 

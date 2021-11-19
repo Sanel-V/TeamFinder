@@ -10,7 +10,7 @@ import java.util.Set;
 public class AccountUserDetails implements UserDetails
 {
     private final String email;
-    private final Integer accountId;
+    private final Long accountId;
     private final String password;
     private final Set<? extends GrantedAuthority> grantedAuthorities;
     private final boolean isAccountNonExpired;
@@ -31,7 +31,7 @@ public class AccountUserDetails implements UserDetails
         this.isEnabled = account.isEnabled();
     }
 
-    public Integer getAccountId()
+    public Long getAccountId()
     {
         return accountId;
     }

@@ -15,9 +15,9 @@ public class AccountModel implements Serializable{
     //TODO: join with ProfileModel
     //TODO: Make accountId auto-generated
     @Id
-    @Column(nullable = false, updatable = false)
+    @Column(nullable = false, updatable = false, unique = true)
     @GeneratedValue(strategy = AUTO)
-    private final Integer accountId;
+    private Long accountId;
     @Column(unique = true)
     private final String email;
 
@@ -31,7 +31,6 @@ public class AccountModel implements Serializable{
 
     public AccountModel()
     {
-        this.accountId = -1;
         this.email = null;
         this.password = null;
         this.role = AccountRole.STANDARD;
@@ -42,8 +41,7 @@ public class AccountModel implements Serializable{
     }
 
 
-    public AccountModel(Integer accountId,
-                        String email,
+    public AccountModel(String email,
                         String password,
                         AccountRole role,
                         boolean isAccountNonExpired,
@@ -51,7 +49,6 @@ public class AccountModel implements Serializable{
                         boolean isCredentialsNonExpired,
                         boolean isEnabled)
     {
-        this.accountId = accountId;
         this.email = email;
         this.password = password;
         this.role = role;
@@ -60,11 +57,9 @@ public class AccountModel implements Serializable{
         this.isCredentialsNonExpired = isCredentialsNonExpired;
         this.isEnabled = isEnabled;
     }
-    public AccountModel(Integer accountId,
-                        String email,
+    public AccountModel(String email,
                         String password)
     {
-        this.accountId = accountId;
         this.email = email;
         this.password = password;
         this.role = AccountRole.STANDARD;
@@ -75,7 +70,7 @@ public class AccountModel implements Serializable{
     }
 
 
-    public Integer getAccountId(){
+    public Long getAccountId(){
         return accountId;
     }
 
