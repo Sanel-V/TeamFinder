@@ -49,8 +49,8 @@ public class ProfileModel implements Serializable{
     }
 
     public ProfileModel(){
-        this.firstName = null;
-        this.lastName = null;
+        this.firstName = "";
+        this.lastName = "";
         this.age = null;
         this.isPublic = null;
         this.summary = null;
