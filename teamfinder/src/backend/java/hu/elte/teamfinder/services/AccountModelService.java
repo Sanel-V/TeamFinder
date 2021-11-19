@@ -10,32 +10,32 @@ import java.util.List;
 @Service
 public class AccountModelService {
 
-  private final AccountRepository accountRepository;
+    private final AccountRepository accountRepository;
 
-  @Autowired
-  public AccountModelService(AccountRepository accountRepository) {
-    this.accountRepository = accountRepository;
-  }
+    @Autowired
+    public AccountModelService(AccountRepository accountRepository) {
+        this.accountRepository = accountRepository;
+    }
 
-  public List<AccountModel> getAllAccounts() {
-    return accountRepository.findAll();
-  }
+    public List<AccountModel> getAllAccounts() {
+        return accountRepository.findAll();
+    }
 
-  public AccountModel getAccountById(Integer id) {
-    return accountRepository.getById(id);
-  }
+    public AccountModel getAccountById(Integer id) {
+        return accountRepository.getById(id);
+    }
 
-  public AccountModel addAccount(AccountModel account) {
-    return accountRepository.save(account);
-  }
-  /*
-      public AccountModel updateAccount(AccountModel account)
-      {
-          //If account already exists, updates
-          return accountRepository.save(account);
-      }
-  */
-  public void deleteAccount(Integer id) {
-    accountRepository.deleteById(id);
-  }
+    public AccountModel addAccount(AccountModel account) {
+        return accountRepository.save(account);
+    }
+    /*
+        public AccountModel updateAccount(AccountModel account)
+        {
+            //If account already exists, updates
+            return accountRepository.save(account);
+        }
+    */
+    public void deleteAccount(Integer id) {
+        accountRepository.deleteById(id);
+    }
 }

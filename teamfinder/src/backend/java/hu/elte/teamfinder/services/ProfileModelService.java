@@ -10,33 +10,33 @@ import java.util.List;
 @Service
 public class ProfileModelService {
 
-  private final ProfileRepository profileRepository;
+    private final ProfileRepository profileRepository;
 
-  @Autowired
-  public ProfileModelService(ProfileRepository profileRepository) {
-    this.profileRepository = profileRepository;
-  }
+    @Autowired
+    public ProfileModelService(ProfileRepository profileRepository) {
+        this.profileRepository = profileRepository;
+    }
 
-  public ProfileModel createProfile(ProfileModel profile) {
-    return profileRepository.save(profile);
-  }
+    public ProfileModel createProfile(ProfileModel profile) {
+        return profileRepository.save(profile);
+    }
 
-  public ProfileModel getProfileById(Integer id) {
-    return profileRepository.getById(id);
-    /*
-    return profileRepository.getAccountById(id).orElseThrow();*/
-  }
+    public ProfileModel getProfileById(Integer id) {
+        return profileRepository.getById(id);
+        /*
+        return profileRepository.getAccountById(id).orElseThrow();*/
+    }
 
-  public List<ProfileModel> findAllProfiles() {
-    return profileRepository.findAll();
-  }
+    public List<ProfileModel> findAllProfiles() {
+        return profileRepository.findAll();
+    }
 
-  public ProfileModel updateProfile(ProfileModel profile) {
-    return profileRepository.save(profile);
-  }
+    public ProfileModel updateProfile(ProfileModel profile) {
+        return profileRepository.save(profile);
+    }
 
-  public Boolean deleteProfile(Integer id) {
-    profileRepository.deleteById(id);
-    return true;
-  }
+    public Boolean deleteProfile(Integer id) {
+        profileRepository.deleteById(id);
+        return true;
+    }
 }
