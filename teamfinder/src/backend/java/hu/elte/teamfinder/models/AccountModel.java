@@ -11,27 +11,29 @@ import java.util.Set;
 import static javax.persistence.GenerationType.AUTO;
 
 @Entity
-public class AccountModel implements Serializable{
-    //TODO: join with ProfileModel
-    //TODO: Make accountId auto-generated
+public class AccountModel implements Serializable {
+    // TODO: join with ProfileModel
+    // TODO: Make accountId auto-generated
     @Id
     @Column(nullable = false, updatable = false)
     @GeneratedValue(strategy = AUTO)
     private final Integer accountId;
+
     @Column(unique = true)
     private final String email;
+
     private final String password;
+
     @Convert(converter = StringSetConverter.class)
     @Column
     private final Set<AccountRole> roles;
-    //TODO: add Access modifiers field and update constructor
+    // TODO: add Access modifiers field and update constructor
     private final boolean isAccountNonExpired;
     private final boolean isAccountNonLocked;
     private final boolean isCredentialsNonExpired;
     private final boolean isEnabled;
 
-    public AccountModel()
-    {
+    public AccountModel() {
         this.accountId = -1;
         this.email = null;
         this.password = null;
@@ -43,16 +45,15 @@ public class AccountModel implements Serializable{
         this.isEnabled = true;
     }
 
-
-    public AccountModel(Integer accountId,
-                        String email,
-                        String password,
-                        Set<AccountRole> roles,
-                        boolean isAccountNonExpired,
-                        boolean isAccountNonLocked,
-                        boolean isCredentialsNonExpired,
-                        boolean isEnabled)
-    {
+    public AccountModel(
+            Integer accountId,
+            String email,
+            String password,
+            Set<AccountRole> roles,
+            boolean isAccountNonExpired,
+            boolean isAccountNonLocked,
+            boolean isCredentialsNonExpired,
+            boolean isEnabled) {
         this.accountId = accountId;
         this.email = email;
         this.password = password;
@@ -62,10 +63,8 @@ public class AccountModel implements Serializable{
         this.isCredentialsNonExpired = isCredentialsNonExpired;
         this.isEnabled = isEnabled;
     }
-    public AccountModel(Integer accountId,
-                        String email,
-                        String password)
-    {
+
+    public AccountModel(Integer accountId, String email, String password) {
         this.accountId = accountId;
         this.email = email;
         this.password = password;
@@ -77,39 +76,35 @@ public class AccountModel implements Serializable{
         this.isEnabled = true;
     }
 
-
-    public Integer getAccountId(){
+    public Integer getAccountId() {
         return accountId;
     }
 
-    public String getEmail(){
+    public String getEmail() {
         return email;
     }
 
-    public String getPassword()
-    {
+    public String getPassword() {
         return password;
     }
 
-    public Set<AccountRole> getRoles() {return roles;}
+    public Set<AccountRole> getRoles() {
+        return roles;
+    }
 
-    public boolean isAccountNonExpired()
-    {
+    public boolean isAccountNonExpired() {
         return isAccountNonExpired;
     }
 
-    public boolean isAccountNonLocked()
-    {
+    public boolean isAccountNonLocked() {
         return isAccountNonLocked;
     }
 
-    public boolean isCredentialsNonExpired()
-    {
+    public boolean isCredentialsNonExpired() {
         return isCredentialsNonExpired;
     }
 
-    public boolean isEnabled()
-    {
+    public boolean isEnabled() {
         return isEnabled;
     }
 }
