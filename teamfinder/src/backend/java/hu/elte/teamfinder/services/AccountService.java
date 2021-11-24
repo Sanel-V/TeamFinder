@@ -4,7 +4,6 @@ import hu.elte.teamfinder.models.AccountModel;
 import hu.elte.teamfinder.models.AccountUserDetails;
 import hu.elte.teamfinder.repos.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -44,7 +43,12 @@ public class AccountService implements UserDetailsService {
     }
 
     public AccountModel getAccountByEmail(String email) {
-        return accountRepository.findAccountModelByEmail(email).get();
+        return accountRepository
+                .findAccountModelByEmail(email)
+                .orElseThrow(
+                        () ->
+                                new UsernameNotFoundException(
+                                        String.format("User %s not found", email)));
     }
 
     public AccountModel addAccount(AccountModel account) {

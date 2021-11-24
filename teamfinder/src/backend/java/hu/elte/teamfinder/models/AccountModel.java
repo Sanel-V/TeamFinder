@@ -5,6 +5,7 @@ import hu.elte.teamfinder.utils.StringSetConverter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,36 +18,26 @@ public class AccountModel implements Serializable {
     @Id
     @Column(nullable = false, updatable = false)
     @GeneratedValue(strategy = AUTO)
-    private final Integer accountId;
+    private Integer accountId;
 
     @Column(unique = true)
-    private final String email;
+    private String email = "";
 
-    private final String password;
+    private String password = "";
 
     @Convert(converter = StringSetConverter.class)
     @Column
-    private final Set<AccountRole> roles;
+    private Set<AccountRole> roles = new HashSet<>(Arrays.asList(AccountRole.STANDARD));
     // TODO: add Access modifiers field and update constructor
-    private final boolean isAccountNonExpired;
-    private final boolean isAccountNonLocked;
-    private final boolean isCredentialsNonExpired;
-    private final boolean isEnabled;
+    private boolean isAccountNonExpired = true;
+    private boolean isAccountNonLocked = true;
+    private boolean isCredentialsNonExpired = true;
+    private boolean isEnabled = true;
 
-    public AccountModel() {
-        this.accountId = -1;
-        this.email = null;
-        this.password = null;
-        this.roles = new HashSet<>();
-        roles.add(AccountRole.STANDARD);
-        this.isAccountNonExpired = true;
-        this.isAccountNonLocked = true;
-        this.isCredentialsNonExpired = true;
-        this.isEnabled = true;
-    }
+    public AccountModel() {}
 
     public AccountModel(
-            Integer accountId,
+            // Integer accountId,
             String email,
             String password,
             Set<AccountRole> roles,
@@ -54,7 +45,7 @@ public class AccountModel implements Serializable {
             boolean isAccountNonLocked,
             boolean isCredentialsNonExpired,
             boolean isEnabled) {
-        this.accountId = accountId;
+        // this.accountId = accountId;
         this.email = email;
         this.password = password;
         this.roles = roles;
@@ -64,16 +55,21 @@ public class AccountModel implements Serializable {
         this.isEnabled = isEnabled;
     }
 
-    public AccountModel(Integer accountId, String email, String password) {
-        this.accountId = accountId;
-        this.email = email;
-        this.password = password;
-        this.roles = new HashSet<>();
-        roles.add(AccountRole.STANDARD);
-        this.isAccountNonExpired = true;
-        this.isAccountNonLocked = true;
-        this.isCredentialsNonExpired = true;
-        this.isEnabled = true;
+    public AccountModel( // Integer accountId,
+            String email, String password) {
+        this(
+                email,
+                password,
+                new HashSet<AccountRole>(Arrays.asList(AccountRole.STANDARD)),
+                true,
+                true,
+                true,
+                true);
+    }
+
+    public AccountModel( // Integer accountId,
+            String email, String password, HashSet<AccountRole> roles) {
+        this(email, password, roles, true, true, true, true);
     }
 
     public Integer getAccountId() {
