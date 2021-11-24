@@ -8,11 +8,11 @@ import java.util.Collection;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class AccountUserDetails extends User {
+public class AccountDetails extends User {
 
     private final Integer accountId;
 
-    public AccountUserDetails(AccountModel account) {
+    public AccountDetails(Account account) {
         super(
                 account.getEmail(),
                 account.getPassword(),
@@ -24,8 +24,7 @@ public class AccountUserDetails extends User {
         this.accountId = account.getAccountId();
     }
 
-    public static Set<SimpleGrantedAuthority> accountRolesToGrantedAuthoritySet(
-            AccountModel account) {
+    public static Set<SimpleGrantedAuthority> accountRolesToGrantedAuthoritySet(Account account) {
         Set<SimpleGrantedAuthority> authorities =
                 account.getRoles().stream()
                         .map(AccountRole::getGrantedAuthorities)

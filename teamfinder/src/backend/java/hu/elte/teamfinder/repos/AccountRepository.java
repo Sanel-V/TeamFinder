@@ -1,26 +1,24 @@
 package hu.elte.teamfinder.repos;
 
-import hu.elte.teamfinder.models.AccountModel;
+import hu.elte.teamfinder.models.Account;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface AccountRepository extends JpaRepository<AccountModel, Integer>
-{
+public interface AccountRepository extends JpaRepository<Account, Integer> {
 
-    Optional<AccountModel> findAccountModelByEmail(String email);
-    //selectAccountByEmail(String username);
+    Optional<Account> findAccountModelByEmail(String email);
+    // selectAccountByEmail(String username);
     /*
-    Optional<AccountModel> selectAccountByEmail(String email);
+    Optional<Account> selectAccountByEmail(String email);
 
-    Optional<AccountModel> getAccountById(Integer accountId);
+    Optional<Account> getAccountById(Integer accountId);
 
-    List<AccountModel> getAllAccounts();
+    List<Account> getAllAccounts();
 
-    AccountModel addAccount(AccountModel account);
+    Account addAccount(Account account);
 
     void deleteAccount(); //Todo: delete profile as well*/
 }

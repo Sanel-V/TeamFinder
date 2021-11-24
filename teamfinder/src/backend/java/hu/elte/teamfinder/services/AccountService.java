@@ -1,7 +1,7 @@
 package hu.elte.teamfinder.services;
 
-import hu.elte.teamfinder.models.AccountModel;
-import hu.elte.teamfinder.models.AccountUserDetails;
+import hu.elte.teamfinder.models.Account;
+import hu.elte.teamfinder.models.AccountDetails;
 import hu.elte.teamfinder.repos.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -27,22 +27,22 @@ public class AccountService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
         // Treat emails as usernames
-        Optional<AccountModel> account = accountRepository.findAccountModelByEmail(username);
+        Optional<Account> account = accountRepository.findAccountModelByEmail(username);
         account.orElseThrow(
                 () -> new UsernameNotFoundException(String.format("User %s not found", username)));
 
-        return new AccountUserDetails(account.get());
+        return new AccountDetails(account.get());
     }
 
-    public List<AccountModel> getAllAccounts() {
+    public List<Account> getAllAccounts() {
         return accountRepository.findAll();
     }
 
-    public AccountModel getAccountById(Integer id) {
+    public Account getAccountById(Integer id) {
         return accountRepository.getById(id);
     }
 
-    public AccountModel getAccountByEmail(String email) {
+    public Account getAccountByEmail(String email) {
         return accountRepository
                 .findAccountModelByEmail(email)
                 .orElseThrow(
@@ -51,11 +51,11 @@ public class AccountService implements UserDetailsService {
                                         String.format("User %s not found", email)));
     }
 
-    public AccountModel addAccount(AccountModel account) {
+    public Account addAccount(Account account) {
         return accountRepository.save(account);
     }
     /*
-        public AccountModel updateAccount(AccountModel account)
+        public Account updateAccount(Account account)
         {
             //If account already exists, updates
             return accountRepository.save(account);

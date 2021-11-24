@@ -1,7 +1,7 @@
 package hu.elte.teamfinder;
 
-import hu.elte.teamfinder.models.AccountModel;
-import hu.elte.teamfinder.models.AccountUserDetails;
+import hu.elte.teamfinder.models.Account;
+import hu.elte.teamfinder.models.AccountDetails;
 import hu.elte.teamfinder.security.AccountRole;
 import hu.elte.teamfinder.utils.StringSetConverter;
 
@@ -46,26 +46,26 @@ public class TeamFinderUnitTests {
 
     @Test
     public void testAccountUserDetailsAccountRolesToGrantedAuthoritySet() {
-        AccountModel account = new AccountModel("bob", "password");
+        Account account = new Account("bob", "password");
         Set<SimpleGrantedAuthority> standardAuthorities =
                 AccountRole.STANDARD.getGrantedAuthorities();
 
         Set<SimpleGrantedAuthority> actualAuthorities =
-                AccountUserDetails.accountRolesToGrantedAuthoritySet(account);
+                AccountDetails.accountRolesToGrantedAuthoritySet(account);
 
         Assert.assertEquals(standardAuthorities, actualAuthorities);
     }
 
     @Test
     public void testPassingAccountToAccountUserDetails() {
-        AccountUserDetails accountUserDetails;
+        AccountDetails accountDetails;
         Set<? extends GrantedAuthority> studentAuthorities =
                 AccountRole.STANDARD.getGrantedAuthorities();
 
-        accountUserDetails = new AccountUserDetails(new AccountModel("bob", "password"));
+        accountDetails = new AccountDetails(new Account("bob", "password"));
 
-        Assert.assertEquals("bob", accountUserDetails.getUsername());
-        Assert.assertEquals("password", accountUserDetails.getPassword());
-        Assert.assertEquals(studentAuthorities, accountUserDetails.getAuthorities());
+        Assert.assertEquals("bob", accountDetails.getUsername());
+        Assert.assertEquals("password", accountDetails.getPassword());
+        Assert.assertEquals(studentAuthorities, accountDetails.getAuthorities());
     }
 }

@@ -12,8 +12,8 @@ import java.util.Set;
 import static javax.persistence.GenerationType.AUTO;
 
 @Entity
-public class AccountModel implements Serializable {
-    // TODO: join with ProfileModel
+public class Account implements Serializable {
+    // TODO: join with Profile
     // TODO: Make accountId auto-generated
     @Id
     @Column(nullable = false, updatable = false)
@@ -34,9 +34,9 @@ public class AccountModel implements Serializable {
     private boolean isCredentialsNonExpired = true;
     private boolean isEnabled = true;
 
-    public AccountModel() {}
+    public Account() {}
 
-    public AccountModel(
+    public Account(
             // Integer accountId,
             String email,
             String password,
@@ -55,7 +55,7 @@ public class AccountModel implements Serializable {
         this.isEnabled = isEnabled;
     }
 
-    public AccountModel( // Integer accountId,
+    public Account( // Integer accountId,
             String email, String password) {
         this(
                 email,
@@ -67,7 +67,7 @@ public class AccountModel implements Serializable {
                 true);
     }
 
-    public AccountModel( // Integer accountId,
+    public Account( // Integer accountId,
             String email, String password, HashSet<AccountRole> roles) {
         this(email, password, roles, true, true, true, true);
     }

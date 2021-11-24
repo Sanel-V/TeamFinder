@@ -5,7 +5,7 @@ import hu.elte.teamfinder.controllers.ProfileController;
 import hu.elte.teamfinder.repos.AccountRepository;
 import hu.elte.teamfinder.repos.ProfileRepository;
 import hu.elte.teamfinder.services.AccountService;
-import hu.elte.teamfinder.services.ProfileModelService;
+import hu.elte.teamfinder.services.ProfileService;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +36,7 @@ public class TeamfinderMvcTests {
     @Autowired private AccountController accountController;
 
     @MockBean private AccountService accountService;
-    @MockBean private ProfileModelService profileModelService;
+    @MockBean private ProfileService profileService;
 
     @MockBean private PasswordEncoder passwordEncoder;
     @MockBean private ProfileRepository profileRepository;
@@ -47,14 +47,14 @@ public class TeamfinderMvcTests {
     	public void beforeAll()
     	{
 
-    		profileModelService.createProfile(new ProfileModel(1, "anna", "smith", 25));
-    		profileModelService.createProfile(new ProfileModel(2, "bob", "smith", 25));
-    		profileModelService.createProfile(new ProfileModel(3, "charlie", "smith", 25));
-    		profileModelService.createProfile(new ProfileModel(4, "dan", "smith", 25));
+    		profileService.createProfile(new Profile(1, "anna", "smith", 25));
+    		profileService.createProfile(new Profile(2, "bob", "smith", 25));
+    		profileService.createProfile(new Profile(3, "charlie", "smith", 25));
+    		profileService.createProfile(new Profile(4, "dan", "smith", 25));
 
-    		accountController.addAccount(new AccountModel(1,"email","pw"));
-    		accountController.addAccount(new AccountModel(2,"email1","pw"));
-    		accountController.addAccount(new AccountModel(3,"email2","pw"));
+    		accountController.addAccount(new Account(1,"email","pw"));
+    		accountController.addAccount(new Account(2,"email1","pw"));
+    		accountController.addAccount(new Account(3,"email2","pw"));
 
     	}
     */
@@ -66,7 +66,7 @@ public class TeamfinderMvcTests {
     public void profileRepoSave()
     {
     	//when
-    	ProfileModel prof = profileModelService.createProfile(new ProfileModel(5,"ethan","klein",30));
+    	Profile prof = profileService.createProfile(new Profile(5,"ethan","klein",30));
 
     	System.out.println(prof.getAccountId());
 

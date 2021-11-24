@@ -1,6 +1,6 @@
 package hu.elte.teamfinder.controllers;
 
-import hu.elte.teamfinder.models.AccountModel;
+import hu.elte.teamfinder.models.Account;
 
 import hu.elte.teamfinder.services.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +36,7 @@ public class AccountController {
      * @return  the account of the given ID, throws Exception if not found
 
     @GetMapping(path = "{accountId}")
-    public AccountModel getAccount(@PathVariable("accountId") Integer accountId){
+    public Account getAccount(@PathVariable("accountId") Integer accountId){
         return ACCOUNTS.stream()
                     .filter(account -> accountId.equals(account.getAccountId()))
                     .findFirst()
@@ -45,25 +45,25 @@ public class AccountController {
     */
 
     @GetMapping("/all")
-    public ResponseEntity<List<AccountModel>> getAllAccounts() {
-        List<AccountModel> accounts = accountService.getAllAccounts();
+    public ResponseEntity<List<Account>> getAllAccounts() {
+        List<Account> accounts = accountService.getAllAccounts();
         return new ResponseEntity<>(accounts, HttpStatus.OK);
     }
 
     @GetMapping("/get/{id}")
-    public ResponseEntity<AccountModel> getAccountById(@PathVariable("id") Integer id) {
-        AccountModel account = accountService.getAccountById(id);
+    public ResponseEntity<Account> getAccountById(@PathVariable("id") Integer id) {
+        Account account = accountService.getAccountById(id);
         return new ResponseEntity<>(account, HttpStatus.OK);
     }
 
     @PostMapping("/add")
-    public ResponseEntity<AccountModel> addAccount(@RequestBody AccountModel account) {
-        AccountModel createdAccount = accountService.addAccount(account);
+    public ResponseEntity<Account> addAccount(@RequestBody Account account) {
+        Account createdAccount = accountService.addAccount(account);
         return new ResponseEntity<>(createdAccount, HttpStatus.OK);
     }
     /*
     @PutMapping("/update")
-    public ResponseEntity<AccountModel> updateAccount(@RequestBody AccountModel account){
+    public ResponseEntity<Account> updateAccount(@RequestBody Account account){
         //TODO: Implement function
         throw new UnsupportedOperationException();
     }*/
