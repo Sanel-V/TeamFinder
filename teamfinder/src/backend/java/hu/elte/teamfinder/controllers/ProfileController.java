@@ -21,7 +21,7 @@ public class ProfileController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<ProfileModel> getProfileById(@PathVariable("id") Integer id){
+    public ResponseEntity<ProfileModel> getProfileById(@PathVariable("id") Long id){
         ProfileModel profile = profileService.getProfileById(id);
         return new ResponseEntity<>(profile, HttpStatus.OK);
     }

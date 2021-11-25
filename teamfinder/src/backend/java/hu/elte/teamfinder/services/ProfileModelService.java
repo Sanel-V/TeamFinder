@@ -25,7 +25,7 @@ public class ProfileModelService {
         return profileRepository.save(profile);
     }
 
-    public ProfileModel getProfileById(Integer id) {
+    public ProfileModel getProfileById(Long id) {
         return profileRepository.getById(id);
         /*
         return profileRepository.getAccountById(id).orElseThrow();*/
@@ -39,7 +39,7 @@ public class ProfileModelService {
         return profileRepository.save(profile);
     }
 
-    public Boolean deleteProfile(Integer id)
+    public Boolean deleteProfile(Long id)
     {
         profileRepository.deleteById(id);
         return true;

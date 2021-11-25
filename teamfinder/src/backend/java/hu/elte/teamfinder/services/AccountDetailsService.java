@@ -37,7 +37,7 @@ public class AccountDetailsService implements UserDetailsService
         return new AccountUserDetails(account.get());
     }
 
-    public UserDetails loadUserById(Integer accountId) throws UsernameNotFoundException
+    public UserDetails loadUserById(Long accountId) throws UsernameNotFoundException
     {
         Optional<AccountModel> account = accountRepository.findById(accountId);
         account.orElseThrow(() -> new UsernameNotFoundException(String.format("User with id: %d not found", accountId)));

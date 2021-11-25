@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface AccountRepository extends JpaRepository<AccountModel, Integer>
+public interface AccountRepository extends JpaRepository<AccountModel, Long>
 {
     //Optional<AccountModel> findAccountModelByEmail(String email);
     //selectAccountByEmail(String username);

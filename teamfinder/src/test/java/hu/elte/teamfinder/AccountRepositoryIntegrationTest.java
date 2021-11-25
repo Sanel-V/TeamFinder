@@ -34,7 +34,7 @@ public class AccountRepositoryIntegrationTest {
         entityManager.persist(account);
         entityManager.flush();
 
-        AccountModel found = accountRepository.getById(Math.toIntExact(accountId));
+        AccountModel found = accountRepository.getById(accountId);
 
         assertThat(found.getEmail()).isEqualTo(account.getEmail());
     }

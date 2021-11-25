@@ -23,7 +23,7 @@ public class AccountModelService {
         return accountRepository.findAll();
     }
 
-    public AccountModel getAccountById(Integer id) {
+    public AccountModel getAccountById(Long id) {
         return accountRepository.getById(id);
     }
 
@@ -37,7 +37,7 @@ public class AccountModelService {
         return accountRepository.save(account);
     }
 */
-    public void deleteAccount(Integer id) {
+    public void deleteAccount(Long id) {
         accountRepository.deleteById(id);
     }
 }
