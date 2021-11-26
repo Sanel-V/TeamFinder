@@ -24,7 +24,7 @@ public class AccountService implements UserDetailsService {
 
     // From UserDetailsService
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public AccountDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
         // Treat emails as usernames
         Optional<Account> account = accountRepository.findAccountModelByEmail(username);

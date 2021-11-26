@@ -4,6 +4,7 @@ import hu.elte.teamfinder.security.AccountRole;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -33,6 +34,28 @@ public class AccountDetails extends User {
         return authorities;
     }
 
+    public static Set<SimpleGrantedAuthority> accountRolesToGrantedAuthoritySet(
+            Set<AccountRole> accountRoles) {
+        Set<SimpleGrantedAuthority> authorities =
+                accountRoles.stream()
+                        .map(AccountRole::getGrantedAuthorities)
+                        .flatMap(Collection::stream)
+                        .collect(Collectors.toSet());
+        return authorities;
+    }
+    /*
+       //Probably not necessary
+       public static Set<SimpleGrantedAuthority> accountRolesToGrantedAuthoritySet(String[] accountRoles)
+       {
+           Set<SimpleGrantedAuthority> authorities =
+                   Arrays.stream(accountRoles)
+                           .map(str -> AccountRole.valueOf(str))
+                           .map(AccountRole::getGrantedAuthorities)
+                           .flatMap(Collection::stream)
+                           .collect(Collectors.toSet());
+           return authorities;
+       }
+    */
     public Integer getAccountId() {
         return accountId;
     }

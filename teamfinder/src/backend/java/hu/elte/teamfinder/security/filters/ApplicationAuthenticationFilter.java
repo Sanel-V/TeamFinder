@@ -2,6 +2,7 @@ package hu.elte.teamfinder.security.filters;
 
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import hu.elte.teamfinder.models.Account;
 import hu.elte.teamfinder.models.AccountDetails;
 import hu.elte.teamfinder.utils.JwtUtil;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -23,7 +24,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 public class ApplicationAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     // TODO: Get from secure location
-    private byte[] SECRET = "secret".getBytes();
+    // private byte[] SECRET = "secret".getBytes();
     private JwtUtil jwtUtil;
 
     private final AuthenticationManager authenticationManager;
@@ -51,10 +52,10 @@ public class ApplicationAuthenticationFilter extends UsernamePasswordAuthenticat
             FilterChain chain,
             Authentication authResult)
             throws IOException, ServletException {
-        AccountDetails account = (AccountDetails) authResult.getPrincipal();
+        Account account = (Account) authResult.getPrincipal();
         Assert.notNull(account.getAccountId(), "Principal returned null account ID");
-        Algorithm algorithm = Algorithm.HMAC256(SECRET);
-        this.jwtUtil = new JwtUtil(algorithm);
+        // Algorithm algorithm = Algorithm.HMAC256(SECRET);
+        this.jwtUtil = new JwtUtil();
         String access_token = jwtUtil.generateAccessToken(request, account);
         String refresh_token = jwtUtil.generateRefreshToken(request, account);
 
