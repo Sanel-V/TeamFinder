@@ -4,11 +4,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.Optional;
 import java.util.Set;
 
-public class AccountUserDetails implements UserDetails
-{
+public class AccountUserDetails implements UserDetails {
     private final String email;
     private final Integer accountId;
     private final String password;
@@ -18,12 +16,11 @@ public class AccountUserDetails implements UserDetails
     private final boolean isCredentialsNonExpired;
     private final boolean isEnabled;
 
-    public AccountUserDetails(AccountModel account)
-    {
+    public AccountUserDetails(AccountModel account) {
         this.email = account.getEmail();
         this.accountId = account.getAccountId();
         this.password = account.getPassword();
-        //TODO: When roles are a Set: unify all authority set into one
+        // TODO: When roles are a Set: unify all authority set into one
         this.grantedAuthorities = account.getRole().getGrantedAuthorities();
         this.isAccountNonExpired = account.isAccountNonExpired();
         this.isAccountNonLocked = account.isAccountNonLocked();
@@ -31,8 +28,7 @@ public class AccountUserDetails implements UserDetails
         this.isEnabled = account.isEnabled();
     }
 
-    public Integer getAccountId()
-    {
+    public Integer getAccountId() {
         return accountId;
     }
 
@@ -70,6 +66,4 @@ public class AccountUserDetails implements UserDetails
     public boolean isEnabled() {
         return isEnabled;
     }
-
-
 }

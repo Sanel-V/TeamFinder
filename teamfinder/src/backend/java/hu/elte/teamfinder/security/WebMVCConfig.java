@@ -9,12 +9,10 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @Configuration
 @EnableWebMvc
-public class WebMVCConfig
-{
-    //TODO: Make this secure(only allow requests from frontend port)
+public class WebMVCConfig {
+    // TODO: Make this secure(only allow requests from frontend port)
     @Bean
-    public CorsFilter corsFilter()
-    {
+    public CorsFilter corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(false);
