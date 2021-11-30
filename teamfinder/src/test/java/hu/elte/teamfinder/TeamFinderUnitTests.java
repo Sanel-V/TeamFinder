@@ -3,7 +3,7 @@ package hu.elte.teamfinder;
 import hu.elte.teamfinder.models.Account;
 import hu.elte.teamfinder.models.AccountDetails;
 import hu.elte.teamfinder.security.AccountRole;
-import hu.elte.teamfinder.utils.StringSetConverter;
+import hu.elte.teamfinder.utils.StringAccountRoleSetConverter;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
@@ -16,14 +16,12 @@ import java.util.Set;
 public class TeamFinderUnitTests {
 
     @Test
-    public void testStringSetConverterUtilSetToString() {
-        StringSetConverter converter = new StringSetConverter();
-        Set<String> dummySet = new HashSet<>();
-        dummySet.add("one");
-        dummySet.add("one");
-        dummySet.add("two");
-        dummySet.add("three");
-        String expected = "one;two;three";
+    public void testStringSetConverterUtilAccountRoleSetToString() {
+        StringAccountRoleSetConverter converter = new StringAccountRoleSetConverter();
+        Set<AccountRole> dummySet = new HashSet<>();
+        dummySet.add(AccountRole.STANDARD);
+        dummySet.add(AccountRole.ADMIN);
+        String expected = "ADMIN;STANDARD";
 
         String actual = converter.convertToDatabaseColumn(dummySet);
 
@@ -31,16 +29,14 @@ public class TeamFinderUnitTests {
     }
 
     @Test
-    public void testStringSetConverterUtilStringToSet() {
-        StringSetConverter converter = new StringSetConverter();
-        String str = "one;two;three";
-        Set<String> expected = new HashSet<>();
-        expected.add("one");
-        expected.add("one");
-        expected.add("two");
-        expected.add("three");
+    public void testStringSetConverterUtilAccountRoleStringToSet() {
+        StringAccountRoleSetConverter converter = new StringAccountRoleSetConverter();
+        String str = "ADMIN;STANDARD";
+        Set<AccountRole> expected = new HashSet<>();
+        expected.add(AccountRole.STANDARD);
+        expected.add(AccountRole.ADMIN);
 
-        Set<String> actual = converter.convertToEntityAttribute(str);
+        Set<AccountRole> actual = converter.convertToEntityAttribute(str);
 
         Assert.assertEquals(expected, actual);
     }

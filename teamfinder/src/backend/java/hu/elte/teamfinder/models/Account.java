@@ -1,7 +1,7 @@
 package hu.elte.teamfinder.models;
 
 import hu.elte.teamfinder.security.AccountRole;
-import hu.elte.teamfinder.utils.StringSetConverter;
+import hu.elte.teamfinder.utils.StringAccountRoleSetConverter;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -25,7 +25,7 @@ public class Account implements Serializable {
 
     private String password = "";
 
-    @Convert(converter = StringSetConverter.class)
+    @Convert(converter = StringAccountRoleSetConverter.class)
     @Column
     private Set<AccountRole> roles = new HashSet<>(Arrays.asList(AccountRole.STANDARD));
     // TODO: add Access modifiers field and update constructor
@@ -82,6 +82,10 @@ public class Account implements Serializable {
 
     public String getPassword() {
         return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public Set<AccountRole> getRoles() {

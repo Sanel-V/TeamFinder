@@ -4,6 +4,7 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import hu.elte.teamfinder.models.Account;
 
+import hu.elte.teamfinder.models.AccountDetails;
 import hu.elte.teamfinder.services.AccountService;
 import hu.elte.teamfinder.utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -103,16 +104,16 @@ public class AccountController {
         if (authorizationHeader != null && authorizationHeader.startsWith(JwtUtil.HEADER_PREFIX)) {
             try {
 
-                String refresh_token_endcoded =
+                String refresh_token_encoded =
                         authorizationHeader.substring(JwtUtil.HEADER_PREFIX.length());
                 DecodedJWT refresh_token = jwtUtil.extractJwtTokenFromHeader(authorizationHeader);
                 String username = refresh_token.getSubject();
-                Account account = accountService.getAccountByEmail(username);
+                AccountDetails account = accountService.loadUserByUsername(username);
                 String access_token = jwtUtil.generateAccessToken(request, account);
 
                 Map<String, String> tokens = new HashMap<>();
                 tokens.put("access_token", access_token);
-                tokens.put("refresh_token", refresh_token_endcoded);
+                tokens.put("refresh_token", refresh_token_encoded);
                 response.setContentType(APPLICATION_JSON_VALUE);
                 new ObjectMapper().writeValue(response.getOutputStream(), tokens);
 

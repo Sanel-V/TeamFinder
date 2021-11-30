@@ -35,28 +35,32 @@ public class ApplicationAuthorizationFilter extends OncePerRequestFilter {
             HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
         // Don't try authorizing on login page
-        if (request.getServletPath().equals("login")) {
+        if (request.getServletPath().equals("/api/login")
+                || request.getServletPath().equals("/account/token/refresh")) {
             filterChain.doFilter(request, response);
-            return;
-        }
-        String authorizationHeader = request.getHeader(AUTHORIZATION);
-        if (authorizationHeader != null && authorizationHeader.startsWith(JwtUtil.HEADER_PREFIX)) {
-            try {
-                jwtUtil.authorizeToken(authorizationHeader);
-
-                filterChain.doFilter(request, response);
-
-            } catch (Exception exception) {
-                response.setHeader("error", exception.getMessage());
-                response.setStatus(FORBIDDEN.value());
-                // response.sendError(FORBIDDEN.value());
-                Map<String, String> error = new HashMap<>();
-                error.put("error_message", exception.getMessage());
-                response.setContentType(APPLICATION_JSON_VALUE);
-                new ObjectMapper().writeValue(response.getOutputStream(), error);
-            }
         } else {
-            filterChain.doFilter(request, response);
+            String authorizationHeader = request.getHeader(AUTHORIZATION);
+            if (authorizationHeader != null
+                    && authorizationHeader.startsWith(JwtUtil.HEADER_PREFIX)) {
+                try {
+                    UsernamePasswordAuthenticationToken authenticationToken =
+                            jwtUtil.authorizeToken(authorizationHeader);
+                    SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+
+                    filterChain.doFilter(request, response);
+
+                } catch (Exception exception) {
+                    response.setHeader("error", exception.getMessage());
+                    response.setStatus(FORBIDDEN.value());
+                    // response.sendError(FORBIDDEN.value());
+                    Map<String, String> error = new HashMap<>();
+                    error.put("error_message", exception.getMessage());
+                    response.setContentType(APPLICATION_JSON_VALUE);
+                    new ObjectMapper().writeValue(response.getOutputStream(), error);
+                }
+            } else {
+                filterChain.doFilter(request, response);
+            }
         }
     }
 }

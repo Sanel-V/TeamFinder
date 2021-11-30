@@ -34,24 +34,23 @@ public class JwtUtil {
         this.algorithm = Algorithm.HMAC256(SECRET);
     }
 
-    public String generateAccessToken(HttpServletRequest request, Account account) {
+    public String generateAccessToken(HttpServletRequest request, AccountDetails account) {
         return JWT.create()
-                .withSubject(account.getEmail())
+                .withSubject(account.getUsername())
                 .withExpiresAt(new Date(System.currentTimeMillis() + ACCESS_EXPIRATION_TIME))
                 .withIssuer(request.getRequestURI())
                 .withClaim("id", account.getAccountId())
                 .withClaim(
                         "authorities",
-                        AccountDetails.accountRolesToGrantedAuthoritySet(account.getRoles())
-                                .stream()
+                        account.getAuthorities().stream()
                                 .map(GrantedAuthority::getAuthority)
                                 .collect(Collectors.toList()))
                 .sign(algorithm);
     }
 
-    public String generateRefreshToken(HttpServletRequest request, Account account) {
+    public String generateRefreshToken(HttpServletRequest request, AccountDetails account) {
         return JWT.create()
-                .withSubject(account.getEmail())
+                .withSubject(account.getUsername())
                 .withExpiresAt(new Date(System.currentTimeMillis() + REFRESH_EXPIRATION_TIME))
                 .withIssuer(request.getRequestURI())
                 .sign(algorithm);
@@ -78,7 +77,7 @@ public class JwtUtil {
         return authorities;
     }
 
-    public void authorizeToken(String authorizationHeader) {
+    public UsernamePasswordAuthenticationToken authorizeToken(String authorizationHeader) {
         DecodedJWT decodedJWT = this.extractJwtTokenFromHeader(authorizationHeader);
         String username = decodedJWT.getSubject();
         Map<String, Claim> claims = decodedJWT.getClaims();
@@ -88,6 +87,6 @@ public class JwtUtil {
 
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(username, null, authorities);
-        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+        return authenticationToken;
     }
 }

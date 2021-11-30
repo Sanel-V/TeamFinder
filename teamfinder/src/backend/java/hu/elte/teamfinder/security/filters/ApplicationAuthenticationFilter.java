@@ -4,7 +4,10 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import hu.elte.teamfinder.models.Account;
 import hu.elte.teamfinder.models.AccountDetails;
+import hu.elte.teamfinder.repos.AccountRepository;
+import hu.elte.teamfinder.services.AccountService;
 import hu.elte.teamfinder.utils.JwtUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -28,9 +31,13 @@ public class ApplicationAuthenticationFilter extends UsernamePasswordAuthenticat
     private JwtUtil jwtUtil;
 
     private final AuthenticationManager authenticationManager;
+    private final AccountService accountService;
 
-    public ApplicationAuthenticationFilter(AuthenticationManager authenticationManager) {
+    @Autowired
+    public ApplicationAuthenticationFilter(
+            AuthenticationManager authenticationManager, AccountService accountService) {
         this.authenticationManager = authenticationManager;
+        this.accountService = accountService;
     }
 
     @Override
@@ -52,7 +59,9 @@ public class ApplicationAuthenticationFilter extends UsernamePasswordAuthenticat
             FilterChain chain,
             Authentication authResult)
             throws IOException, ServletException {
-        Account account = (Account) authResult.getPrincipal();
+        // AccountDetails account = new
+        // AccountDetails(accountService.getAccountByEmail(authResult.getPrincipal().toString()));
+        AccountDetails account = (AccountDetails) authResult.getPrincipal();
         Assert.notNull(account.getAccountId(), "Principal returned null account ID");
         // Algorithm algorithm = Algorithm.HMAC256(SECRET);
         this.jwtUtil = new JwtUtil();
