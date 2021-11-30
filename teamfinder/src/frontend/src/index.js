@@ -3,10 +3,13 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+
+import { BrowserRouter } from "react-router-dom";
 import { Accounts } from './components/accounts/accounts';
+import { Profile } from './components/profile/profile';
 
 ReactDOM.render(
-    <Accounts />,
+  <App/>,
   document.getElementById('root')
 );
 
