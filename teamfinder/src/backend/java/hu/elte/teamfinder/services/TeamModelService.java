@@ -20,4 +20,12 @@ public class TeamModelService {
     public List<TeamModel> findAllTeams() {
         return teamRepository.findAll();
     }
+
+    public void deleteTeam(Long id) {
+        teamRepository.deleteById(id);
+    }
+
+    public TeamModel getTeamById(Long id) {
+        return teamRepository.getById(id);
+    }
 }

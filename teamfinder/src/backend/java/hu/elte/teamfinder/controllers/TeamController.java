@@ -27,4 +27,18 @@ public class TeamController {
         List<TeamModel> teams = teamService.findAllTeams();
         return new ResponseEntity<>(teams, HttpStatus.OK);
     }
+
+    @DeleteMapping("/delete/{id}")
+    public  ResponseEntity<?> deleteTeamById(@PathVariable("id") Long id){
+        teamService.deleteTeam(id);
+        return  new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/get/{id}")
+    public ResponseEntity<TeamModel> getTeamById(@PathVariable("id") Long id){
+        TeamModel team = teamService.getTeamById(id);
+        return new ResponseEntity<>(team, HttpStatus.OK);
+    }
+
+    //TODO: add and delete member from certain team
 }
