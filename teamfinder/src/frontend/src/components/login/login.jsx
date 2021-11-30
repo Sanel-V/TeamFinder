@@ -11,7 +11,9 @@ export class Login extends React.Component {
 
         this.state = {
             email: '',
-            password: ''
+            password: '',
+            access_token: '',
+            refresh_token: ''
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -21,7 +23,9 @@ export class Login extends React.Component {
 
     submit() {
         const { email, password } = this.state;
-        axios.post(this.baseUrl + '/accounts/login', { email: email, password: password })
+        console.log('email:'+email);
+        console.log('pass:'+password);
+        axios.post(this.baseUrl + '/api/login', { username: email, password: password })
         .then(response => {
             console.log({response});
         })
