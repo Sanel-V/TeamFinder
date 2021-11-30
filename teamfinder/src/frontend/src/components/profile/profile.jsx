@@ -6,15 +6,15 @@ import { Routes, Route, Link } from "react-router-dom";
 import App from "../../App";
 import { Accounts } from "../accounts/accounts";
 
-export class Profile extends React.Component {
+export function Profile() {
 
-    constructor(props) {
+    /*constructor(props) {
+
         super(props);
 
         this.state = {
             profile: []
         }
-
         this.baseUrl = "http://localhost:8080";
         this.state = { 
             key: 0,
@@ -23,7 +23,7 @@ export class Profile extends React.Component {
             bio : "lorem"
         };
 
-        axios.get(`${this.baseUrl}/account/get/`+props.id)
+        axios.get(`${this.baseUrl}/account/get/`)
             .then(response => {
                 this.state = { profile: response.data };
                 console.log(props.id);
@@ -37,34 +37,31 @@ export class Profile extends React.Component {
                 // always executed
             });
 
-            console.log(this.state);
+            //console.log(props.match.params.id);
 
-    }
+    }*/
 
-    render() {
-        return(
-        <div className="container">
-          
-            <Routes>
-              <Route path="allprofiles" element={<Accounts />} />
-            </Routes>
-            <div className="main-body">
-            
-                  <nav aria-label="breadcrumb" className="main-breadcrumb">
-                    <ol className="breadcrumb">
-                      <li className="breadcrumb-item"><a href="index.html">Home</a></li>
-                      <li className="breadcrumb-item"><a href="javascript:void(0)">User</a></li>
-                      <li className="breadcrumb-item active" aria-current="page">User Profile</li>
-                    </ol>
-                  </nav>
-            
-                  <AllData/>
 
-            </div>
+    let { id } = 0
+
+    return(
+    <div className="container">
+      
+        <div className="main-body">
+        
+              <nav aria-label="breadcrumb" className="main-breadcrumb">
+                <ol className="breadcrumb">
+                  <li className="breadcrumb-item"><Link to='/' > Home </Link></li>
+                  <li className="breadcrumb-item"><a href="">User Profile</a></li>
+                </ol>
+              </nav>
+              <h1></h1>
+              <AllData/>
+
         </div>
-        )
+    </div>
+    )
 
-    }
 }
 
 function NoData(){
@@ -75,7 +72,7 @@ function NoData(){
         <div className="d-flex flex-column align-items-center text-center">
           <div className="mt-3">
             <h4>No data on this user</h4>
-                <Link to='/allprofiles' > To the homePage </Link>
+                <Link to='/dashboard' > To the homePage </Link>
           </div>
         </div>
       </div>
@@ -145,7 +142,7 @@ function AllData(){
             <hr></hr>
             <div className="row">
               <div className="col-sm-12">
-                <a className="btn btn-info " target="__blank" href="https://www.bootdey.com/snippets/view/profile-edit-data-and-skills">Edit</a>
+                <Link className="btn btn-info " to='/edit' > Edit </Link>
               </div>
             </div>
           </div>

@@ -9,9 +9,7 @@ import { Accounts } from './components/accounts/accounts';
 import { Profile } from './components/profile/profile';
 
 ReactDOM.render(
-  <BrowserRouter>
-    <Profile id="0" />
-  </BrowserRouter>,
+  <App/>,
   document.getElementById('root')
 );
 
