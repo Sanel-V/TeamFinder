@@ -21,13 +21,22 @@ export class Login extends React.Component {
 
     }
 
+
+
     submit() {
         const { email, password } = this.state;
         console.log('email:'+email);
         console.log('pass:'+password);
-        axios.post(this.baseUrl + '/api/login', { username: email, password: password })
+        const params = new URLSearchParams()
+        params.append('username', email)
+        params.append('password', password)
+        axios.post(this.baseUrl + '/api/login', params)
         .then(response => {
             console.log({response});
+            if (response.status == 200){
+                localStorage.setItem('access_token', response.data.access_token);
+                window.location.href = "/accounts";
+            }
         })
         .catch(err => {
             console.log({err});
@@ -41,6 +50,7 @@ export class Login extends React.Component {
 
     render() {
         const {email, password} = this.state;
+
         return <div className="base-container">
             <div className="header">Login to TeamFinder</div>
             <div className="content">
@@ -49,11 +59,11 @@ export class Login extends React.Component {
                 </div>
                 <div className="form">
                     <div className="form-group">
-                        <label htmlFor="email">Email</label>
+                        <label htmlFor="email">Email: Bob</label>
                         <input type="text" name="email" placeholder="abc@szerver.hu" value={email} onChange={this.handleChange}/>
                     </div>
                     <div className="form-group">
-                        <label htmlFor="password">Password</label>
+                        <label htmlFor="password">Password: pass</label>
                         <input type="password" name="password" placeholder="*************" value={password} onChange={this.handleChange}/>
                     </div>
                 </div>

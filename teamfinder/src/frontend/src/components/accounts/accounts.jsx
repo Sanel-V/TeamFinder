@@ -1,6 +1,7 @@
 import React from "react";
 import "./accounts.scss";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { Routes, Route, Link } from "react-router-dom";
 import axios from "axios";
 import { useState } from "react";
 
@@ -12,9 +13,12 @@ export class Accounts extends React.Component {
         this.state = {
             profiles: []
         }
+        var token = localStorage.getItem('access_token');
+        
+        if (!token) window.location.href = '/';
 
         this.baseUrl = "http://localhost:8080";
-
+        axios.defaults.headers.common['Authorization'] = "Bearer: " + token;
         axios.get(`${this.baseUrl}/account/all`)
             .then(response => {
                 if (response.data.length === 0)
@@ -33,10 +37,15 @@ export class Accounts extends React.Component {
 
     }
 
+
     render() {
+        function logout(e) {
+            localStorage.removeItem('access_token');
+            window.location.href = '/';
+        }
         return(
         <div>
-            <button className="logoutBtn">Log out</button>
+            <button onClick={logout} className="logoutBtn">Log out</button>
             <Profiles profiles={this.state.profiles}/>
         </div>
         )
@@ -55,9 +64,6 @@ function Profiles(props){
         <div className="profList" key={profile.accountId}>{<Profile profile={profile} />}</div>
     );
     return(
-        /*<div className="container d-flex">
-            
-        </div>*/
         <div className="container2">
             <div className="bloc-tabs">
                 <button className={toggleState === 1 ? "tabs active-tabs" : "tabs"} onClick={() => toggleTab(1)}> People </button>
@@ -114,11 +120,11 @@ function Profile(props) {
 
     
     return (
-            <div>
-                <div className="nameBlock"> <p>{props.profile.email}</p> </div>
-                <div className="statusBlock"> <p>Status</p> </div>
-                <div className="tagBlock"><p>Tag1 Tag2</p> </div>
-                <button className="viewBtn">View Profile</button>
+            <div className="d-flex flex-row">
+                <div className="p-2 "> <p>{props.profile.email}</p> </div>
+                <div className="p-2 "> <p>Status</p> </div>
+                <div className="p-2 "><p>Tag1</p> </div>
+                <Link className="p-2 " to={"/profile/"+props.profile.accountId}>View profile</Link>
             </div>
                 /*<div className=" image d-flex flex-column justify-content-center align-items-center"> <button className="btn btn-secondary"><img alt="" src={props.profile.image} height="100" width="100" /></button> <span className="name mt-3">{props.profile.email}</span> <span className="idd">@instagram</span>
                     <div className="d-flex flex-row justify-content-center align-items-center gap-2"> <span className="idd1">Oxc4c16a645_b21a</span> <span><i className="fa fa-copy"></i></span> </div>
