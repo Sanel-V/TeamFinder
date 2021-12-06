@@ -18,6 +18,7 @@ export class Login extends React.Component {
 
         this.handleChange = this.handleChange.bind(this);
         this.submit = this.submit.bind(this);
+        
 
     }
 
@@ -39,13 +40,17 @@ export class Login extends React.Component {
         this.setState({[name]: value});
     }
 
+    trigger(event) {
+        this.props.toggleActive(false);
+        event.preventDefault();
+    }
+
     render() {
         const {email, password} = this.state;
         return <div className="base-container">
             <div className="header">Login to TeamFinder</div>
             <div className="content">
                 <div className="image">
-                    <img src={loginImg} />
                 </div>
                 <div className="form">
                     <div className="form-group">
@@ -54,9 +59,10 @@ export class Login extends React.Component {
                     </div>
                     <div className="form-group">
                         <label htmlFor="password">Password</label>
-                        <input type="password" name="password" placeholder="*************" value={password} onChange={this.handleChange}/>
+                        <input type="password" name="password" placeholder="******" value={password} onChange={this.handleChange}/>
                     </div>
                 </div>
+                <div className="switch" >Don't have account? <div className="switchButton" onClick={this.trigger.bind(this)}>Register here.</div></div>
             </div>
             <div className="footer">
                 <button type="button" onClick={this.submit} className="btn">Login</button>

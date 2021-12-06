@@ -8,6 +8,7 @@ class Dashboard extends React.Component {
     this.state = {
       isLogginActive: true
     };
+    this.toggleActive = this.toggleActive.bind(this);
   }
 
   componentDidMount() {
@@ -28,6 +29,10 @@ class Dashboard extends React.Component {
     this.setState(prevState => ({ isLogginActive: !prevState.isLogginActive }));
   }
 
+  toggleActive (isActive) {
+    this.setState({isLogginActive: isActive})
+  }
+
   render() {
     const { isLogginActive } = this.state;
     const current = isLogginActive ? "Register" : "Login";
@@ -36,37 +41,17 @@ class Dashboard extends React.Component {
       <div className="App">
         <div className="login">
           <div className="container" ref={ref => (this.container = ref)}>
-            {isLogginActive && (
-              <Login containerRef={ref => (this.current = ref)} />
-            )}
-            {!isLogginActive && (
-              <Register containerRef={ref => (this.current = ref)} />
-            )}
+            { isLogginActive
+              && (<Login toggleActive={this.toggleActive.bind(this)}/>)
+            }
+             { !isLogginActive
+              && (<Register toggleActive={this.toggleActive.bind(this)}/>)
+            }
           </div>
-          <RightSide
-            current={current}
-            currentActive={currentActive}
-            containerRef={ref => (this.rightSide = ref)}
-            onClick={this.changeState.bind(this)}
-          />
         </div>
       </div>
     );
   }
 }
-
-const RightSide = props => {
-  return (
-    <div
-      className="right-side"
-      ref={props.containerRef}
-      onClick={props.onClick}
-    >
-      <div className="inner-container">
-        <div className="text">{props.current}</div>
-      </div>
-    </div>
-  );
-};
 
 export default Dashboard;
