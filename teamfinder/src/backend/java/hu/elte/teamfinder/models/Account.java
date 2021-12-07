@@ -25,6 +25,13 @@ public class Account implements Serializable {
 
     private String password = "";
 
+    @OneToOne(
+            mappedBy = "account",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY,
+            optional = false)
+    private Profile profile;
+
     @Convert(converter = StringAccountRoleSetConverter.class)
     @Column
     private Set<AccountRole> roles = new HashSet<>(Arrays.asList(AccountRole.STANDARD));
