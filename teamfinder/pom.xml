@@ -132,7 +132,15 @@
 					</execution>
 				</executions>
 			</plugin>
-
+			<plugin>
+				<groupId>com.heroku.sdk</groupId>
+				<artifactId>heroku-maven-plugin</artifactId>
+				<configuration>
+					<processTypes>
+						<web>java $JAVA_OPTS -cp target/classes:target/dependency/* Main</web>
+					</processTypes>
+				</configuration>
+			</plugin>
 			<!--
 			<plugin>
 				<groupId>com.github.eirslett</groupId>
@@ -178,15 +186,10 @@
 			<artifactId>maven-jxr-plugin</artifactId>
 			<version>3.1.1</version>
 		</plugin>
-			<plugin>
-				<groupId>com.heroku.sdk</groupId>
-				<artifactId>heroku-maven-plugin</artifactId>
-				<version>3.0.3</version>
-			</plugin>
 		</plugins>
 	</reporting>
 
-	<profiles>
+	<!--<profiles>
 		<profile>
 			<id>deploy-heroku</id>
 			<properties>
@@ -209,5 +212,5 @@
 				</plugins>
 			</build>
 		</profile>
-	</profiles>
+	</profiles>-->
 </project>
