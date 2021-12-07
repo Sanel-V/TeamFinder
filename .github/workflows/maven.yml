@@ -27,4 +27,4 @@ jobs:
     - name: PMD check
       run: mvn pmd:check --file teamfinder/pom.xml
     - name: Deploy with Heroku
-      run: mvn clean heroku:deploy
+      run: mvn clean heroku:deploy --file teamfinder/pom.xml
