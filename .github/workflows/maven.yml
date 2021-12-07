@@ -26,3 +26,5 @@ jobs:
       run: mvn -B package --file teamfinder/pom.xml
     - name: PMD check
       run: mvn pmd:check --file teamfinder/pom.xml
+    - name: Deploy with Heroku
+      run: mvnw heroku:deploy jib:build -P deploy-heroku,deploy-docker
