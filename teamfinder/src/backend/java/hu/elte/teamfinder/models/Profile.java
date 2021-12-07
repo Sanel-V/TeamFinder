@@ -27,8 +27,13 @@ public class Profile implements Serializable {
     private Boolean isPublic;
     /** Summary of the profile */
     private String summary;
-    /** Shows the skills of the person */
+    /**Shows the skills of the person */
+    @Convert(converter = StringListConverter.class)
     private ArrayList<String> tags;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @MapsId
+    private AccountModel account;
 
     /**
      * The general contructor of the Profile
@@ -110,5 +115,9 @@ public class Profile implements Serializable {
         if (!this.tags.remove(tag)) {
             throw new IllegalArgumentException("Tag doesn't exist!");
         }
+    }
+
+    public AccountModel getAccount() {
+        return account;
     }
 }
