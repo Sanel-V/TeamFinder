@@ -9,6 +9,7 @@ import hu.elte.teamfinder.models.AccountDetails;
 import hu.elte.teamfinder.services.AccountService;
 import hu.elte.teamfinder.services.ProfileService;
 import hu.elte.teamfinder.utils.JwtUtil;
+import hu.elte.teamfinder.viewmodels.AccountViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -59,15 +61,19 @@ public class AccountController {
     */
 
     @GetMapping("/all")
-    public ResponseEntity<List<Account>> getAllAccounts() {
+    public ResponseEntity<List<AccountViewModel>> getAllAccounts() {
+        List<AccountViewModel> accountViewModels = new ArrayList<>();
+
         List<Account> accounts = accountService.getAllAccounts();
-        return new ResponseEntity<>(accounts, HttpStatus.OK);
+        accounts.forEach(account -> accountViewModels.add(new AccountViewModel(account)));
+
+        return new ResponseEntity<>(accountViewModels, HttpStatus.OK);
     }
 
     @GetMapping("/get/{id}")
-    public ResponseEntity<Account> getAccountById(@PathVariable("id") Long id) {
+    public ResponseEntity<AccountViewModel> getAccountById(@PathVariable("id") Long id) {
         Account account = accountService.getAccountById(id);
-        return new ResponseEntity<>(account, HttpStatus.OK);
+        return new ResponseEntity<>(new AccountViewModel(account), HttpStatus.OK);
     }
 
     @PostMapping("/add")
@@ -81,7 +87,8 @@ public class AccountController {
             return new ResponseEntity<String>(e2.getMessage(), HttpStatus.BAD_REQUEST);
         }
         profileService.createProfile(account.getProfile());
-        return new ResponseEntity<Account>(createdAccount, HttpStatus.CREATED);
+        return new ResponseEntity<AccountViewModel>(
+                new AccountViewModel(createdAccount), HttpStatus.CREATED);
     }
 
     @PutMapping("/update/{id}")
@@ -102,7 +109,8 @@ public class AccountController {
                 return new ResponseEntity<String>(e2.getMessage(), HttpStatus.BAD_REQUEST);
             }
         }
-        return new ResponseEntity<Account>(foundAccount, HttpStatus.OK);
+        return new ResponseEntity<AccountViewModel>(
+                new AccountViewModel(foundAccount), HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{id}")

@@ -111,10 +111,6 @@ public class Profile implements Serializable {
         this.summary = summary;
     }
 
-    public ArrayList<String> getAllTags() {
-        return this.tags;
-    }
-
     public void clearTags() {
         this.tags.clear();
     }
