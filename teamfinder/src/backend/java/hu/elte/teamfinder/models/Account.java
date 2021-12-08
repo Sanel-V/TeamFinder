@@ -44,10 +44,10 @@ public class Account implements Serializable {
     public Account() {}
 
     public Account(
-            // Integer accountId,
             String email,
             String password,
             Set<AccountRole> roles,
+            Profile profile,
             boolean isAccountNonExpired,
             boolean isAccountNonLocked,
             boolean isCredentialsNonExpired,
@@ -56,6 +56,7 @@ public class Account implements Serializable {
         this.email = email;
         this.password = password;
         this.roles = roles;
+        this.profile = profile;
         this.isAccountNonExpired = isAccountNonExpired;
         this.isAccountNonLocked = isAccountNonLocked;
         this.isCredentialsNonExpired = isCredentialsNonExpired;
@@ -68,15 +69,17 @@ public class Account implements Serializable {
                 email,
                 password,
                 new HashSet<AccountRole>(Arrays.asList(AccountRole.NEW_USER)),
+                null,
                 true,
                 true,
                 true,
                 true);
+        this.profile = new Profile(this);
     }
 
     public Account( // Integer accountId,
             String email, String password, HashSet<AccountRole> roles) {
-        this(email, password, roles, true, true, true, true);
+        this(email, password, roles, null, true, true, true, true);
     }
 
     public Integer getAccountId() {
@@ -113,5 +116,9 @@ public class Account implements Serializable {
 
     public boolean isEnabled() {
         return isEnabled;
+    }
+
+    public Profile getProfile() {
+        return profile;
     }
 }

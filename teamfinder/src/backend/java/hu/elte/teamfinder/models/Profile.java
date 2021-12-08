@@ -40,19 +40,24 @@ public class Profile implements Serializable {
     /**
      * The general contructor of the Profile
      *
-     * @param accountId Id of the account form Account
+     * @param account account the profile is connected to
      * @param firstname
      * @param lastname
      * @param age
      */
-    public Profile(Integer accountId, String firstname, String lastname, Integer age) {
-        this.accountId = accountId;
+    public Profile(Account account, String firstname, String lastname, Integer age) {
+        this.account = account;
+        this.accountId = account.getAccountId();
         this.firstName = firstname;
         this.lastName = lastname;
         this.age = age;
         this.isPublic = true;
         this.summary = "";
         this.tags = new ArrayList<String>();
+    }
+
+    public Profile(Account account) {
+        this(account, null, null, null);
     }
 
     public Profile() {}
