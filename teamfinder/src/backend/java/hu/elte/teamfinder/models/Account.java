@@ -13,8 +13,6 @@ import static javax.persistence.GenerationType.AUTO;
 
 @Entity
 public class Account implements Serializable {
-    // TODO: join with Profile
-    // TODO: Make accountId auto-generated
     @Id
     @Column(nullable = false, updatable = false)
     @GeneratedValue(strategy = AUTO)
@@ -104,6 +102,10 @@ public class Account implements Serializable {
 
     public String getEmail() {
         return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {

@@ -12,7 +12,6 @@ import static javax.persistence.GenerationType.AUTO;
 @Entity
 public class Profile implements Serializable {
 
-    // TODO: connect Profile to Account
     /** ID of the account from Account */
     @Id
     @Column(nullable = false, updatable = false, unique = true)
@@ -53,7 +52,7 @@ public class Profile implements Serializable {
         this.firstName = firstname;
         this.lastName = lastname;
         this.age = age;
-        this.isPublic = true;
+        this.isPublic = false;
         this.summary = "";
         this.tags = new ArrayList<String>();
     }

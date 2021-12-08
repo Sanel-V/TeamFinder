@@ -32,7 +32,7 @@ public class TeamFinderApplication {
     CommandLineRunner run(AccountService service) {
         // Can't have profile without account and vice-versa
         Account account = new Account("Greg", "pass123");
-        Profile test = new Profile(account, "Greg", "gamer", 20);
+        Profile test = new Profile(account, "Greg", "asd", 20);
         account.setProfile(test);
 
         return args -> {
