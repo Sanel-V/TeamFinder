@@ -1,4 +1,4 @@
-package hu.elte.teamfinder.models;
+package hu.elte.teamfinder.utils;
 
 import javax.persistence.AttributeConverter;
 import java.util.ArrayList;
@@ -14,10 +14,10 @@ public class LongListConverter implements AttributeConverter<List<Long>, String>
 
     @Override
     public List<Long> convertToEntityAttribute(String s) {
-        if( s!= null ){
+        if (s != null) {
             List<String> stringList = Arrays.asList(s.split(";"));
             List<Long> longList = new ArrayList<>();
-            for (String str: stringList ) {
+            for (String str : stringList) {
                 longList.add(Long.parseLong(str));
             }
             return longList;

@@ -1,5 +1,7 @@
 package hu.elte.teamfinder.models;
 
+import hu.elte.teamfinder.utils.StringListConverter;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;

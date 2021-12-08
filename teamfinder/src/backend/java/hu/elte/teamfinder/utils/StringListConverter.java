@@ -1,4 +1,4 @@
-package hu.elte.teamfinder.models;
+package hu.elte.teamfinder.utils;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;

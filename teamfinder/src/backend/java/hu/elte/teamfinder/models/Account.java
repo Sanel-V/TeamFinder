@@ -34,7 +34,7 @@ public class Account implements Serializable {
 
     @Convert(converter = StringAccountRoleSetConverter.class)
     @Column
-    private Set<AccountRole> roles = new HashSet<>(Arrays.asList(AccountRole.STANDARD));
+    private Set<AccountRole> roles = new HashSet<>(Arrays.asList(AccountRole.NEW_USER));
     // TODO: add Access modifiers field and update constructor
     private boolean isAccountNonExpired = true;
     private boolean isAccountNonLocked = true;
@@ -67,7 +67,7 @@ public class Account implements Serializable {
         this(
                 email,
                 password,
-                new HashSet<AccountRole>(Arrays.asList(AccountRole.STANDARD)),
+                new HashSet<AccountRole>(Arrays.asList(AccountRole.NEW_USER)),
                 true,
                 true,
                 true,
