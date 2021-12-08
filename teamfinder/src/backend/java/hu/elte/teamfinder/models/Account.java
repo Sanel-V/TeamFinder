@@ -77,9 +77,25 @@ public class Account implements Serializable {
         this.profile = new Profile(this);
     }
 
+    public Account(String email, String password, Profile profile) {
+        this(
+                email,
+                password,
+                new HashSet<AccountRole>(Arrays.asList(AccountRole.NEW_USER)),
+                profile,
+                true,
+                true,
+                true,
+                true);
+    }
+
     public Account( // Integer accountId,
             String email, String password, HashSet<AccountRole> roles) {
         this(email, password, roles, null, true, true, true, true);
+    }
+
+    public Account(String email, String password, HashSet<AccountRole> roles, Profile profile) {
+        this(email, password, roles, profile, true, true, true, true);
     }
 
     public Long getAccountId() {
@@ -120,5 +136,9 @@ public class Account implements Serializable {
 
     public Profile getProfile() {
         return profile;
+    }
+
+    public void setProfile(Profile profile) {
+        this.profile = profile;
     }
 }
