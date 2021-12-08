@@ -18,7 +18,7 @@ public class Account implements Serializable {
     @Id
     @Column(nullable = false, updatable = false)
     @GeneratedValue(strategy = AUTO)
-    private Integer accountId;
+    private Long accountId;
 
     @Column(unique = true)
     private String email = "";
@@ -82,7 +82,7 @@ public class Account implements Serializable {
         this(email, password, roles, null, true, true, true, true);
     }
 
-    public Integer getAccountId() {
+    public Long getAccountId() {
         return accountId;
     }
 

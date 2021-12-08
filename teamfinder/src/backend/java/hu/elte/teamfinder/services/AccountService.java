@@ -1,5 +1,6 @@
 package hu.elte.teamfinder.services;
 
+import hu.elte.teamfinder.exceptions.UserAlreadyExists;
 import hu.elte.teamfinder.models.Account;
 import hu.elte.teamfinder.models.AccountDetails;
 import hu.elte.teamfinder.repos.AccountRepository;
@@ -40,7 +41,7 @@ public class AccountService implements UserDetailsService {
         return accountRepository.findAll();
     }
 
-    public Account getAccountById(Integer id) {
+    public Account getAccountById(Long id) {
         return accountRepository.getById(id);
     }
 
@@ -53,9 +54,19 @@ public class AccountService implements UserDetailsService {
                                         String.format("User %s not found", email)));
     }
 
-    public Account addAccount(Account account) {
-        account.setPassword(passwordEncoder.encode(account.getPassword()));
-        return accountRepository.save(account);
+    public Account addAccount(Account account) throws UserAlreadyExists {
+        if (account.getEmail() == null || account.getEmail() == "") {
+            throw new IllegalArgumentException("Invalid email provided");
+        }
+
+        try {
+            getAccountByEmail(account.getEmail());
+        } catch (UsernameNotFoundException e1) {
+            // No account exists with this email, we can safely create one
+            account.setPassword(passwordEncoder.encode(account.getPassword()));
+            return accountRepository.save(account);
+        }
+        throw new UserAlreadyExists("Account with email " + account.getEmail() + " already exists");
     }
     /*
         public Account updateAccount(Account account)
@@ -64,7 +75,7 @@ public class AccountService implements UserDetailsService {
             return accountRepository.save(account);
         }
     */
-    public void deleteAccount(Integer id) {
+    public void deleteAccount(Long id) {
         accountRepository.deleteById(id);
     }
 }

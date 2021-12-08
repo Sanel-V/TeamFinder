@@ -1,6 +1,6 @@
 package hu.elte.teamfinder;
 
-import hu.elte.teamfinder.models.AccountModel;
+import hu.elte.teamfinder.models.Account;
 import hu.elte.teamfinder.repos.AccountRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,23 +18,20 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DataJpaTest
 public class AccountRepositoryIntegrationTest {
 
-    @Autowired
-    private TestEntityManager entityManager;
+    @Autowired private TestEntityManager entityManager;
 
-    @Autowired
-    private AccountRepository accountRepository;
+    @Autowired private AccountRepository accountRepository;
 
-    public AccountRepositoryIntegrationTest() {
-    }
+    public AccountRepositoryIntegrationTest() {}
 
     @Test
-    public void getAccountById(){
-        AccountModel account = new AccountModel("example@gmail.com", "pass");
+    public void getAccountById() {
+        Account account = new Account("example@gmail.com", "pass");
         Long accountId = account.getAccountId();
         entityManager.persist(account);
         entityManager.flush();
 
-        AccountModel found = accountRepository.getById(accountId);
+        Account found = accountRepository.getById(accountId);
 
         assertThat(found.getEmail()).isEqualTo(account.getEmail());
     }

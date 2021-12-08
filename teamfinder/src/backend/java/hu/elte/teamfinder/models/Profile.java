@@ -1,6 +1,7 @@
 package hu.elte.teamfinder.models;
 
 import hu.elte.teamfinder.utils.StringListConverter;
+import org.junit.jupiter.api.Test;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -16,12 +17,12 @@ public class Profile implements Serializable {
     @Id
     @Column(nullable = false, updatable = false, unique = true)
     @GeneratedValue(strategy = AUTO)
-    private Integer accountId;
+    private Long accountId;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String firstName;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String lastName;
 
     private Integer age;
@@ -31,6 +32,7 @@ public class Profile implements Serializable {
     private String summary;
     /** Shows the skills of the person */
     @Convert(converter = StringListConverter.class)
+    @Column(name = "tags")
     private ArrayList<String> tags;
 
     @OneToOne(fetch = FetchType.LAZY)
@@ -62,23 +64,35 @@ public class Profile implements Serializable {
 
     public Profile() {}
 
-    public Integer getAccountId() {
+    public Long getAccountId() {
         return this.accountId;
     }
 
-    public String getFirstname() {
+    public Boolean getPublic() {
+        return isPublic;
+    }
+
+    public void setPublic(Boolean aPublic) {
+        isPublic = aPublic;
+    }
+
+    public void setAccountId(Long accountId) {
+        this.accountId = accountId;
+    }
+
+    public String getFirstName() {
         return this.firstName;
     }
 
-    public void setFirstname(String firstname) {
+    public void setFirstName(String firstname) {
         this.firstName = firstname;
     }
 
-    public String getLastname() {
+    public String getLastName() {
         return this.lastName;
     }
 
-    public void setLastname(String lastname) {
+    public void setLastName(String lastname) {
         this.lastName = lastname;
     }
 
@@ -88,14 +102,6 @@ public class Profile implements Serializable {
 
     public void setAge(Integer age) {
         this.age = age;
-    }
-
-    public Boolean getIsPublic() {
-        return this.isPublic;
-    }
-
-    public void setIsPublic(Boolean isPublic) {
-        this.isPublic = isPublic;
     }
 
     public String getSummary() {
@@ -124,7 +130,19 @@ public class Profile implements Serializable {
         }
     }
 
+    public ArrayList<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(ArrayList<String> tags) {
+        this.tags = tags;
+    }
+
     public Account getAccount() {
         return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
     }
 }

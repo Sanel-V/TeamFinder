@@ -2,10 +2,12 @@ package hu.elte.teamfinder.controllers;
 
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import hu.elte.teamfinder.exceptions.UserAlreadyExists;
 import hu.elte.teamfinder.models.Account;
 
 import hu.elte.teamfinder.models.AccountDetails;
 import hu.elte.teamfinder.services.AccountService;
+import hu.elte.teamfinder.services.ProfileService;
 import hu.elte.teamfinder.utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,12 +35,14 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RestController
 @RequestMapping("/account")
 public class AccountController {
-    // TODO: making instance of Service
+
     private final AccountService accountService;
+    private final ProfileService profileService;
 
     @Autowired
-    public AccountController(AccountService accountService) {
+    public AccountController(AccountService accountService, ProfileService profileService) {
         this.accountService = accountService;
+        this.profileService = profileService;
     }
 
     // TODO: add @PreAuthorize for permission based authentication for each Mapping
@@ -66,15 +70,23 @@ public class AccountController {
     }
 
     @GetMapping("/get/{id}")
-    public ResponseEntity<Account> getAccountById(@PathVariable("id") Integer id) {
+    public ResponseEntity<Account> getAccountById(@PathVariable("id") Long id) {
         Account account = accountService.getAccountById(id);
         return new ResponseEntity<>(account, HttpStatus.OK);
     }
 
     @PostMapping("/add")
     public ResponseEntity<Account> addAccount(@RequestBody Account account) {
-        Account createdAccount = accountService.addAccount(account);
-        return new ResponseEntity<>(createdAccount, HttpStatus.OK);
+        Account createdAccount;
+        try {
+            createdAccount = accountService.addAccount(account);
+        } catch (UserAlreadyExists e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        profileService.createProfile(account.getProfile());
+        return new ResponseEntity<>(createdAccount, HttpStatus.CREATED);
     }
     /*
     @PutMapping("/update")
@@ -84,7 +96,7 @@ public class AccountController {
     }*/
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteAccountById(@PathVariable("id") Integer id) {
+    public ResponseEntity<?> deleteAccountById(@PathVariable("id") Long id) {
         accountService.deleteAccount(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }

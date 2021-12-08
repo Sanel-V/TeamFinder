@@ -2,6 +2,7 @@ package hu.elte.teamfinder.utils;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -16,6 +17,6 @@ public class StringListConverter implements AttributeConverter<List<String>, Str
 
     @Override
     public List<String> convertToEntityAttribute(String s) {
-        return s != null ? Arrays.asList(s.split(";")) : Collections.emptyList();
+        return s != null ? new ArrayList<>(Arrays.asList(s.split(";"))) : Collections.emptyList();
     }
 }

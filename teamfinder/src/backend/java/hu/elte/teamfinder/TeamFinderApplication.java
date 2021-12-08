@@ -1,5 +1,6 @@
 package hu.elte.teamfinder;
 
+import hu.elte.teamfinder.exceptions.UserAlreadyExists;
 import hu.elte.teamfinder.models.Account;
 import hu.elte.teamfinder.repos.AccountRepository;
 import hu.elte.teamfinder.security.AccountRole;
@@ -29,7 +30,12 @@ public class TeamFinderApplication {
     @Bean
     CommandLineRunner run(AccountService service) {
         return args -> {
-            service.addAccount(new Account("Bob", "pass"));
+            try {
+                service.addAccount(new Account("Bob", "pass"));
+                service.addAccount(new Account("Bob", "thebuilder"));
+            } catch (UserAlreadyExists userAlreadyExists) {
+                userAlreadyExists.printStackTrace();
+            }
         };
     }
 }
