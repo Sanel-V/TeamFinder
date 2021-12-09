@@ -1,7 +1,7 @@
 package hu.elte.teamfinder.controllers;
 
-import hu.elte.teamfinder.models.Profile;
-import hu.elte.teamfinder.services.ProfileService;
+import hu.elte.teamfinder.models.ProfileModel;
+import hu.elte.teamfinder.services.ProfileModelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,30 +13,30 @@ import java.util.List;
 @RequestMapping("/profile")
 public class ProfileController {
 
-    private final ProfileService profileService;
+    private final ProfileModelService profileService;
 
     @Autowired
-    public ProfileController(ProfileService service) {
+    public  ProfileController(ProfileModelService service){
         this.profileService = service;
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Profile> getProfileById(@PathVariable("id") Integer id) {
-        Profile profile = profileService.getProfileById(id);
+    public ResponseEntity<ProfileModel> getProfileById(@PathVariable("id") Long id){
+        ProfileModel profile = profileService.getProfileById(id);
         return new ResponseEntity<>(profile, HttpStatus.OK);
     }
 
     @GetMapping("/allprofiles")
-    public ResponseEntity<List<Profile>> getAllProfiles() {
-        List<Profile> profiles = profileService.findAllProfiles();
+    public  ResponseEntity<List<ProfileModel>> getAllProfiles(){
+        List<ProfileModel> profiles = profileService.findAllProfiles();
         return new ResponseEntity<>(profiles, HttpStatus.OK);
     }
 
     @PutMapping("/update")
-    public ResponseEntity<Profile> updateProfile(@RequestBody Profile profile) {
-        Profile updatedProfile = profileService.updateProfile(profile);
+    public ResponseEntity<ProfileModel> updateProfile(@RequestBody ProfileModel profile){
+        ProfileModel updatedProfile = profileService.updateProfile(profile);
         return new ResponseEntity<>(updatedProfile, HttpStatus.OK);
     }
 
-    // Deleting profile is only possible if you delete the account
+    //Deleting profile is only possible if you delete the account
 }
