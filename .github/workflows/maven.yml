@@ -26,5 +26,7 @@ jobs:
       run: mvn -B package --file teamfinder/pom.xml
     - name: PMD check
       run: mvn pmd:check --file teamfinder/pom.xml
+    - name: Heroku config
+      run: heroku config:set PROJECT_PATH=teamfinder/pom.xml
     - name: Deploy with Heroku
       run: mvn clean heroku:deploy -Dheroku.appName=teamfinderapp --file teamfinder/pom.xml
