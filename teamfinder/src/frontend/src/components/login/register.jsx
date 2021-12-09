@@ -6,6 +6,11 @@ export class Register extends React.Component {
         super(props);
     }
 
+    trigger = (event) => {
+        this.props.toggleActive(true);
+        event.preventDefault();
+    }
+
     render() {
         return <div className="base-container">
             <div className="header">Register</div>
@@ -15,10 +20,6 @@ export class Register extends React.Component {
                 </div>
                 <div className="form">
                     <div className="form-group">
-                        <label htmlFor="username">Username</label>
-                        <input type="text" name="username" placeholder="Username"/>
-                    </div>
-                    <div className="form-group">
                         <label htmlFor="email">Email</label>
                         <input type="email" name="email" placeholder="Email"/>
                     </div>
@@ -27,6 +28,7 @@ export class Register extends React.Component {
                         <input type="password" name="password" placeholder="Password"/>
                     </div>
                 </div>
+                <div className="switch">Already have account? <div className="switchButton" onClick = {this.trigger.bind(this)}>Login here.</div></div>
             </div>
             <div className="footer">
                 <button type="button" className="btn">Register</button>

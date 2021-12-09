@@ -2,6 +2,7 @@ package hu.elte.teamfinder.security;
 
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -10,10 +11,25 @@ import java.util.stream.Collectors;
 public enum AccountRole {
     ADMIN(
             new HashSet<AccountPermission>(
-                    List.of(AccountPermission.ACCOUNT_WRITE, AccountPermission.ACCOUNT_READ))),
+                    List.of(
+                            AccountPermission.ACCOUNT_WRITE,
+                            AccountPermission.ACCOUNT_READ,
+                            AccountPermission.PROFILE_WRITE,
+                            AccountPermission.PROFILE_READ))),
     STANDARD(
             new HashSet<AccountPermission>(
-                    List.of(AccountPermission.ACCOUNT_WRITE, AccountPermission.ACCOUNT_READ)));
+                    List.of(
+                            AccountPermission.ACCOUNT_WRITE,
+                            AccountPermission.ACCOUNT_READ,
+                            AccountPermission.PROFILE_WRITE,
+                            AccountPermission.PROFILE_READ))),
+    NEW_USER(
+            new HashSet<AccountPermission>(
+                    List.of(
+                            AccountPermission.ACCOUNT_WRITE,
+                            AccountPermission.ACCOUNT_READ,
+                            AccountPermission.PROFILE_WRITE,
+                            AccountPermission.PROFILE_READ)));
 
     private final Set<AccountPermission> permissions;
 

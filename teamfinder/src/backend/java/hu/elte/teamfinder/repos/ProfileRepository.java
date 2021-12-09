@@ -1,15 +1,18 @@
 package hu.elte.teamfinder.repos;
 
-import hu.elte.teamfinder.models.ProfileModel;
+import hu.elte.teamfinder.models.Profile;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+import java.util.Optional;
+
 @Repository
-public interface ProfileRepository extends JpaRepository<ProfileModel, Integer> {
+public interface ProfileRepository extends JpaRepository<Profile, Integer> {
 
-    // Optional<ProfileModel> getAccountById(Integer id);
+    // Optional<Profile> getAccountById(Integer id);
 
-    // List<ProfileModel> getAllProfiles();
+    // List<Profile> getAllProfiles();
 
-    // Optional<ProfileModel> updateProfile(ProfileModel profile);
+    // Optional<Profile> updateProfile(Profile profile);
 }

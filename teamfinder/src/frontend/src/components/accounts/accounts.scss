@@ -1,88 +1,175 @@
 * {
-    margin: 0;
-    padding: 0
+  margin: 0;
+  padding: 0
 }
 
-body {
-    background-color: #000
+.container {
+  margin: 0 auto;
+  width: 100%;
 }
 
-.card {
-    width: 350px;
-    background-color: #efefef;
-    border: none;
-    cursor: pointer;
-    transition: all 0.5s
+.mycard {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 1px solid rgba(0,0,0,.125);
+  border-radius: 0.25rem;
 }
 
-.image img {
-    transition: all 0.5s
+.logoutBtn {
+  position: relative;
+  right: -90%;
+  margin: 10px 15px;
+  padding: 5px 5px;
 }
 
-.card:hover .image img {
-    transform: scale(1.5)
+.searchBtn {
+  position: relative;
+  padding: 5px 15px;
+  margin-left: 10px;
+  border-radius: 5px;
+  background-color: rgb(92, 158, 233);
+  color: white
 }
 
-.btn {
-    height: 140px;
-    width: 140px;
-    border-radius: 50%
+.searchBtn:hover {
+  background-color: white;
+  border: 2px solid rgb(92, 158, 233);
+  padding: 3px 13px;
+  color: black;
 }
 
-.name {
-    font-size: 22px;
-    font-weight: bold
+.textInput {
+  position: relative;
+  border-radius: 10px;
+  padding: 5px;
+  margin-bottom: 40px;
 }
 
-.idd {
-    font-size: 14px;
-    font-weight: 600
+.profList {
+  position: relative;
+  display: inline-block;
+  background-color: rgb(223, 223, 223);
+  border-radius: 10px;
+  width: 70%;
+  margin: 20px 0;
 }
 
-.idd1 {
-    font-size: 12px
+.nameBlock, .statusBlock, .tagBlock {
+  display: inline-block;
+  padding: 10px 0;
 }
 
-.number {
-    font-size: 22px;
-    font-weight: bold
+.nameBlock p, .statusBlock p, .tagBlock p {
+  margin:0;
+  font-weight: 600;
+  width: 30px;
 }
 
-.follow {
-    font-size: 12px;
-    font-weight: 500;
-    color: #444444
+.nameBlock {
+position: relative;
+right: -5%;
+width: 50px;
+}
+.statusBlock {
+position: relative;
+right: -20%;
+width: 70px;
+}
+.tagBlock {
+position: relative;
+right: -40%;
+width: 150px;
 }
 
-.btn1 {
-    height: 40px;
-    width: 150px;
-    border: none;
-    background-color: #000;
-    color: #aeaeae;
-    font-size: 15px
+.viewBtn {
+  position: relative;
+  right: -50%;
+  margin-left: 100px;
+  margin-right: 50px;
+  padding: 3px 5px;
+  border-radius: 7px;
 }
 
-.text span {
-    font-size: 13px;
-    color: #545454;
-    font-weight: 500
+.container2 {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 100%;
+  background: #f1f1f1;
+  margin: 10px auto 0;
+  word-break: break-all;
+  border: 1px solid rgba(0, 0, 0, 0.274);
 }
 
-.icons i {
-    font-size: 19px
+.bloc-tabs {
+  display: flex;
+}
+.tabs {
+
+  padding: 15px;
+  text-align: center;
+  width: 50%;
+  background: rgba(128, 128, 128, 0.075);
+  cursor: pointer;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.274);
+  box-sizing: content-box;
+  position: relative;
+  outline: none;
+}
+.tabs:not(:last-child){
+  border-right: 1px solid rgba(0, 0, 0, 0.274);
 }
 
-hr .new1 {
-    border: 1px solid
+.active-tabs  {
+  background: white;
+  border-bottom: 1px solid transparent;
 }
 
-.join {
-    font-size: 14px;
-    color: #a0a0a0;
-    font-weight: bold
+.active-tabs::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% + 2px);
+  height: 5px;
+  background: rgb(88, 147, 241);
 }
 
-.date {
-    background-color: #ccc
+button {
+  border: none;
+  
+}
+.content-tabs {
+  flex-grow : 1;
+}
+.content {
+  background: white;
+  padding: 20px;
+  width: 100%;
+  height: 100%;
+  display: none;
+}
+.content h2 {
+  padding: 0px 0 5px 0px;
+}
+.content hr {
+  width: 100%;
+  height: 2px;
+  background: #222;
+  margin-bottom: 5px;
+}
+.content p {
+  width: 100%;
+  height: 100%;
+}
+.active-content {
+  display: block;
 }
