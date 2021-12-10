@@ -31,13 +31,12 @@ public class ApplicationAuthenticationFilter extends UsernamePasswordAuthenticat
     private JwtUtil jwtUtil;
 
     private final AuthenticationManager authenticationManager;
-    private final AccountService accountService;
+    // private final AccountService accountService;
 
     @Autowired
-    public ApplicationAuthenticationFilter(
-            AuthenticationManager authenticationManager, AccountService accountService) {
+    public ApplicationAuthenticationFilter(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;
-        this.accountService = accountService;
+        // this.accountService = accountService;
     }
 
     @Override

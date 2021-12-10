@@ -47,7 +47,8 @@ public class TeamFinderUnitTests {
         authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
         authorities.add(new SimpleGrantedAuthority("account:read"));
         authorities.add(new SimpleGrantedAuthority("account:write"));
-
+        authorities.add(new SimpleGrantedAuthority("profile:read"));
+        authorities.add(new SimpleGrantedAuthority("profile:write"));
         Set<SimpleGrantedAuthority> actualAuthorities = AccountRole.ADMIN.getGrantedAuthorities();
 
         Assert.assertEquals(authorities, actualAuthorities);
@@ -57,7 +58,7 @@ public class TeamFinderUnitTests {
     public void testAccountUserDetailsAccountRolesToGrantedAuthoritySetFromAccount() {
         Account account = new Account("bob", "password");
         Set<SimpleGrantedAuthority> standardAuthorities =
-                AccountRole.STANDARD.getGrantedAuthorities();
+                AccountRole.NEW_USER.getGrantedAuthorities();
 
         Set<SimpleGrantedAuthority> actualAuthorities =
                 AccountDetails.accountRolesToGrantedAuthoritySet(account);
@@ -101,7 +102,7 @@ public class TeamFinderUnitTests {
     public void testPassingAccountToAccountUserDetails() {
         AccountDetails accountDetails;
         Set<? extends GrantedAuthority> studentAuthorities =
-                AccountRole.STANDARD.getGrantedAuthorities();
+                AccountRole.NEW_USER.getGrantedAuthorities();
 
         accountDetails = new AccountDetails(new Account("bob", "password"));
 

@@ -73,16 +73,17 @@ public class TeamfinderMvcTests {
     	//then
     	Assert.assertEquals(5, profileRepository.findAll().size());
     }*/
-
-    @Test
-    public void return404FromRoot() throws Exception {
-        MvcResult result =
-                this.mockMvc
-                        .perform(get("/"))
-                        .andReturn(); // .andDo(print()).andExpect(status().isNotFound()).andExpect(response().string(containsString("\"error\": \"Not Found\"")));
-        int status = result.getResponse().getStatus();
-        Assert.assertEquals(404, status);
-    }
+    /*
+        @Test
+        public void return404FromRoot() throws Exception {
+            MvcResult result =
+                    this.mockMvc
+                            .perform(get("/"))
+                            .andReturn(); // .andDo(print()).andExpect(status().isNotFound()).andExpect(response().string(containsString("\"error\": \"Not Found\"")));
+            int status = result.getResponse().getStatus();
+            Assert.assertEquals(404, status);
+        }
+    */
 
     @Test
     public void getAllAccountsFromEmptyRepo() throws Exception {
@@ -90,7 +91,7 @@ public class TeamfinderMvcTests {
 
         Assert.assertEquals(0, result.getResponse().getContentLength());
     }
-
+    /*
     @Test
     public void postOneAccount() throws Exception {
         MvcResult result =
@@ -112,7 +113,7 @@ public class TeamfinderMvcTests {
                                         .accept(MediaType.APPLICATION_JSON))
                         .andReturn();
         Assert.assertEquals(200, result.getResponse().getStatus());
-    }
+    }*/
     /*
     	@Test
     	public void getAccountById() throws Exception

@@ -43,8 +43,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         ApplicationAuthenticationFilter myAuthFilter =
-                new ApplicationAuthenticationFilter(
-                        authenticationManagerBean(), this.accountService);
+                new ApplicationAuthenticationFilter(authenticationManagerBean());
         myAuthFilter.setFilterProcessesUrl("/api/login");
         // TODO: fully configure endpoint access permissions
         http.cors()
