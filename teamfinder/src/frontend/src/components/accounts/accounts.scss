@@ -8,6 +8,10 @@
   width: 100%;
 }
 
+.profContainer {
+  width: 1000px;
+}
+
 .mycard {
   position: relative;
   width: 100%;
@@ -23,7 +27,7 @@
 
 .logoutBtn {
   position: relative;
-  right: -90%;
+  right: -470px;
   margin: 10px 15px;
   padding: 5px 5px;
 }
@@ -172,4 +176,10 @@ button {
 }
 .active-content {
   display: block;
+}
+
+@media only screen and (max-width: 800px) {
+  .logoutBtn {
+    right: 0;
+  }
 }
