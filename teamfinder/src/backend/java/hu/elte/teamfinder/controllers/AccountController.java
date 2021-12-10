@@ -13,6 +13,7 @@ import hu.elte.teamfinder.viewmodels.AccountViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.util.MimeTypeUtils;
@@ -64,7 +65,7 @@ public class AccountController {
 
     @GetMapping("/all")
     public ResponseEntity<?> getAllAccounts(Principal principal) {
-        // AccountDetails accountDetails = (AccountDetails)principal;
+        // UsernamePasswordAuthenticationToken authenticationToken = principal.;
         /*
         if(!accountDetails.getAuthorities().contains(new SimpleGrantedAuthority("ADMIN")))
         {
