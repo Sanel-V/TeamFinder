@@ -46,7 +46,7 @@ export class Accounts extends React.Component {
             window.location.href = '/';
         }
         return(
-        <div>
+        <div className="profContainer">
             <button onClick={logout} className="logoutBtn">Log out</button>
             <Profiles profiles={this.state.profiles}/>
         </div>

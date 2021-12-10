@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 public class AccountDetails extends User {
 
-    private final Integer accountId;
+    private final Long accountId;
 
     public AccountDetails(Account account) {
         super(
@@ -56,7 +56,7 @@ public class AccountDetails extends User {
            return authorities;
        }
     */
-    public Integer getAccountId() {
+    public Long getAccountId() {
         return accountId;
     }
 }

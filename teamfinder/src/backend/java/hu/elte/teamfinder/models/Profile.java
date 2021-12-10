@@ -1,5 +1,8 @@
 package hu.elte.teamfinder.models;
 
+import hu.elte.teamfinder.utils.StringListConverter;
+import org.junit.jupiter.api.Test;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -9,17 +12,16 @@ import static javax.persistence.GenerationType.AUTO;
 @Entity
 public class Profile implements Serializable {
 
-    // TODO: connect Profile to Account
     /** ID of the account from Account */
     @Id
     @Column(nullable = false, updatable = false, unique = true)
     @GeneratedValue(strategy = AUTO)
-    private Integer accountId;
+    private Long accountId;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String firstName;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String lastName;
 
     private Integer age;
@@ -28,45 +30,68 @@ public class Profile implements Serializable {
     /** Summary of the profile */
     private String summary;
     /** Shows the skills of the person */
+    @Convert(converter = StringListConverter.class)
+    @Column(name = "tags")
     private ArrayList<String> tags;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @MapsId
+    private Account account;
 
     /**
      * The general contructor of the Profile
      *
-     * @param accountId Id of the account form Account
+     * @param account account the profile is connected to
      * @param firstname
      * @param lastname
      * @param age
      */
-    public Profile(Integer accountId, String firstname, String lastname, Integer age) {
-        this.accountId = accountId;
+    public Profile(Account account, String firstname, String lastname, Integer age) {
+        this.account = account;
+        this.accountId = account.getAccountId();
         this.firstName = firstname;
         this.lastName = lastname;
         this.age = age;
-        this.isPublic = true;
+        this.isPublic = false;
         this.summary = "";
         this.tags = new ArrayList<String>();
     }
 
+    public Profile(Account account) {
+        this(account, null, null, null);
+    }
+
     public Profile() {}
 
-    public Integer getAccountId() {
+    public Long getAccountId() {
         return this.accountId;
     }
 
-    public String getFirstname() {
+    public Boolean getPublic() {
+        return isPublic;
+    }
+
+    public void setPublic(Boolean aPublic) {
+        isPublic = aPublic;
+    }
+
+    public void setAccountId(Long accountId) {
+        this.accountId = accountId;
+    }
+
+    public String getFirstName() {
         return this.firstName;
     }
 
-    public void setFirstname(String firstname) {
+    public void setFirstName(String firstname) {
         this.firstName = firstname;
     }
 
-    public String getLastname() {
+    public String getLastName() {
         return this.lastName;
     }
 
-    public void setLastname(String lastname) {
+    public void setLastName(String lastname) {
         this.lastName = lastname;
     }
 
@@ -78,24 +103,12 @@ public class Profile implements Serializable {
         this.age = age;
     }
 
-    public Boolean getIsPublic() {
-        return this.isPublic;
-    }
-
-    public void setIsPublic(Boolean isPublic) {
-        this.isPublic = isPublic;
-    }
-
     public String getSummary() {
         return this.summary;
     }
 
     public void setSummary(String summary) {
         this.summary = summary;
-    }
-
-    public ArrayList<String> getAllTags() {
-        return this.tags;
     }
 
     public void clearTags() {
@@ -110,5 +123,21 @@ public class Profile implements Serializable {
         if (!this.tags.remove(tag)) {
             throw new IllegalArgumentException("Tag doesn't exist!");
         }
+    }
+
+    public ArrayList<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(ArrayList<String> tags) {
+        this.tags = tags;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
     }
 }

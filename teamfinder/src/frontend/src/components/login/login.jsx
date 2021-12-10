@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import loginImg from "../../login.svg";
 import axios from "axios";
 
@@ -16,16 +16,17 @@ export class Login extends React.Component {
             refresh_token: ''
         };
 
+        this.state = {result: ""}
+        this.state = {error: false}
+
         this.handleChange = this.handleChange.bind(this);
         this.submit = this.submit.bind(this);
-        
 
     }
 
-
-
     submit() {
         const { email, password } = this.state;
+        
         console.log('email:'+email);
         console.log('pass:'+password);
         const params = new URLSearchParams()
@@ -33,6 +34,8 @@ export class Login extends React.Component {
         params.append('password', password)
         axios.post(this.baseUrl + '/api/login', params)
         .then(response => {
+            this.setState({ result: response.data })
+            this.setState({ error: null })
             console.log({response});
             if (response.status == 200){
                 localStorage.setItem('access_token', response.data.access_token);
@@ -41,7 +44,20 @@ export class Login extends React.Component {
         })
         .catch(err => {
             console.log({err});
+            this.setState({ error: true })
         });
+    }
+
+    getErrorView = () => {
+        return (
+            <div className="divError">
+            Oh no! Something went wrong.
+            </div>
+        )
+    }
+
+    getListItems = () => {
+        return (<div></div>)
     }
 
     handleChange(e) {
@@ -56,7 +72,7 @@ export class Login extends React.Component {
 
     render() {
         const {email, password} = this.state;
-
+        const { error } = this.state;
         return <div className="base-container">
             <div className="header">Login to TeamFinder</div>
             <div className="content">
@@ -72,6 +88,9 @@ export class Login extends React.Component {
                         <input type="password" name="password" placeholder="******" value={password} onChange={this.handleChange}/>
                     </div>
                 </div>
+                <ul>
+                    {  error ? this.getErrorView() : this.getListItems()}
+                </ul>
                 <div className="switch" >Don't have account? <div className="switchButton" onClick={this.trigger.bind(this)}>Register here.</div></div>
             </div>
             <div className="footer">

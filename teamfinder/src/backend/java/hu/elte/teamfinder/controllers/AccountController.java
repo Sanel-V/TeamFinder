@@ -2,26 +2,25 @@ package hu.elte.teamfinder.controllers;
 
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import hu.elte.teamfinder.exceptions.UserAlreadyExists;
 import hu.elte.teamfinder.models.Account;
 
 import hu.elte.teamfinder.models.AccountDetails;
 import hu.elte.teamfinder.services.AccountService;
+import hu.elte.teamfinder.services.ProfileService;
 import hu.elte.teamfinder.utils.JwtUtil;
+import hu.elte.teamfinder.viewmodels.AccountViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.util.MimeTypeUtils;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,12 +32,14 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RestController
 @RequestMapping("/account")
 public class AccountController {
-    // TODO: making instance of Service
+
     private final AccountService accountService;
+    private final ProfileService profileService;
 
     @Autowired
-    public AccountController(AccountService accountService) {
+    public AccountController(AccountService accountService, ProfileService profileService) {
         this.accountService = accountService;
+        this.profileService = profileService;
     }
 
     // TODO: add @PreAuthorize for permission based authentication for each Mapping
@@ -60,39 +61,63 @@ public class AccountController {
     */
 
     @GetMapping("/all")
-    public ResponseEntity<List<Account>> getAllAccounts() {
+    public ResponseEntity<List<AccountViewModel>> getAllAccounts() {
+        List<AccountViewModel> accountViewModels = new ArrayList<>();
+
         List<Account> accounts = accountService.getAllAccounts();
-        return new ResponseEntity<>(accounts, HttpStatus.OK);
+        accounts.forEach(account -> accountViewModels.add(new AccountViewModel(account)));
+
+        return new ResponseEntity<>(accountViewModels, HttpStatus.OK);
     }
 
     @GetMapping("/get/{id}")
-    public ResponseEntity<Account> getAccountById(@PathVariable("id") Integer id) {
+    public ResponseEntity<AccountViewModel> getAccountById(@PathVariable("id") Long id) {
         Account account = accountService.getAccountById(id);
-        return new ResponseEntity<>(account, HttpStatus.OK);
+        return new ResponseEntity<>(new AccountViewModel(account), HttpStatus.OK);
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Account> addAccount(@RequestBody Account account) {
-        Account createdAccount = accountService.addAccount(account);
-        return new ResponseEntity<>(createdAccount, HttpStatus.OK);
+    public ResponseEntity<?> addAccount(@RequestBody Account account) {
+        Account createdAccount;
+        try {
+            createdAccount = accountService.addAccount(account);
+        } catch (UserAlreadyExists e1) {
+            return new ResponseEntity<String>(e1.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (IllegalArgumentException e2) {
+            return new ResponseEntity<String>(e2.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+        profileService.createProfile(account.getProfile());
+        return new ResponseEntity<AccountViewModel>(
+                new AccountViewModel(createdAccount), HttpStatus.CREATED);
     }
-    /*
-    @PutMapping("/update")
-    public ResponseEntity<Account> updateAccount(@RequestBody Account account){
-        //TODO: Implement function
-        throw new UnsupportedOperationException();
-    }*/
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<?> updateAccount(
+            @PathVariable("id") Long id, @RequestBody Account account) {
+        // TODO: Implement function
+        Account foundAccount;
+        try {
+            foundAccount = accountService.getAccountById(id);
+        } catch (UsernameNotFoundException e1) {
+            return new ResponseEntity<String>(e1.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+        if (account.getAccountId() == null
+                || foundAccount.getAccountId() == account.getAccountId()) {
+            try {
+                foundAccount = accountService.updateAccount(id, account);
+            } catch (UserAlreadyExists e2) {
+                return new ResponseEntity<String>(e2.getMessage(), HttpStatus.BAD_REQUEST);
+            }
+        }
+        return new ResponseEntity<AccountViewModel>(
+                new AccountViewModel(foundAccount), HttpStatus.OK);
+    }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteAccountById(@PathVariable("id") Integer id) {
+    public ResponseEntity<?> deleteAccountById(@PathVariable("id") Long id) {
         accountService.deleteAccount(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-    /*
-    @GetMapping("/getUserDetails/{username}")
-    public ResponseEntity<UserDetails>   loadUserByUsername(@PathVariable("username") String username){
-        return new ResponseEntity<>(accountService.loadUserByUsername(username), HttpStatus.OK);
-    }*/
 
     @GetMapping("/token/refresh")
     public void refreshToken(HttpServletRequest request, HttpServletResponse response)

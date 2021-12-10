@@ -1,5 +1,6 @@
 package hu.elte.teamfinder.services;
 
+import hu.elte.teamfinder.exceptions.UserAlreadyExists;
 import hu.elte.teamfinder.models.Account;
 import hu.elte.teamfinder.models.AccountDetails;
 import hu.elte.teamfinder.repos.AccountRepository;
@@ -40,7 +41,7 @@ public class AccountService implements UserDetailsService {
         return accountRepository.findAll();
     }
 
-    public Account getAccountById(Integer id) {
+    public Account getAccountById(Long id) {
         return accountRepository.getById(id);
     }
 
@@ -53,18 +54,44 @@ public class AccountService implements UserDetailsService {
                                         String.format("User %s not found", email)));
     }
 
-    public Account addAccount(Account account) {
-        account.setPassword(passwordEncoder.encode(account.getPassword()));
-        return accountRepository.save(account);
-    }
-    /*
-        public Account updateAccount(Account account)
-        {
-            //If account already exists, updates
+    public Account addAccount(Account account) throws UserAlreadyExists {
+        if (account.getEmail() == null || account.getEmail() == "") {
+            throw new IllegalArgumentException("Invalid email");
+        }
+        try {
+            getAccountByEmail(account.getEmail());
+        } catch (UsernameNotFoundException e1) {
+            // No account exists with this email, we can safely create one
+            account.setPassword(passwordEncoder.encode(account.getPassword()));
             return accountRepository.save(account);
         }
-    */
-    public void deleteAccount(Integer id) {
+        throw new UserAlreadyExists("Account with email " + account.getEmail() + " already exists");
+    }
+
+    public void deleteAccount(Long id) {
         accountRepository.deleteById(id);
+    }
+
+    public Account updateAccount(Long id, Account account) throws UserAlreadyExists {
+        Account account1;
+        Account accountToUpdate = getAccountById(id);
+
+        // check if email is in use
+        try {
+            account1 = getAccountByEmail(account.getEmail());
+        } catch (UsernameNotFoundException e1) {
+            // No account exists with this email, we can safely update
+            if (account.getPassword() != "") {
+                accountToUpdate.setPassword(passwordEncoder.encode(account.getPassword()));
+            }
+            accountToUpdate.setEmail(account.getEmail());
+            return accountRepository.save(accountToUpdate);
+        }
+        // Email belongs to account that we're updating
+        if (account1.getAccountId() == accountToUpdate.getAccountId()) {
+            accountToUpdate.setPassword(passwordEncoder.encode(account.getPassword()));
+            return accountRepository.save(accountToUpdate);
+        }
+        throw new UserAlreadyExists("Account with email " + account.getEmail() + " already exists");
     }
 }

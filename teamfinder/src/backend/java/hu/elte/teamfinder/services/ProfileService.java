@@ -3,8 +3,11 @@ package hu.elte.teamfinder.services;
 import hu.elte.teamfinder.models.Profile;
 import hu.elte.teamfinder.repos.ProfileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
