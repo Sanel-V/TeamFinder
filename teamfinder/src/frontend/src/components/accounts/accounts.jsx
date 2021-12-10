@@ -3,6 +3,8 @@ import "./accounts.scss";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Routes, Route, Link } from "react-router-dom";
 import axios from "axios";
+
+import profileImage from "../../login.svg";
 import { useState } from "react";
 
 export class Accounts extends React.Component {
@@ -19,7 +21,7 @@ export class Accounts extends React.Component {
 
         this.baseUrl = "http://localhost:8080";
         axios.defaults.headers.common['Authorization'] = "Bearer: " + token;
-        axios.get(`${this.baseUrl}/account/all`)
+        axios.get(`${this.baseUrl}/profile/profile/all`)
             .then(response => {
                 if (response.data.length === 0)
                     this.setState({ profiles: [{key: 0, "image":"abc", "email" : "avx", "bio" : "abc"}] })
@@ -61,7 +63,7 @@ function Profiles(props){
         setToggleState(index);
     };
     const profiles = input.map((profile) =>
-        <div className="profList" key={profile.accountId}>{<Profile profile={profile} />}</div>
+        <div className="profList" key={profile.accountId}>{<Profile profile={profile} id={1} />}</div>
     );
     return(
         <div className="container2">
@@ -121,10 +123,11 @@ function Profile(props) {
     
     return (
             <div className="d-flex flex-row">
-                <div className="p-2 "> <p>{props.profile.email}</p> </div>
-                <div className="p-2 "> <p>Status</p> </div>
-                <div className="p-2 "><p>Tag1</p> </div>
-                <Link className="p-2 " to={"/profile/"+props.profile.accountId}>View profile</Link>
+                <img src="/profile_default.png" className="profileImage" alt="" />
+                <div className="p-2 "> <p>{props.profile.firstName}</p> </div>
+                <div className="p-2 "> <p></p> </div>
+                <div className="p-2 "><p></p> </div>
+                <Link className="p-2 " to={"/profile/"+props.id}>View profile</Link>
             </div>
                 /*<div className=" image d-flex flex-column justify-content-center align-items-center"> <button className="btn btn-secondary"><img alt="" src={props.profile.image} height="100" width="100" /></button> <span className="name mt-3">{props.profile.email}</span> <span className="idd">@instagram</span>
                     <div className="d-flex flex-row justify-content-center align-items-center gap-2"> <span className="idd1">Oxc4c16a645_b21a</span> <span><i className="fa fa-copy"></i></span> </div>

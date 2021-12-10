@@ -2,49 +2,44 @@ import React from "react";
 import "./profile.scss"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from "axios";
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route, Link, useParams } from "react-router-dom";
 import App from "../../App";
 import { Accounts } from "../accounts/accounts";
 
 export function Profile() {
 
-    /*constructor(props) {
+    let { id } = useParams();
+    let baseUrl = "http://localhost:8080";
+    let profile = {};
+    var token = localStorage.getItem('access_token');
+    let success = false;
 
-        super(props);
+    axios.defaults.headers.common['Authorization'] = "Bearer: " + token;
+    axios.get(`${baseUrl}/account/get/${id}`)
+        .then(response => {
+            success = true;
+            profile = { profile: response.data };
+            console.log(response.data);
+        })
+        .catch(function (error) {
+            // handle error
 
-        this.state = {
-            profile: []
-        }
-        this.baseUrl = "http://localhost:8080";
-        this.state = { 
-            key: 0,
-            image:"https://i.pinimg.com/564x/d5/42/0d/d5420d23ea3e6f092d8d1c60843400de.jpg",
-            email : "defaul@email.hu",
-            bio : "lorem"
-        };
+            console.log(error);
+        })
+        .then(function () {
+        });
 
-        axios.get(`${this.baseUrl}/account/get/`)
-            .then(response => {
-                this.state = { profile: response.data };
-                console.log(props.id);
-            })
-            .catch(function (error) {
-                // handle error
+        return <AllData id={id} profile={profile} success={success}/>
 
-                console.log(error);
-            })
-            .then(function () {
-                // always executed
-            });
-
-            //console.log(props.match.params.id);
-
-    }*/
+        //console.log(props.match.params.id);
 
 
-    let { id } = 0
 
-    return(
+
+}
+
+function Render(props){
+  return(
     <div className="container">
       
         <div className="main-body">
@@ -55,13 +50,20 @@ export function Profile() {
                   <li className="breadcrumb-item"><a href="">User Profile</a></li>
                 </ol>
               </nav>
-              <h1></h1>
-              <AllData/>
+              <h1>{props.id}</h1>
+              <LoadData profile={props.profile} success={props.success}/>
 
         </div>
     </div>
     )
+}
 
+function LoadData(props){
+  console.log("success: "+props.success);
+  if (props.success)
+    return <AllData profile={props.profile}/>;
+  else
+    return <NoData />;
 }
 
 function NoData(){
@@ -81,7 +83,7 @@ function NoData(){
   );
 }
 
-function AllData(){
+function AllData(profile){
   
   return(
       <div className="row gutters-sm">
@@ -91,7 +93,7 @@ function AllData(){
             <div className="d-flex flex-column align-items-center text-center">
               <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" className="rounded-circle" width="150"></img>
               <div className="mt-3">
-                <h4>John Doe</h4>
+                <h4>{profile.firstName}</h4>
                 <p className="text-secondary mb-1">Full Stack Developer</p>
                 <p className="text-muted font-size-sm">Bay Area, San Francisco, CA</p>
                 <button className="btn btn-primary">Follow</button>
