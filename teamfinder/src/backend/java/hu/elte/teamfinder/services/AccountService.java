@@ -3,24 +3,34 @@ package hu.elte.teamfinder.services;
 import hu.elte.teamfinder.exceptions.UserAlreadyExists;
 import hu.elte.teamfinder.models.Account;
 import hu.elte.teamfinder.models.AccountDetails;
+import hu.elte.teamfinder.models.Profile;
 import hu.elte.teamfinder.repos.AccountRepository;
+import hu.elte.teamfinder.repos.ProfileRepository;
+import hu.elte.teamfinder.security.AccountRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class AccountService implements UserDetailsService {
 
+    private final ProfileRepository profileRepository;
     private final AccountRepository accountRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public AccountService(AccountRepository accountRepository, PasswordEncoder passwordEncoder) {
+    public AccountService(
+            ProfileRepository profileRepository,
+            AccountRepository accountRepository,
+            PasswordEncoder passwordEncoder) {
+        this.profileRepository = profileRepository;
         this.accountRepository = accountRepository;
         this.passwordEncoder = passwordEncoder;
     }
@@ -63,6 +73,10 @@ public class AccountService implements UserDetailsService {
         } catch (UsernameNotFoundException e1) {
             // No account exists with this email, we can safely create one
             account.setPassword(passwordEncoder.encode(account.getPassword()));
+            if (account.getProfile() == null) {
+                account.setProfile(new Profile(account));
+            }
+            profileRepository.save(account.getProfile());
             return accountRepository.save(account);
         }
         throw new UserAlreadyExists("Account with email " + account.getEmail() + " already exists");
@@ -93,5 +107,25 @@ public class AccountService implements UserDetailsService {
             return accountRepository.save(accountToUpdate);
         }
         throw new UserAlreadyExists("Account with email " + account.getEmail() + " already exists");
+    }
+
+    public Account addAccountRoles(Long id, Set<AccountRole> roles) {
+        Account accountToUpdate = getAccountById(id);
+        if (accountToUpdate != null) {
+            accountToUpdate.getRoles().addAll(roles);
+            return accountRepository.save(accountToUpdate);
+        } else {
+            throw new UsernameNotFoundException("Invalid account ID");
+        }
+    }
+
+    public Account removeAccountRoles(Long id, HashSet<AccountRole> roles) {
+        Account accountToUpdate = getAccountById(id);
+        if (accountToUpdate != null) {
+            accountToUpdate.getRoles().removeAll(roles);
+            return accountRepository.save(accountToUpdate);
+        } else {
+            throw new UsernameNotFoundException("Invalid account ID");
+        }
     }
 }

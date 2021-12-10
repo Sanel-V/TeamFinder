@@ -5,12 +5,12 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import hu.elte.teamfinder.models.Account;
 import hu.elte.teamfinder.models.AccountDetails;
+import hu.elte.teamfinder.services.AccountService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
@@ -30,7 +30,11 @@ public class JwtUtil {
 
     private Algorithm algorithm;
 
-    public JwtUtil() {
+    private final AccountService accountService;
+
+    @Autowired
+    public JwtUtil(AccountService accountService) {
+        this.accountService = accountService;
         this.algorithm = Algorithm.HMAC256(SECRET);
     }
 
@@ -86,7 +90,8 @@ public class JwtUtil {
         Set<SimpleGrantedAuthority> authorities = this.extractAuthoritiesFromToken(decodedJWT);
 
         UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(username, null, authorities);
+                new UsernamePasswordAuthenticationToken(
+                        accountService.loadUserByUsername(username), null, authorities);
         return authenticationToken;
     }
 }

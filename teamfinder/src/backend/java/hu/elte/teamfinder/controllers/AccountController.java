@@ -13,6 +13,9 @@ import hu.elte.teamfinder.viewmodels.AccountViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.util.MimeTypeUtils;
 import org.springframework.web.bind.annotation.*;
@@ -42,8 +45,6 @@ public class AccountController {
         this.profileService = profileService;
     }
 
-    // TODO: add @PreAuthorize for permission based authentication for each Mapping
-
     /*
     /**
      * Getting an account by ID
@@ -61,19 +62,28 @@ public class AccountController {
     */
 
     @GetMapping("/all")
-    public ResponseEntity<List<AccountViewModel>> getAllAccounts() {
+    public ResponseEntity<?> getAllAccounts(Authentication authentication) {
+
+        if (!isAdmin(authentication)) {
+            return new ResponseEntity<String>("Access denied", FORBIDDEN);
+        }
+
         List<AccountViewModel> accountViewModels = new ArrayList<>();
 
         List<Account> accounts = accountService.getAllAccounts();
         accounts.forEach(account -> accountViewModels.add(new AccountViewModel(account)));
 
-        return new ResponseEntity<>(accountViewModels, HttpStatus.OK);
+        return new ResponseEntity<List<AccountViewModel>>(accountViewModels, HttpStatus.OK);
     }
 
     @GetMapping("/get/{id}")
-    public ResponseEntity<AccountViewModel> getAccountById(@PathVariable("id") Long id) {
+    public ResponseEntity<?> getAccountById(
+            @PathVariable("id") Long id, Authentication authentication) {
+        if (!isMeOrAdmin(id, authentication)) {
+            return new ResponseEntity<String>("Access denied", FORBIDDEN);
+        }
         Account account = accountService.getAccountById(id);
-        return new ResponseEntity<>(new AccountViewModel(account), HttpStatus.OK);
+        return new ResponseEntity<AccountViewModel>(new AccountViewModel(account), HttpStatus.OK);
     }
 
     @PostMapping("/add")
@@ -93,8 +103,13 @@ public class AccountController {
 
     @PutMapping("/update/{id}")
     public ResponseEntity<?> updateAccount(
-            @PathVariable("id") Long id, @RequestBody Account account) {
-        // TODO: Implement function
+            @PathVariable("id") Long id,
+            @RequestBody Account account,
+            Authentication authentication) {
+
+        if (!isMeOrAdmin(id, authentication)) {
+            return new ResponseEntity<String>("Access denied", FORBIDDEN);
+        }
         Account foundAccount;
         try {
             foundAccount = accountService.getAccountById(id);
@@ -114,7 +129,11 @@ public class AccountController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteAccountById(@PathVariable("id") Long id) {
+    public ResponseEntity<?> deleteAccountById(
+            @PathVariable("id") Long id, Authentication authentication) {
+        if (!isMeOrAdmin(id, authentication)) {
+            return new ResponseEntity<String>("Access denied", FORBIDDEN);
+        }
         accountService.deleteAccount(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -123,7 +142,7 @@ public class AccountController {
     public void refreshToken(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
         // TODO: maybe make member
-        JwtUtil jwtUtil = new JwtUtil();
+        JwtUtil jwtUtil = new JwtUtil(accountService);
 
         String authorizationHeader = request.getHeader(AUTHORIZATION);
         if (authorizationHeader != null && authorizationHeader.startsWith(JwtUtil.HEADER_PREFIX)) {
@@ -152,5 +171,26 @@ public class AccountController {
                 new ObjectMapper().writeValue(response.getOutputStream(), error);
             }
         }
+    }
+
+    private boolean isMeOrAdmin(Long id, Authentication authentication) {
+        AccountDetails accountDetails = (AccountDetails) authentication.getPrincipal();
+        // Only allow if user is updating their own account data or if user is admin
+        if (accountDetails.getAccountId() == id
+                || accountDetails
+                        .getAuthorities()
+                        .contains((new SimpleGrantedAuthority("ROLE_ADMIN")))) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isAdmin(Authentication authentication) {
+        // Only allow fetching all accounts if user is admin
+        AccountDetails accountDetails = (AccountDetails) authentication.getPrincipal();
+        if (accountDetails.getAuthorities().contains((new SimpleGrantedAuthority("ROLE_ADMIN")))) {
+            return true;
+        }
+        return false;
     }
 }

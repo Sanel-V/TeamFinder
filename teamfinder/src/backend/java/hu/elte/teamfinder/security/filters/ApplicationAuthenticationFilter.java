@@ -1,10 +1,7 @@
 package hu.elte.teamfinder.security.filters;
 
-import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import hu.elte.teamfinder.models.Account;
 import hu.elte.teamfinder.models.AccountDetails;
-import hu.elte.teamfinder.repos.AccountRepository;
 import hu.elte.teamfinder.services.AccountService;
 import hu.elte.teamfinder.utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,7 +61,7 @@ public class ApplicationAuthenticationFilter extends UsernamePasswordAuthenticat
         AccountDetails account = (AccountDetails) authResult.getPrincipal();
         Assert.notNull(account.getAccountId(), "Principal returned null account ID");
         // Algorithm algorithm = Algorithm.HMAC256(SECRET);
-        this.jwtUtil = new JwtUtil();
+        this.jwtUtil = new JwtUtil(accountService);
         String access_token = jwtUtil.generateAccessToken(request, account);
         String refresh_token = jwtUtil.generateRefreshToken(request, account);
 

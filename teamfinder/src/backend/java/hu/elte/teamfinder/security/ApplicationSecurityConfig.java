@@ -16,8 +16,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import java.util.jar.JarEntry;
-
 @Configuration
 @EnableWebSecurity
 // @EnableGlobalMethodSecurity(prePostEnabled = true) //TODO: uncomment this when controllers are
@@ -46,22 +44,35 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 new ApplicationAuthenticationFilter(
                         authenticationManagerBean(), this.accountService);
         myAuthFilter.setFilterProcessesUrl("/api/login");
-        // TODO: fully configure endpoint access permissions
         http.cors()
                 .and()
                 .csrf()
                 .disable() // TODO: consider removing this in live build
                 .authorizeRequests()
-                .antMatchers("/api/login/**", "account/token/refresh")
+                .antMatchers("/api/login/**", "account/token/refresh", "/account/add/**")
                 .permitAll()
+                .antMatchers("/profile/public/**")
+                .hasAnyAuthority("profile:read")
+                .antMatchers("/profile/all/**")
+                .hasAnyAuthority("ROLE_ADMIN")
+                .antMatchers("/profile/update/**")
+                .hasAnyAuthority("profile:write")
+                .antMatchers("/profile/get/**")
+                .hasAnyAuthority("profile:read")
+                .antMatchers("/account/get/**")
+                .hasAnyAuthority("account:read")
+                .antMatchers("/account/update/**")
+                .hasAnyAuthority("account:write")
+                .antMatchers("/account/delete/**")
+                .hasAnyAuthority("ROLE_ADMIN")
                 .antMatchers("/account/all/**")
-                .hasAnyAuthority("ROLE_STANDARD")
+                .hasAnyAuthority("ROLE_ADMIN", "account:read")
                 .anyRequest()
                 .authenticated();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http.addFilter(myAuthFilter);
-        this.jwtUtil = new JwtUtil();
+        this.jwtUtil = new JwtUtil(accountService);
         http.addFilterBefore(
                 new ApplicationAuthorizationFilter(jwtUtil),
                 UsernamePasswordAuthenticationFilter.class);

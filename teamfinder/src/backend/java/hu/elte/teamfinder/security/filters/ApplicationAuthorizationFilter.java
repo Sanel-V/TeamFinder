@@ -36,7 +36,8 @@ public class ApplicationAuthorizationFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
         // Don't try authorizing on login page
         if (request.getServletPath().equals("/api/login")
-                || request.getServletPath().equals("/account/token/refresh")) {
+                || request.getServletPath().equals("/account/token/refresh")
+                || request.getServletPath().equals("/account/add")) {
             filterChain.doFilter(request, response);
         } else {
             String authorizationHeader = request.getHeader(AUTHORIZATION);
