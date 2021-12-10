@@ -27,7 +27,7 @@ public class Account implements Serializable {
             mappedBy = "account",
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY,
-            optional = false)
+            optional = true)
     private Profile profile;
 
     @Convert(converter = StringAccountRoleSetConverter.class)

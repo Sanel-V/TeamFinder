@@ -52,7 +52,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf()
                 .disable() // TODO: consider removing this in live build
                 .authorizeRequests()
-                .antMatchers("/api/login/**", "account/token/refresh")
+                .antMatchers("/api/login/**", "account/token/refresh", "/account/add/**")
                 .permitAll()
                 .antMatchers("/account/all/**")
                 .hasAnyAuthority("ROLE_STANDARD")

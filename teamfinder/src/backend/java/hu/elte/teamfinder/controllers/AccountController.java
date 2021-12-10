@@ -13,6 +13,7 @@ import hu.elte.teamfinder.viewmodels.AccountViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.util.MimeTypeUtils;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -61,13 +63,19 @@ public class AccountController {
     */
 
     @GetMapping("/all")
-    public ResponseEntity<List<AccountViewModel>> getAllAccounts() {
+    public ResponseEntity<?> getAllAccounts(Principal principal) {
+        // AccountDetails accountDetails = (AccountDetails)principal;
+        /*
+        if(!accountDetails.getAuthorities().contains(new SimpleGrantedAuthority("ADMIN")))
+        {
+            return new ResponseEntity<String>("Access denied", FORBIDDEN);
+        }*/
         List<AccountViewModel> accountViewModels = new ArrayList<>();
 
         List<Account> accounts = accountService.getAllAccounts();
         accounts.forEach(account -> accountViewModels.add(new AccountViewModel(account)));
 
-        return new ResponseEntity<>(accountViewModels, HttpStatus.OK);
+        return new ResponseEntity<List<AccountViewModel>>(accountViewModels, HttpStatus.OK);
     }
 
     @GetMapping("/get/{id}")
