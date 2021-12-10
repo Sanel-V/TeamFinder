@@ -31,3 +31,15 @@ jobs:
     - run: npm ci --prefix ./teamfinder/src/frontend
     - run: npm run build --if-present --prefix ./teamfinder/src/frontend
     - run: npm test --prefix ./teamfinder/src/frontend
+    
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: "teamfinderapp"
+          heroku_email: "sarkozidominik13@gmail.com"
+          appdir: "teamfinder/src/frontend"
