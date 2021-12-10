@@ -77,12 +77,15 @@ public class ProfileService {
                     new HashSet<AccountRole>(Arrays.asList(AccountRole.NEW_USER)));
         } else {
             profileToUpdate.setPublic(profile.getPublic());
+            accountService.addAccountRoles(
+                    profileToUpdate.getAccountId(),
+                    new HashSet<AccountRole>(Arrays.asList(AccountRole.STANDARD)));
             accountService.removeAccountRoles(
                     profileToUpdate.getAccountId(),
                     new HashSet<AccountRole>(Arrays.asList(AccountRole.NEW_USER)));
         }
 
-        return profileRepository.save(profile);
+        return profileRepository.save(profileToUpdate);
     }
 
     public Boolean deleteProfile(Long id) {
