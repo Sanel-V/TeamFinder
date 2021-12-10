@@ -52,31 +52,37 @@ public class ProfileService {
      */
     public Profile updateProfile(Long id, Profile profile) throws UsernameNotFoundException {
         Profile profileToUpdate = profileRepository.findById(id).get();
-        if (profile.getFirstName() != null) {
+        if (profile.getFirstName() != null && profile.getFirstName() != "") {
             profileToUpdate.setFirstName(profile.getFirstName());
         }
-        if (profile.getLastName() != null) {
+        if (profile.getLastName() != null && profile.getLastName() != "") {
             profileToUpdate.setLastName(profile.getLastName());
         }
-        if (profile.getAge() != null) {
+        if (profile.getAge() != null || profile.getAge() > 10) {
             profileToUpdate.setAge(profile.getAge());
         }
-        if (profile.getTags() != null) {
+        if (profile.getTags() != null && !profile.getTags().isEmpty()) {
             profileToUpdate.setTags(profile.getTags());
         }
-        if (profile.getSummary() != null) {
+        if (profile.getSummary() != null && profile.getSummary() != "") {
             profileToUpdate.setSummary(profile.getSummary());
         }
         // If data is missing, don't change user role
         // Only name is required
-        if (profileToUpdate.getFirstName() == null || profileToUpdate.getLastName() == null) {
+        if (profileToUpdate.getFirstName() == null
+                || profile.getFirstName() == ""
+                || profileToUpdate.getLastName() == null
+                || profile.getLastName() == "") {
             // Don't allow partial profiles to be public
             profileToUpdate.setPublic(false);
             accountService.addAccountRoles(
                     profileToUpdate.getAccountId(),
                     new HashSet<AccountRole>(Arrays.asList(AccountRole.NEW_USER)));
         } else {
-            profileToUpdate.setPublic(profile.getPublic());
+            if (profile.getPublic() != null) {
+                profileToUpdate.setPublic(profile.getPublic());
+            }
+
             accountService.addAccountRoles(
                     profileToUpdate.getAccountId(),
                     new HashSet<AccountRole>(Arrays.asList(AccountRole.STANDARD)));
