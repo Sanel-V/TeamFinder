@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface ProfileRepository extends JpaRepository<Profile, Integer> {
+public interface ProfileRepository extends JpaRepository<Profile, Long> {
 
     // Optional<Profile> getAccountById(Integer id);
 
