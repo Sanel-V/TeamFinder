@@ -42,4 +42,4 @@ jobs:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "teamfinderapp"
           heroku_email: "sarkozidominik13@gmail.com"
-          appdir: "teamfinder/src/frontend"
+          appdir: "./teamfinder/src/frontend"
