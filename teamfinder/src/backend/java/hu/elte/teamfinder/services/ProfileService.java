@@ -58,8 +58,8 @@ public class ProfileService {
         if (profile.getLastName() != null && profile.getLastName() != "") {
             profileToUpdate.setLastName(profile.getLastName());
         }
-        if (profile.getAge() != null || profile.getAge() > 10) {
-            profileToUpdate.setAge(profile.getAge());
+        if (profile.getAge() != null) {
+            if (profile.getAge() > 10) profileToUpdate.setAge(profile.getAge());
         }
         if (profile.getTags() != null && !profile.getTags().isEmpty()) {
             profileToUpdate.setTags(profile.getTags());

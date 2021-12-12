@@ -10,9 +10,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServlet;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,9 +24,8 @@ import static org.springframework.http.HttpStatus.FORBIDDEN;
 @RequestMapping("/profile")
 public class ProfileController {
 
-    private final ProfileService profileService;
+    @Autowired private final ProfileService profileService;
 
-    @Autowired
     public ProfileController(ProfileService service) {
         this.profileService = service;
     }
@@ -32,7 +33,12 @@ public class ProfileController {
     @GetMapping("/get/{id}")
     public ResponseEntity<?> getProfileById(
             @PathVariable("id") Long id, Authentication authentication) {
-        AccountDetails accountDetails = (AccountDetails) authentication.getPrincipal();
+
+        AccountDetails accountDetails =
+                (AccountDetails)
+                        SecurityContextHolder.getContext()
+                                .getAuthentication()
+                                .getPrincipal(); // (AccountDetails) authentication.getPrincipal();
         Profile profile = profileService.getProfileById(id);
         if (profile.getPublic() || accountDetails.getAccountId() == id || isAdmin(authentication)) {
             return new ResponseEntity<ProfileViewModel>(
@@ -74,6 +80,7 @@ public class ProfileController {
     public ResponseEntity<?> updateProfile(
             @PathVariable Long id, @RequestBody Profile profile, Authentication authentication) {
         AccountDetails accountDetails = (AccountDetails) authentication.getPrincipal();
+
         if (!(accountDetails.getAccountId() == id || isAdmin(authentication))) {
             return new ResponseEntity<String>("Access denied", FORBIDDEN);
         }
