@@ -47,6 +47,8 @@ public class TeamFinderUnitTests {
         authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
         authorities.add(new SimpleGrantedAuthority("account:read"));
         authorities.add(new SimpleGrantedAuthority("account:write"));
+        authorities.add(new SimpleGrantedAuthority("profile:read"));
+        authorities.add(new SimpleGrantedAuthority("profile:write"));
 
         Set<SimpleGrantedAuthority> actualAuthorities = AccountRole.ADMIN.getGrantedAuthorities();
 
@@ -56,13 +58,13 @@ public class TeamFinderUnitTests {
     @Test
     public void testAccountUserDetailsAccountRolesToGrantedAuthoritySetFromAccount() {
         Account account = new Account("bob", "password");
-        Set<SimpleGrantedAuthority> standardAuthorities =
-                AccountRole.STANDARD.getGrantedAuthorities();
+        Set<SimpleGrantedAuthority> newUserAuthorities =
+                AccountRole.NEW_USER.getGrantedAuthorities();
 
         Set<SimpleGrantedAuthority> actualAuthorities =
                 AccountDetails.accountRolesToGrantedAuthoritySet(account);
 
-        Assert.assertEquals(standardAuthorities, actualAuthorities);
+        Assert.assertEquals(newUserAuthorities, actualAuthorities);
     }
 
     @Test
@@ -100,14 +102,14 @@ public class TeamFinderUnitTests {
     @Test
     public void testPassingAccountToAccountUserDetails() {
         AccountDetails accountDetails;
-        Set<? extends GrantedAuthority> studentAuthorities =
-                AccountRole.STANDARD.getGrantedAuthorities();
+        Set<? extends GrantedAuthority> newUserAuthorities =
+                AccountRole.NEW_USER.getGrantedAuthorities();
 
         accountDetails = new AccountDetails(new Account("bob", "password"));
 
         Assert.assertEquals("bob", accountDetails.getUsername());
         Assert.assertEquals("password", accountDetails.getPassword());
-        Assert.assertEquals(studentAuthorities, accountDetails.getAuthorities());
+        Assert.assertEquals(newUserAuthorities, accountDetails.getAuthorities());
     }
 
     //////////////////////////////
