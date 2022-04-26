@@ -33,6 +33,7 @@ public class TeamFinderApplication {
         // Can't have profile without account and vice-versa
         Account account = new Account("Greg", "pass123");
         Profile test = new Profile(account, "Greg", "asd", 20);
+        test.setPublic(true);
         account.setProfile(test);
 
         return args -> {

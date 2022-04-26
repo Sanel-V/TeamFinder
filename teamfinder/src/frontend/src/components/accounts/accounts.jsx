@@ -21,7 +21,7 @@ export class Accounts extends React.Component {
 
         this.baseUrl = "http://localhost:8080";
         axios.defaults.headers.common['Authorization'] = "Bearer: " + token;
-        axios.get(`${this.baseUrl}/profile/profile/all`)
+        axios.get(`${this.baseUrl}/profile/public`)
             .then(response => {
                 if (response.data.length === 0)
                     this.setState({ profiles: [{key: 0, "image":"abc", "email" : "avx", "bio" : "abc"}] })
@@ -63,7 +63,7 @@ function Profiles(props){
         setToggleState(index);
     };
     const profiles = input.map((profile) =>
-        <div className="profList" key={profile.accountId}>{<Profile profile={profile} id={1} />}</div>
+        <div className="profList" key={profile.accountId}>{<Profile profile={profile} id={profile.accountId} />}</div>
     );
     return(
         <div className="container2">
@@ -124,7 +124,7 @@ function Profile(props) {
     return (
             <div className="d-flex flex-row">
                 <img src="/profile_default.png" className="profileImage" alt="" />
-                <div className="p-2 "> <p>{props.profile.firstName}</p> </div>
+                <div className="p-2 "> <p>{props.profile.firstName + " " + props.profile.lastName}</p> </div>
                 <div className="p-2 "> <p></p> </div>
                 <div className="p-2 "><p></p> </div>
                 <Link className="p-2 " to={"/profile/"+props.id}>View profile</Link>

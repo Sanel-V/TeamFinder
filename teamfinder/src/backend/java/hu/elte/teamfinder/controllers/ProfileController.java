@@ -48,7 +48,7 @@ public class ProfileController {
         }
     }
 
-    @GetMapping("profile/public")
+    @GetMapping("/public")
     public ResponseEntity<List<ProfileViewModel>> getAllPublicProfiles() {
         List<ProfileViewModel> profileViewModels = new ArrayList<>();
 
@@ -62,7 +62,7 @@ public class ProfileController {
         return new ResponseEntity<>(profileViewModels, HttpStatus.OK);
     }
 
-    @GetMapping("/profile/all")
+    @GetMapping("/all")
     public ResponseEntity<?> getAllProfiles(Authentication authentication) {
 
         if (!isAdmin(authentication)) {

@@ -45,6 +45,7 @@
   "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
   "main": "index.js",
   "devDependencies": {
+    "@types/react": "^18.0.7",
     "postcss-normalize": "^10.0.1",
     "sass": "^1.42.1"
   },

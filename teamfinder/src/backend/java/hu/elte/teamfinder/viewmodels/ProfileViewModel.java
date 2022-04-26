@@ -5,6 +5,8 @@ import hu.elte.teamfinder.models.Profile;
 import java.util.ArrayList;
 
 public class ProfileViewModel {
+
+    private long accountId;
     private String firstName;
     private String lastName;
     private Integer age;
@@ -13,6 +15,7 @@ public class ProfileViewModel {
     private ArrayList<String> tags;
 
     public ProfileViewModel(Profile profile) {
+        accountId = profile.getAccountId();
         firstName = profile.getFirstName();
         lastName = profile.getLastName();
         age = profile.getAge();
@@ -21,6 +24,12 @@ public class ProfileViewModel {
         tags = profile.getTags();
     }
 
+    public long getAccountId() {
+        return accountId;
+    }
+    public void setAccountId(long accountId) {
+        this.accountId = accountId;
+    }
     public String getFirstName() {
         return firstName;
     }

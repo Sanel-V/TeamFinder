@@ -15,7 +15,8 @@ export class Edit extends React.Component {
 
         this.state = {
             email: '',
-            password: ''
+            password: '',
+			id : props.id
         };
 
         this.submit = this.submit.bind(this);
@@ -36,14 +37,15 @@ export class Edit extends React.Component {
 
     render() {
     return(
+		
     <div className="container">
-      
+      	
         <div className="main-body">
         
               <nav aria-label="breadcrumb" className="main-breadcrumb">
                 <ol className="breadcrumb">
-                  <li className="breadcrumb-item"><Link to='/' > Home </Link></li>
-                  <li className="breadcrumb-item"><Link to='/profile/0' > Profile </Link></li>
+                  <li className="breadcrumb-item"><Link to='/accounts' > Home </Link></li>
+                  <li className="breadcrumb-item"><Link to='/accounts' > Profile </Link></li>
                   <li className="breadcrumb-item" aria-current="page">Edit Profile</li>
                 </ol>
               </nav>

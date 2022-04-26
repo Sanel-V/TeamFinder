@@ -80,7 +80,7 @@ export class Login extends React.Component {
                 </div>
                 <div className="form">
                     <div className="form-group">
-                        <label htmlFor="email">Email: Bob</label>
+                        <label htmlFor="email">Email:</label>
                         <input type="text" name="email" placeholder="abc@szerver.hu" value={email} onChange={this.handleChange}/>
                     </div>
                     <div className="form-group">

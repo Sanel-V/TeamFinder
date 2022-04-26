@@ -44,12 +44,13 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 new ApplicationAuthenticationFilter(
                         authenticationManagerBean(), this.accountService);
         myAuthFilter.setFilterProcessesUrl("/api/login");
+        http.headers().frameOptions().disable();
         http.cors()
                 .and()
                 .csrf()
                 .disable() // TODO: consider removing this in live build
                 .authorizeRequests()
-                .antMatchers("/api/login/**", "account/token/refresh", "/account/add/**")
+                .antMatchers("/api/login/**", "account/token/refresh", "/account/add/**", "/h2-console/**")
                 .permitAll()
                 .antMatchers("/profile/public/**")
                 .hasAnyAuthority("profile:read")
@@ -70,7 +71,6 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest()
                 .authenticated();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-
         http.addFilter(myAuthFilter);
         this.jwtUtil = new JwtUtil(accountService);
         http.addFilterBefore(
